@@ -1,5 +1,5 @@
 export const MyAssignments = () => {
   return (
-    <div>MyAssignments</div>
+    <div>Welcome to My Assignments page</div>
   )
 }

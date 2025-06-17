@@ -1,5 +1,5 @@
 export const FilterAssignments = () => {
   return (
-    <div>FilterAssignments</div>
+    <div>Welcome to Filter Assignments page</div>
   )
 }
