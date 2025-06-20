@@ -7,7 +7,7 @@ export const Authentication = () => {
       id="authentication"
       flexDirection={"column"}
       justifyContent={"center"}
-      w={["90%", "90%", "60%", "50%", "50%"]}
+      w={["80%", "80%", "45%", "35%", "35%"]}
     >
       <Button 
         mb={3}
