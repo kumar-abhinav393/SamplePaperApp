@@ -39,7 +39,7 @@ export const Header = () => {
           colStart={20}
           display={"flex"}
           alignItems={"center"}
-          justifyContent={"flex-end"}
+          justifyContent={"flex-center"}
           colEnd={[25, 25, 24, 24, 24]}
         >
           <ColorModeButton />
