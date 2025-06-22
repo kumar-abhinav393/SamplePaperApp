@@ -6,8 +6,9 @@ import { Login } from "./pages/Login/Login"
 import { Signup } from "./pages/Signup/Signup"
 import { FilterAssignments } from "./pages/FilterAssignments/FilterAssignments"
 import { MyAssignments } from "./pages/MyAssignments/MyAssignments"
-import { Flex, Grid } from "@chakra-ui/react"
+import { Box, Flex, Grid } from "@chakra-ui/react"
 import { Header } from "./components/Header/Header"
+import { Navigation } from "./components/Navigation/Navigation"
 
 function App() {
   return (
@@ -17,7 +18,10 @@ function App() {
           <Grid height={"100dvh"} gridTemplateRows={"auto 1fr"} 
             w={["100vw", "100vw", "100vw", "100vw", "90vw"]}
             >
-            <Header/>
+              <Box>
+                <Header/>
+                <Navigation/>
+              </Box>
             <Routes>
               <Route
                 path = {RouterPaths.Root}
