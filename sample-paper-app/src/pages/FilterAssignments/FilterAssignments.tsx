@@ -4,6 +4,7 @@ import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import { Box, Button, Flex, SimpleGrid, Stack, useBreakpointValue } from "@chakra-ui/react"
 
 export const FilterAssignments = () => {
+  const isTablet = useBreakpointValue({ base: false, md: true, lg: false })
   return (
     <Box id="filter-assignment"
       mx={"auto"}
