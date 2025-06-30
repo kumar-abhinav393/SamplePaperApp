@@ -69,6 +69,7 @@ export const Login = () => {
           />
           <Text mt={2}>PASSWORD</Text>
           <Input
+            type="password"
             variant={"outline"}
             placeholder="password >= 8"
             css={{ "--focus-color": "#3b82f6d6" }}
@@ -89,6 +90,7 @@ export const Login = () => {
             Cancel
           </Button>
           <Button
+            disabled
             color={"white"}
             bg={"#3b82f6d6"}
             fontWeight={"bold"}
