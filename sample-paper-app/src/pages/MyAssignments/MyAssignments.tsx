@@ -22,8 +22,8 @@ export const MyAssignments = () => {
             h={["30px", "30px", "40px", "40px", "40px"]}
           >
             <GridItem
-              colEnd={23}
-              colStart={2}
+              colEnd={[24, 24, 23, 23, 23]}
+              colStart={[1, 1, 2, 2, 2]}
               display={"flex"}
             >
               <Input
@@ -34,9 +34,8 @@ export const MyAssignments = () => {
               />
             </GridItem>
             <GridItem
-              colSpan={2}
               colEnd={24}
-              colStart={23}
+              colStart={[25, 25, 23, 23, 23]}
               display={"flex"}
               alignItems={"center"}
               justifyContent={"center"}
