@@ -3,8 +3,16 @@ import { TfiSearch } from "react-icons/tfi";
 import { FaSortNumericDown } from "react-icons/fa";
 import { FaSortNumericUp } from "react-icons/fa";
 import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
+import { useState } from "react";
 
 export const MyAssignments = () => {
+
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+
+  const handleSortToggle = () => {
+    setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
+  }
+
   return (
     <Box id="my-assignments"
       mx={"auto"}
@@ -22,9 +30,9 @@ export const MyAssignments = () => {
             h={["30px", "30px", "40px", "40px", "40px"]}
           >
             <GridItem
-              colEnd={[24, 24, 23, 23, 23]}
-              colStart={[1, 1, 2, 2, 2]}
               display={"flex"}
+              colStart={[1, 1, 2, 2, 2]}
+              colEnd={[24, 24, 23, 23, 23]}
             >
               <Input
                 placeholder="Search assignments..."
@@ -35,10 +43,10 @@ export const MyAssignments = () => {
             </GridItem>
             <GridItem
               colEnd={24}
-              colStart={[25, 25, 23, 23, 23]}
               display={"flex"}
               alignItems={"center"}
               justifyContent={"center"}
+              colStart={[25, 25, 23, 23, 23]}
             >
               <Button
                 ml={1}
@@ -60,8 +68,8 @@ export const MyAssignments = () => {
           >
             <GridItem
               colEnd={[23]}
-              colStart={[1, 1, 2, 2, 2]}
               display={"flex"}
+              colStart={[1, 1, 2, 2, 2]}
             >
                 <TimeFilterSelect />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
@@ -73,20 +81,21 @@ export const MyAssignments = () => {
             </GridItem>
             <GridItem
               colEnd={24}
-              colStart={[25, 25, 23, 23, 23]}
               display={"flex"}
               alignItems={"center"}
               justifyContent={"center"}
+              colStart={[25, 25, 23, 23, 23]}
             >
               <Button
                 ml={1}
                 color={"white"}
                 bg={"#3b82f6d6"}
+                onClick={handleSortToggle}
                 border={"1px solid #444746"}
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
-                <FaSortNumericDown />
+                { sortOrder === "desc" ? <FaSortNumericUp /> : <FaSortNumericDown /> }
               </Button>
             </GridItem>
           </Grid>
