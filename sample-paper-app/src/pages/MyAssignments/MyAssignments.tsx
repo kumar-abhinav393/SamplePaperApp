@@ -72,7 +72,7 @@ export const MyAssignments = () => {
               display={"flex"}
               colStart={[1, 1, 2, 2, 2]}
             >
-                <TimeFilterSelect />
+              <TimeFilterSelect />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
                 <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>This Month</Button>
                 <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>Last Month</Button>
