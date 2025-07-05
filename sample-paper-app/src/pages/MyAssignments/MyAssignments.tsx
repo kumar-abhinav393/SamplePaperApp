@@ -1,9 +1,10 @@
-import { Box, Button, Flex, Grid, GridItem, Input, SimpleGrid, Text } from "@chakra-ui/react"
+import { Box, Button, Flex, Grid, GridItem, Input, SimpleGrid } from "@chakra-ui/react"
 import { TfiSearch } from "react-icons/tfi";
 import { FaSortNumericDown } from "react-icons/fa";
 import { FaSortNumericUp } from "react-icons/fa";
 import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
 import { useState } from "react";
+import { AssignmentCard } from "@/components/AssignmentCard/AssignmentCard";
 
 export const MyAssignments = () => {
 
@@ -71,7 +72,7 @@ export const MyAssignments = () => {
               display={"flex"}
               colStart={[1, 1, 2, 2, 2]}
             >
-                <TimeFilterSelect />
+              <TimeFilterSelect />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
                 <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>This Month</Button>
                 <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>Last Month</Button>
@@ -95,10 +96,22 @@ export const MyAssignments = () => {
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
-                { sortOrder === "desc" ? <FaSortNumericUp /> : <FaSortNumericDown /> }
+                {sortOrder === "desc" ? <FaSortNumericUp /> : <FaSortNumericDown />}
               </Button>
             </GridItem>
           </Grid>
+        </Box>
+        <Box
+          pb={[2, 2, 4, 4, 10]}
+          mt={[5, 5, 6]}
+          bg={"#141218"}
+          overflowX={"auto"}
+          borderRadius={"lg"}
+          whiteSpace={"nowrap"}
+          mx={[0, 0, 8, 10, 10]}
+          border={"1px solid #444746"}
+        >
+          <AssignmentCard />
         </Box>
       </SimpleGrid>
     </Box>
