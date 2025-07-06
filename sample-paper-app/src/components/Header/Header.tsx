@@ -64,7 +64,7 @@ export const Header = () => {
           fontSize={["15px", "15px", "18px", "18px", "20px"]}
         >
           <Text 
-            paddingBottom={[0, 0, 1, 1, 1]}
+            mt={[0, 0, 0, 1, 1]}
             fontWeight={"bold"}
           >
             Gyaan Haridwar
