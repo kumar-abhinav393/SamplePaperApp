@@ -37,7 +37,7 @@ export const authReducer = (
                 pending: false,
                 authIsReady: true
             }
-        case "PENDING":
+        case "IS_PENDING":
             return {
                 ...state,
                 pending: true
