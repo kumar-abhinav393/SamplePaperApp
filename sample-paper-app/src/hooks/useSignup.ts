@@ -27,7 +27,7 @@ export const useSignup = () => {
             await signOut(auth)
         } catch (error: unknown) {
             console.log("Signup error: ", error)
-         }
+        }
     }
     return { signup }
 }
