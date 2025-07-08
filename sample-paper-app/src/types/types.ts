@@ -12,6 +12,6 @@ type AuthAction =
     | { type: "LOGIN"; payload: User }
     | { type: "LOGOUT" }
     | { type: "AUTH_IS_READY"; payload: User | null }
-    | { type: "PENDING" }
+    | { type: "IS_PENDING" }
 
 export type { AuthState, AuthAction }
