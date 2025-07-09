@@ -1,6 +1,32 @@
+import { useSignup } from "@/hooks/useSignup";
 import { Flex, Box, Input, Button, Text, Fieldset, Field } from "@chakra-ui/react"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
+
+  const { signup } = useSignup();
+  const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleSubmit = async () => {
+    try {
+      if(password === confirmPassword) {
+        await signup({ email, password, displayName })
+      }
+    } catch (error: unknown) {
+      console.log(error)
+    }
+  }
+
+  const handleCancel = () => {
+    navigate("/")
+  }
+
   return (
     <Flex id="login"
       mx={"auto"}
@@ -47,9 +73,11 @@ export const Signup = () => {
                 <Field.Root>
                   <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>EMAIL</Field.Label>
                   <Input
+                    value={email}
                     variant={"outline"}
                     placeholder="user@domain.com"
                     css={{ "--focus-color": "#3b82f6d6" }}
+                    onChange={(e) => setEmail(e.target.value)}
                     fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                   />
                 </Field.Root>
@@ -58,10 +86,12 @@ export const Signup = () => {
                   <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>PASSWORD</Field.Label>
                   <Input
                     type="password"
+                    value={password}
                     variant={"outline"}
                     placeholder="password >= 8"
                     css={{ "--focus-color": "#3b82f6d6" }}
                     fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                    onChange={(e) => setPassword(e.target.value)}
                   />
                 </Field.Root>
 
@@ -70,9 +100,11 @@ export const Signup = () => {
                   <Input
                     type="password"
                     variant={"outline"}
+                    value={confirmPassword}
                     placeholder="password >= 8"
-                    css={{ "--focus-color": "#3b82f6d6" }}
+                    css={{ "--focus-color": (password === confirmPassword) ? "#3b82f6d6" : "red" }}
                     fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
                   />
                 </Field.Root>
 
@@ -80,9 +112,11 @@ export const Signup = () => {
                   <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>DISPLAY NAME</Field.Label>
                   <Input
                     variant={"outline"}
+                    value={displayName}
                     placeholder="Robert Pinto"
                     css={{ "--focus-color": "#3b82f6d6" }}
                     fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                    onChange={(e) => setDisplayName(e.target.value)}
                   />
                 </Field.Root>
               </Fieldset.Content>
@@ -94,18 +128,22 @@ export const Signup = () => {
               justifyContent={"space-between"}
             >
               <Button
+                w={100}
                 color={"white"}
                 bg={"#3b82f6d6"}
                 fontWeight={"bold"}
+                onClick={handleCancel}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
-                Cancel
+                Back
               </Button>
               <Button
-                disabled
+                w={100}
+                disabled={!email || !password || !confirmPassword || !displayName || password !== confirmPassword}
                 color={"white"}
                 bg={"#3b82f6d6"}
                 fontWeight={"bold"}
+                onClick={handleSubmit}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
                 Signup
