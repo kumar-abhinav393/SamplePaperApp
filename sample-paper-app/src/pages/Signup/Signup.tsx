@@ -20,6 +20,10 @@ export const Signup = () => {
     try {
       if (password === confirmPassword) {
         await signup({ email, password, displayName })
+        setEmail(" ")
+        setPassword(" ")
+        setDisplayName(" ")
+        setConfirmPassword(" ")
       }
     } catch (error: unknown) {
       console.log(error)
