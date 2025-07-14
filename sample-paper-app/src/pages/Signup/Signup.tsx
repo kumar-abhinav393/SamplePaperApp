@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { useSignup } from "@/hooks/useSignup";
-import { Flex, Box, Input, Button, Text, Fieldset, Field } from "@chakra-ui/react"
-import { useState } from "react"
 import { useNavigate } from "react-router-dom";
+import { getPasswordIcon } from "@/helpers/getPasswordIcon";
+import { Flex, Box, Input, Button, Text, Fieldset, Field, InputGroup } from "@chakra-ui/react";
 
 export const Signup = () => {
 
@@ -84,28 +85,32 @@ export const Signup = () => {
 
                 <Field.Root>
                   <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>PASSWORD</Field.Label>
-                  <Input
-                    type="password"
-                    value={password}
-                    variant={"outline"}
-                    placeholder="password >= 8"
-                    css={{ "--focus-color": "#3b82f6d6" }}
-                    fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-                    onChange={(e) => setPassword(e.target.value)}
-                  />
+                  <InputGroup endElement={getPasswordIcon(showPassword, setShowPassword)}>
+                    <Input
+                      value={password}
+                      variant={"outline"}
+                      placeholder="password >= 8"
+                      css={{ "--focus-color": "#3b82f6d6" }}
+                      type={showPassword ? "text" : "password"}
+                      fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </InputGroup>
                 </Field.Root>
 
                 <Field.Root>
                   <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>CONFIRM PASSWORD</Field.Label>
-                  <Input
-                    type="password"
-                    variant={"outline"}
-                    value={confirmPassword}
-                    placeholder="password >= 8"
-                    css={{ "--focus-color": (password === confirmPassword) ? "#3b82f6d6" : "red" }}
-                    fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                  />
+                  <InputGroup endElement={getPasswordIcon(showConfirmPassword, setShowConfirmPassword)}>
+                    <Input
+                      variant={"outline"}
+                      value={confirmPassword}
+                      placeholder="password >= 8"
+                      fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                      type={showConfirmPassword ? "text" : "password"}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      css={{ "--focus-color": (password === confirmPassword) ? "#3b82f6d6" : "red" }}
+                    />
+                  </InputGroup>
                 </Field.Root>
 
                 <Field.Root>
