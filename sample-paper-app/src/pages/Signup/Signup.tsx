@@ -12,20 +12,18 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [showPassword, setShowPassword] = useState(false)
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async () => {
     try {
-      if(password === confirmPassword) {
+      if (password === confirmPassword) {
         await signup({ email, password, displayName })
       }
     } catch (error: unknown) {
       console.log(error)
     }
-  }
-
-  const handleCancel = () => {
-    navigate("/")
   }
 
   return (
@@ -64,8 +62,8 @@ export const Signup = () => {
         </Flex>
         <Flex
           mt={4}
-          flexDirection={"column"}
           alignItems={"column"}
+          flexDirection={"column"}
           w={["310px", "350px", "400px", "450px"]}
         >
           <form>
@@ -137,19 +135,19 @@ export const Signup = () => {
                 color={"white"}
                 bg={"#3b82f6d6"}
                 fontWeight={"bold"}
-                onClick={handleCancel}
+                onClick={() => {navigate("/")}}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
                 Back
               </Button>
               <Button
                 w={100}
-                disabled={!email || !password || !confirmPassword || !displayName || password !== confirmPassword}
                 color={"white"}
                 bg={"#3b82f6d6"}
                 fontWeight={"bold"}
                 onClick={handleSubmit}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+                disabled={!email || !password || !confirmPassword || !displayName || password !== confirmPassword}
               >
                 Signup
               </Button>
