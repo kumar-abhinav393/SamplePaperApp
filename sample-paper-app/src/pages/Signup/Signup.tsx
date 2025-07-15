@@ -68,7 +68,7 @@ export const Signup = () => {
           fontSize={["l", "l", "1xl", "2xl", "2xl"]}
         >
           <Text>Already Registered?</Text>
-          <Box>
+          <Box onClick={() => navigate("/login")}>
             <Text
               cursor={"pointer"}
               fontWeight={"bold"}
