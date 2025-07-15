@@ -24,6 +24,7 @@ export const Signup = () => {
         setPassword(" ")
         setDisplayName(" ")
         setConfirmPassword(" ")
+        navigate("/login")
       }
     } catch (error: unknown) {
       console.log(error)
