@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSignup } from "@/hooks/useSignup";
 import { useNavigate } from "react-router-dom";
+import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
 import { Flex, Box, Input, Button, Text, Fieldset, Field, InputGroup } from "@chakra-ui/react";
 
@@ -17,13 +18,25 @@ export const Signup = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const handleSubmit = async () => {
+    const signupPromise = signup({ email, password, displayName })
+    toaster.promise(signupPromise, {
+      success: {
+        title: "Successfully signed up!",
+        description: "Welcome aboard!",
+      },
+      error: {
+        title: "Signup failed",
+        description: "Please check your details and try again.",
+      },
+      loading: { title: "Signing up...", description: "Please wait" },
+    });
     try {
       if (password === confirmPassword) {
-        await signup({ email, password, displayName })
-        setEmail(" ")
-        setPassword(" ")
-        setDisplayName(" ")
-        setConfirmPassword(" ")
+        await signupPromise
+        setEmail("")
+        setPassword("")
+        setDisplayName("")
+        setConfirmPassword("")
         navigate("/login")
       }
     } catch (error: unknown) {
