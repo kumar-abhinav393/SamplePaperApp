@@ -1,6 +1,7 @@
 import { toaster } from "@/components/ui/toaster";
+import { getPasswordIcon } from "@/helpers/getPasswordIcon";
 import { useLogin } from "@/hooks/useLogin";
-import { Box, Button, Field, Flex, Input, Text } from "@chakra-ui/react"
+import { Box, Button, Field, Flex, Input, InputGroup, Text } from "@chakra-ui/react"
 import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 
@@ -11,6 +12,7 @@ export const Login = () => {
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+  const [showPassword, setShowPassword] = useState(false)
 
   const emailError =
     email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -105,15 +107,17 @@ export const Login = () => {
             )}
           </Field.Root>
           <Text mt={2}>PASSWORD</Text>
-          <Input
-            type="password"
+          <InputGroup endElement={getPasswordIcon(showPassword, setShowPassword)}>
+            <Input
             value={password}
             variant={"outline"}
             placeholder="password >= 8"
             css={{ "--focus-color": "#3b82f6d6" }}
+            type={showPassword ? "text" : "password"}
             fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
             onChange={(e) => setPassword(e.target.value)}
           />
+          </InputGroup>
         </Flex>
         <Flex
           mt={4}
