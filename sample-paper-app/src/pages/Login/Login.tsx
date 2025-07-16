@@ -25,9 +25,11 @@ export const Login = () => {
         title: "Login failed",
         description: "Please check your credentials and try again",
       })
+      setEmail("")
+      setPassword("")
     }
   }
-  
+
   return (
     <Flex id="login"
       mx={"auto"}
