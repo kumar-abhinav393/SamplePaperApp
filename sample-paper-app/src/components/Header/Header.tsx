@@ -1,7 +1,13 @@
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react"
 import { ColorModeButton } from "../ui/color-mode"
+import { Logout } from "./Logout";
+import { useAuthContext } from "@/hooks/useAuthContext";
+
 
 export const Header = () => {
+
+  const { user } = useAuthContext();
+
   return (
     <Box id="header"
       mx={"auto"}
@@ -36,13 +42,17 @@ export const Header = () => {
         </GridItem>
         <GridItem
           p={1}
-          colStart={20}
+          gap={[0, 0, 0, 3, 3]}
+          colStart={[20, 23, 23, 23, 23]}
           display={"flex"}
           alignItems={"center"}
-          justifyContent={"flex-center"}
+          justifyContent={"flex-end"}
           colEnd={[25, 25, 24, 24, 24]}
         >
           <ColorModeButton />
+          {user && (
+            <Logout />
+          )}
         </GridItem>
       </Grid>
       <Grid
