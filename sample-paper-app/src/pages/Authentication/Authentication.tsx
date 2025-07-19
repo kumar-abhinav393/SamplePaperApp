@@ -1,6 +1,10 @@
 import { Button, Flex } from "@chakra-ui/react"
+import { useNavigate } from "react-router-dom"
 
 export const Authentication = () => {
+
+  const navigate = useNavigate();
+
   return (
     <Flex
       mx={"auto"}
@@ -13,6 +17,7 @@ export const Authentication = () => {
         mb={3}
         bg={"#3b82f6d6"}
         fontWeight={"bold"}
+        onClick={() => navigate("/login")}
         fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
       >
         LOGIN WITH EMAIL
@@ -20,6 +25,7 @@ export const Authentication = () => {
       <Button
         bg={"#3b82f6d6"}
         fontWeight={"bold"}
+        onClick={() => navigate("/signup")}
         fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
       >
         REGISTER WITH EMAIL
