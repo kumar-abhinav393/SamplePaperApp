@@ -1,0 +1,98 @@
+import {
+  Button,
+  createOverlay,
+  Dialog,
+  Flex,
+  Input,
+  Portal,
+} from "@chakra-ui/react";
+import type React from "react";
+import { GiClick } from "react-icons/gi";
+import { toaster } from "../ui/toaster";
+import { useResetPassword } from "@/hooks/useResetPassword";
+import { useState } from "react";
+
+interface DialoagProps {
+  title?: string;
+  description?: string;
+  content?: React.ReactNode;
+}
+
+export const dialog = createOverlay<DialoagProps>((props) => {
+  const { title, description, content, ...rest } = props;
+
+  const { resetPassword } = useResetPassword();
+
+  const [email, setEmail] = useState("");
+
+  const handleResetPassword = async () => {
+    try {
+      await resetPassword(email);
+      toaster.create({
+        description: "Please check the mail to reset your password in your inbox or spam",
+        type: "info",
+        closable: true,
+      });
+      dialog.close("a");
+    } catch {
+      toaster.create({
+        description: "Invalid Email Address",
+        type: "error",
+        closable: true,
+      });
+    }
+  };
+
+  return (
+    <Dialog.Root {...rest}>
+      <Portal>
+        <Dialog.Backdrop />
+        <Dialog.Positioner justifyContent={"center"} alignItems={"center"}>
+          <Dialog.Content>
+            {title && (
+              <Dialog.Header
+                justifyContent={"center"}
+                alignItems={"center"}
+                bg={"#141218"}
+              >
+                <Dialog.Title fontSize={["l", "l", "xl", "1xl", "1xl"]}>
+                  {title}
+                </Dialog.Title>
+              </Dialog.Header>
+            )}
+            <Dialog.Body bg={"#141218"}>
+              {description && (
+                <Dialog.Description
+                  color={"white"}
+                  fontSize={["lg", "lg", "xl", "1xl", "1xl"]}
+                >
+                  {description}
+                  <Flex mt={2} gap={2}>
+                    <Input
+                      value={email}
+                      variant={"outline"}
+                      placeholder="abc@domain.com"
+                      css={{ "--focus-color": "#3b82f6d6" }}
+                      onChange={(e) => setEmail(e.target.value)}
+                      fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+                    />
+                    <Button
+                      color={"white"}
+                      bg={"#3b82f6d6"}
+                      disabled={!email}
+                      onClick={handleResetPassword}
+                      fontSize={["xl", "xl", "xl", "1xl", "1xl"]}
+                    >
+                      {<GiClick />}
+                    </Button>
+                  </Flex>
+                </Dialog.Description>
+              )}
+              {content}
+            </Dialog.Body>
+          </Dialog.Content>
+        </Dialog.Positioner>
+      </Portal>
+    </Dialog.Root>
+  );
+});

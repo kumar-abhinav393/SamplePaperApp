@@ -1,3 +1,4 @@
+import { dialog } from "@/components/Modals/ResetPasswordModal";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
 import { useLogin } from "@/hooks/useLogin";
@@ -72,7 +73,12 @@ export const Login = () => {
           fontSize={["l", "l", "1xl", "2xl", "2xl"]}
         >
           <Text>Forgot Password?</Text>
-          <Box>
+          <Box onClick={() => {
+            dialog.open("a", {
+              title: "Reset Password",
+              description: "EMAIL",
+            })
+          }}>
             <Text
               cursor={"pointer"}
               fontWeight={"bold"}
@@ -81,6 +87,7 @@ export const Login = () => {
               Change Password
             </Text>
           </Box>
+          <dialog.Viewport />
         </Flex>
         <Flex
           mt={4}
