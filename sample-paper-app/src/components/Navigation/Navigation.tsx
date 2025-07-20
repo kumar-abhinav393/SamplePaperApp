@@ -38,9 +38,26 @@ export const Navigation = () => {
                     colStart={12}
                     colEnd={14}
                     display={"flex"}
+                    position={"relative"}
                     alignItems={"center"}
                     justifyContent={"center"}
                 >
+                    <Box
+                        position="absolute"
+                        left={["47%","47%","49%","49%","49%"]}
+                        top={0}
+                        bottom={[8,8,12,12,14]}
+                        borderLeft="1px solid #444746"
+                        pointerEvents="none"
+                    />
+                    <Box
+                        position="absolute"
+                        left={["47%","47%","49%","49%","49%"]}
+                        top={[8,8,12,12,14]}
+                        bottom={0}
+                        borderLeft="1px solid #444746"
+                        pointerEvents="none"
+                    />
                     <Flex alignItems={"center"} justifyContent={"center"} h={["20px", "20px", "30px", "30px", "40px"]}>
                         <GyaanLogo height={{base: "20px", sm: "20px", md: "30px", lg: "30px", xl: "40px"}} />
                     </Flex>
