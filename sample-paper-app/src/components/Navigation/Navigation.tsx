@@ -1,3 +1,4 @@
+import { GyaanLogo } from "@/assets/gyaan-logo"
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react"
 
 export const Navigation = () => {
@@ -29,7 +30,6 @@ export const Navigation = () => {
                     >
                         <Text
                             cursor={"pointer"}
-                            fontWeight={"bold"}
                             _hover={{color: "#3b82f6d6"}}
                         >Filter Assignments</Text>
                     </Flex>
@@ -38,10 +38,28 @@ export const Navigation = () => {
                     colStart={12}
                     colEnd={14}
                     display={"flex"}
+                    position={"relative"}
+                    alignItems={"center"}
                     justifyContent={"center"}
                 >
-                    <Flex border={"1px solid #444746"} alignItems={"center"}>
-                        <Text>LOGO</Text>
+                    <Box
+                        position="absolute"
+                        left={["47%","47%","49%","49%","49%"]}
+                        top={0}
+                        bottom={[8,8,12,12,14]}
+                        borderLeft="1px solid #444746"
+                        pointerEvents="none"
+                    />
+                    <Box
+                        position="absolute"
+                        left={["47%","47%","49%","49%","49%"]}
+                        top={[8,8,12,12,14]}
+                        bottom={0}
+                        borderLeft="1px solid #444746"
+                        pointerEvents="none"
+                    />
+                    <Flex alignItems={"center"} justifyContent={"center"} h={["20px", "20px", "30px", "30px", "40px"]}>
+                        <GyaanLogo height={{base: "20px", sm: "20px", md: "30px", lg: "30px", xl: "40px"}} />
                     </Flex>
 
                 </GridItem>
@@ -58,7 +76,6 @@ export const Navigation = () => {
                     >
                         <Text
                             cursor={"pointer"}
-                            fontWeight={"bold"}
                             _hover={{color: "#3b82f6d6"}}
                         >
                             My Assignments
