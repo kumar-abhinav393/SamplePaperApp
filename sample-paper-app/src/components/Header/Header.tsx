@@ -2,6 +2,7 @@ import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react"
 import { ColorModeButton } from "../ui/color-mode"
 import { Logout } from "./Logout";
 import { useAuthContext } from "@/hooks/useAuthContext";
+import { GyaanLogo } from "@/assets/gyaan-logo";
 
 
 export const Header = () => {
@@ -33,11 +34,7 @@ export const Header = () => {
             alignItems={"center"}
             h={["37px", "37px", "50px", "50px", "60px"]}
           >
-            <Text 
-              fontSize={["xl", "2xl", "2xl", "3xl", "3xl"]}
-            >
-              GYAAN LOGO & NAME
-            </Text>
+            <GyaanLogo height={{base: "37px", sm: "50px", md: "60px", lg: "60px", xl: "70px"}} />
           </Flex>
         </GridItem>
         <GridItem
