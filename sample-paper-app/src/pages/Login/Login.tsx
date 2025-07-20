@@ -7,21 +7,20 @@ import { useNavigate } from "react-router-dom"
 
 export const Login = () => {
 
-  const navigate = useNavigate();
   const { login } = useLogin();
+  const navigate = useNavigate();
 
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [showPassword, setShowPassword] = useState(false)
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-  const emailError =
-    email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
+  const emailError = (email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+  
   const handleSubmit = async() => {
     try{
       await login({email, password})
       navigate("/filter-assignments")
-    } catch(error) {
+    } catch {
       toaster.create({
         type: "error",
         title: "Login failed",
