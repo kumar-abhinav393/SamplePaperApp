@@ -72,13 +72,13 @@ export const dialog = createOverlay<DialoagProps>((props) => {
                       value={email}
                       variant={"outline"}
                       placeholder="abc@domain.com"
-                      css={{ "--focus-color": "#3b82f6d6" }}
+                      css={{ "--focus-color": "#3bc8f6d6" }}
                       onChange={(e) => setEmail(e.target.value)}
                       fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                     />
                     <Button
                       color={"white"}
-                      bg={"#3b82f6d6"}
+                      bg={"#3bc8f6d6"}
                       disabled={!email}
                       onClick={handleResetPassword}
                       fontSize={["xl", "xl", "xl", "1xl", "1xl"]}

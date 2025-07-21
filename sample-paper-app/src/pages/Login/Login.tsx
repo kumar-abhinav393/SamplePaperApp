@@ -61,7 +61,7 @@ export const Login = () => {
             <Text
               cursor={"pointer"}
               fontWeight={"bold"}
-              color={"#3b82f6d6"}
+              color={"#3bc8f6d6"}
             >
               Signup
             </Text>
@@ -82,7 +82,7 @@ export const Login = () => {
             <Text
               cursor={"pointer"}
               fontWeight={"bold"}
-              color={"#3b82f6d6"}
+              color={"#3bc8f6d6"}
             >
               Change Password
             </Text>
@@ -104,7 +104,7 @@ export const Login = () => {
               value={email}
               variant={"outline"}
               placeholder="user@domain.com"
-              css={{ "--focus-color": "#3b82f6d6" }}
+              css={{ "--focus-color": "#3bc8f6d6" }}
               onChange={(e) => setEmail(e.target.value)}
               fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
             />
@@ -118,7 +118,7 @@ export const Login = () => {
             value={password}
             variant={"outline"}
             placeholder="password >= 8"
-            css={{ "--focus-color": "#3b82f6d6" }}
+            css={{ "--focus-color": "#3bc8f6d6" }}
             type={showPassword ? "text" : "password"}
             fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
             onChange={(e) => setPassword(e.target.value)}
@@ -131,8 +131,8 @@ export const Login = () => {
           justifyContent={"space-between"}
         >
           <Button
-            color={"white"}
-            bg={"#3b82f6d6"}
+            color={"black"}
+            bg={"#3bc8f6d6"}
             fontWeight={"bold"}
             onClick={() => navigate("/")}
             fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
@@ -140,8 +140,8 @@ export const Login = () => {
             Cancel
           </Button>
           <Button
-            color={"white"}
-            bg={"#3b82f6d6"}
+            color={"black"}
+            bg={"#3bc8f6d6"}
             fontWeight={"bold"}
             onClick={handleSubmit}
             disabled={!email || !password}

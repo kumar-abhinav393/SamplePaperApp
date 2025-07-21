@@ -27,7 +27,7 @@ export const Header = () => {
           display={"flex"}
           alignItems={"center"}
           colStart={[1, 1, 2, 2, 2]}
-          colEnd={[20, 20, 14 ,12 ,12]}
+          colEnd={20}
           borderRight={"1px solid #444746"}
         >
           <Flex
@@ -68,10 +68,10 @@ export const Header = () => {
           flexDirection={"column"}
           colStart={[1, 1, 2, 2, 2]}
           borderRight={"1px solid #444746"}
-          fontSize={["15px", "15px", "18px", "18px", "20px"]}
+          fontSize={["12px", "12px", "15px", "18px", "20px"]}
         >
           <Text 
-            mt={[0, 0, 0, 1, 1]}
+            mt={1}
             fontWeight={"bold"}
           >
             Gyaan Haridwar

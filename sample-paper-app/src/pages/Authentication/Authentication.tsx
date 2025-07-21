@@ -15,7 +15,7 @@ export const Authentication = () => {
     >
       <Button 
         mb={3}
-        bg={"#3b82f6d6"}
+        bg={"#3bc8f6d6"}
         fontWeight={"bold"}
         onClick={() => navigate("/login")}
         fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
@@ -23,7 +23,7 @@ export const Authentication = () => {
         LOGIN WITH EMAIL
       </Button>
       <Button
-        bg={"#3b82f6d6"}
+        bg={"#3bc8f6d6"}
         fontWeight={"bold"}
         onClick={() => navigate("/signup")}
         fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
