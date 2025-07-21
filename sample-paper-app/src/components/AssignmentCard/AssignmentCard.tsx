@@ -32,7 +32,7 @@ export const AssignmentCard = () => {
                             alignItems={"flex-start"}
                         >
                             <Heading
-                                color={"#3b82f6d6"}
+                                color={"#3bc8f6d6"}
                                 fontSize={["13px", "13px", "18px", "18px", "20px"]}
                             >
                                 {item.title}
@@ -58,7 +58,7 @@ export const AssignmentCard = () => {
                             >
                                 <Link
                                 variant={"underline"}
-                                color={"#3b82f6d6"}
+                                color={"#3bc8f6d6"}
                             >
                                 Description
                             </Link>
@@ -72,7 +72,7 @@ export const AssignmentCard = () => {
                             fontSize={["12px", "12px", "18px", "18px", "20px"]}
                         >
                             <Heading
-                                color={"#3b82f6d6"}
+                                color={"#3bc8f6d6"}
                             >
                                 <Flex gap={1}>
                                     <MdPreview />

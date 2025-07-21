@@ -1,4 +1,12 @@
-import { Box, Button, Flex, Grid, GridItem, Input, SimpleGrid } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  GridItem,
+  Input,
+  SimpleGrid,
+} from "@chakra-ui/react";
 import { TfiSearch } from "react-icons/tfi";
 import { FaSortNumericDown } from "react-icons/fa";
 import { FaSortNumericUp } from "react-icons/fa";
@@ -7,24 +15,20 @@ import { useState } from "react";
 import { AssignmentCard } from "@/components/AssignmentCard/AssignmentCard";
 
 export const MyAssignments = () => {
-
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
 
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
-  }
+  };
 
   return (
-    <Box id="my-assignments"
+    <Box
+      id="my-assignments"
       mx={"auto"}
       maxW={"1200px"}
       w={["100vw", "100vw", "100vw", "95vw", "90vw"]}
     >
-      <SimpleGrid
-        h={"100vh"}
-        gridRowStart={3}
-        templateRows={"auto auto 1fr"}
-      >
+      <SimpleGrid h={"100vh"} gridRowStart={3} templateRows={"auto auto 1fr"}>
         <Box mt={[3, 3, 5, 5, 6]}>
           <Grid
             templateColumns={"repeat(24, 1fr)"}
@@ -39,7 +43,10 @@ export const MyAssignments = () => {
                 placeholder="Search assignments..."
                 fontSize={["l", "l", "xl", "1xl", "1xl"]}
                 h={["30px", "30px", "40px", "40px", "40px"]}
-                css={{ "--focus-color": "#3b82f6d6", "border": "1px solid #444746" }}
+                css={{
+                  "--focus-color": "#3bc8f6d6",
+                  border: "1px solid #444746",
+                }}
               />
             </GridItem>
             <GridItem
@@ -52,7 +59,7 @@ export const MyAssignments = () => {
               <Button
                 ml={1}
                 color={"white"}
-                bg={"#3b82f6d6"}
+                bg={"#3bc8f6d6"}
                 border={"1px solid #444746"}
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
@@ -67,17 +74,45 @@ export const MyAssignments = () => {
             templateColumns={"repeat(24, 1fr)"}
             h={["30px", "30px", "40px", "40px", "40px"]}
           >
-            <GridItem
-              colEnd={[23]}
-              display={"flex"}
-              colStart={[1, 1, 2, 2, 2]}
-            >
+            <GridItem colEnd={[23]} display={"flex"} colStart={[1, 1, 2, 2, 2]}>
               <TimeFilterSelect />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
-                <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>This Month</Button>
-                <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>Last Month</Button>
-                <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>Upcoming</Button>
-                <Button h={"40px"} w={"100px"} bg={"#3b82f6d6"} color={"white"} fontSize={"lg"}>All</Button>
+                <Button
+                  h={"40px"}
+                  w={"100px"}
+                  bg={"#3bc8f6d6"}
+                  color={"black"}
+                  fontSize={"lg"}
+                >
+                  This Month
+                </Button>
+                <Button
+                  h={"40px"}
+                  w={"100px"}
+                  bg={"#3bc8f6d6"}
+                  color={"black"}
+                  fontSize={"lg"}
+                >
+                  Last Month
+                </Button>
+                <Button
+                  h={"40px"}
+                  w={"100px"}
+                  bg={"#3bc8f6d6"}
+                  color={"black"}
+                  fontSize={"lg"}
+                >
+                  Upcoming
+                </Button>
+                <Button
+                  h={"40px"}
+                  w={"100px"}
+                  bg={"#3bc8f6d6"}
+                  color={"black"}
+                  fontSize={"lg"}
+                >
+                  All
+                </Button>
               </Flex>
             </GridItem>
             <GridItem
@@ -90,13 +125,17 @@ export const MyAssignments = () => {
               <Button
                 ml={1}
                 color={"white"}
-                bg={"#3b82f6d6"}
+                bg={"#3bc8f6d6"}
                 onClick={handleSortToggle}
                 border={"1px solid #444746"}
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
-                {sortOrder === "desc" ? <FaSortNumericUp /> : <FaSortNumericDown />}
+                {sortOrder === "desc" ? (
+                  <FaSortNumericUp />
+                ) : (
+                  <FaSortNumericDown />
+                )}
               </Button>
             </GridItem>
           </Grid>
@@ -115,5 +154,5 @@ export const MyAssignments = () => {
         </Box>
       </SimpleGrid>
     </Box>
-  )
-}
+  );
+};

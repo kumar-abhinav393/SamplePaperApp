@@ -21,7 +21,7 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
           alignItems="center"
         >
           <Text
-            color={"#3b82f6d6"}
+            color={"#3bc8f6d6"}
             fontWeight="medium"
             fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
           >
@@ -37,7 +37,7 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
           alignItems="center"
         >
           <Text
-            color={"#3b82f6d6"}
+            color={"#3bc8f6d6"}
             fontWeight="medium"
             fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
           >
@@ -53,7 +53,7 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
           alignItems="center"
         >
           <Text
-            color={"#3b82f6d6"}
+            color={"#3bc8f6d6"}
             fontWeight="medium"
             fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
           >

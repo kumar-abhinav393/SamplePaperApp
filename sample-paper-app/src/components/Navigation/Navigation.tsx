@@ -26,7 +26,7 @@ export const Navigation = () => {
                 >
                     <Flex
                         alignItems={"center"}
-                        fontSize={["l", "l", "xl", "1xl", "1xl"]}
+                        fontSize={["12px", "12px", "15px", "18px", "20px"]}
                     >
                         <Text
                             cursor={"pointer"}
@@ -72,7 +72,7 @@ export const Navigation = () => {
                 >
                     <Flex
                         alignItems={"center"}
-                        fontSize={["l", "l", "xl", "1xl", "1xl"]}
+                        fontSize={["12px", "12px", "15px", "18px", "20px"]}
                     >
                         <Text
                             cursor={"pointer"}

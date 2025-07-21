@@ -68,16 +68,16 @@ export const FilterAssignments = () => {
               justifyContent={"space-between"}
             >
               <Button
-                color={"white"}
-                bg={"#3b82f6d6"}
+                color={"black"}
+                bg={"#3bc8f6d6"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
                 Clear All
               </Button>
               <Button
                 disabled
-                color={"white"}
-                bg={"#3b82f6d6"}
+                color={"black"}
+                bg={"#3bc8f6d6"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
                 Filter Paper

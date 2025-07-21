@@ -72,7 +72,7 @@ export const Signup = () => {
             <Text
               cursor={"pointer"}
               fontWeight={"bold"}
-              color={"#3b82f6d6"}
+              color={"#3bc8f6d6"}
             >
               Login
             </Text>
@@ -93,7 +93,7 @@ export const Signup = () => {
                     value={email}
                     variant={"outline"}
                     placeholder="user@domain.com"
-                    css={{ "--focus-color": "#3b82f6d6" }}
+                    css={{ "--focus-color": "#3bc8f6d6" }}
                     onChange={(e) => setEmail(e.target.value)}
                     fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                   />
@@ -106,7 +106,7 @@ export const Signup = () => {
                       value={password}
                       variant={"outline"}
                       placeholder="password >= 8"
-                      css={{ "--focus-color": "#3b82f6d6" }}
+                      css={{ "--focus-color": "#3bc8f6d6" }}
                       type={showPassword ? "text" : "password"}
                       fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                       onChange={(e) => setPassword(e.target.value)}
@@ -124,7 +124,7 @@ export const Signup = () => {
                       fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                       type={showConfirmPassword ? "text" : "password"}
                       onChange={(e) => setConfirmPassword(e.target.value)}
-                      css={{ "--focus-color": (password === confirmPassword) ? "#3b82f6d6" : "red" }}
+                      css={{ "--focus-color": (password === confirmPassword) ? "#3bc8f6d6" : "red" }}
                     />
                   </InputGroup>
                 </Field.Root>
@@ -135,7 +135,7 @@ export const Signup = () => {
                     variant={"outline"}
                     value={displayName}
                     placeholder="Robert Pinto"
-                    css={{ "--focus-color": "#3b82f6d6" }}
+                    css={{ "--focus-color": "#3bc8f6d6" }}
                     fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                     onChange={(e) => setDisplayName(e.target.value)}
                   />
@@ -150,8 +150,8 @@ export const Signup = () => {
             >
               <Button
                 w={100}
-                color={"white"}
-                bg={"#3b82f6d6"}
+                color={"black"}
+                bg={"#3bc8f6d6"}
                 fontWeight={"bold"}
                 onClick={() => { navigate("/") }}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
@@ -160,8 +160,8 @@ export const Signup = () => {
               </Button>
               <Button
                 w={100}
-                color={"white"}
-                bg={"#3b82f6d6"}
+                color={"black"}
+                bg={"#3bc8f6d6"}
                 fontWeight={"bold"}
                 onClick={handleSubmit}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
