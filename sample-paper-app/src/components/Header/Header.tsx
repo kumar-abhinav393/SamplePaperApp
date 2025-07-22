@@ -23,7 +23,7 @@ export const Header = () => {
         h={["45px", "45px", "60px", "60px", "70px"]}
       >
         <GridItem
-          p={1}
+          pl={1}
           display={"flex"}
           alignItems={"center"}
           colStart={[1, 1, 2, 2, 2]}
@@ -31,10 +31,21 @@ export const Header = () => {
           borderRight={"1px solid #444746"}
         >
           <Flex
+            mb={[0, 0, 1, 1, 1]}
             alignItems={"center"}
+            justifyContent={"center"}
             h={["37px", "37px", "50px", "50px", "60px"]}
           >
             <GyaanLogo height={{base: "37px", sm: "50px", md: "60px", lg: "60px", xl: "70px"}} />
+          </Flex>
+          <Flex
+            pl={1}
+            w={"100%"}
+            fontSize={["25px", "25px", "40px", "40px", "50px"]}
+          >
+            <Text color={"#3bc8f6d6"} fontFamily={"sans-serif"} fontWeight={"bold"}>
+              Gyaan Tuitions
+            </Text>
           </Flex>
         </GridItem>
         <GridItem
