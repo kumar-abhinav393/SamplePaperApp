@@ -41,7 +41,7 @@ export const Header = () => {
           <Flex
             pl={1}
             w={"100%"}
-            fontSize={["25px", "25px", "40px", "40px", "50px"]}
+            fontSize={["25px", "25px", "40px", "40px", "45px"]}
           >
             <Text color={"#3bc8f6d6"} fontFamily={"sans-serif"} fontWeight={"bold"}>
               Gyaan Tuitions
