@@ -36,7 +36,9 @@ export const Header = () => {
             justifyContent={"center"}
             h={["37px", "37px", "50px", "50px", "60px"]}
           >
-            <GyaanLogo height={{base: "37px", sm: "50px", md: "60px", lg: "60px", xl: "70px"}} />
+            <Box h={["37px", "37px", "50px", "50px", "60px"]}>
+              <GyaanLogo height="100%" />
+            </Box>
           </Flex>
           <Flex
             pl={1}

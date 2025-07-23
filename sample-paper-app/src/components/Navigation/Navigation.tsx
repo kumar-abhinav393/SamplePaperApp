@@ -59,7 +59,9 @@ export const Navigation = () => {
                         pointerEvents="none"
                     />
                     <Flex alignItems={"center"} justifyContent={"center"} h={["20px", "20px", "30px", "30px", "40px"]}>
-                        <GyaanLogo height={{base: "20px", sm: "20px", md: "30px", lg: "30px", xl: "40px"}} />
+                        <Box h={["20px", "20px", "30px", "30px", "40px"]}>
+                            <GyaanLogo height="100%" />
+                        </Box>
                     </Flex>
 
                 </GridItem>
