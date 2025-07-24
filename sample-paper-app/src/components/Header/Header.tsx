@@ -16,7 +16,7 @@ export const Header = () => {
       w={["100vw", "100vw", "100vw", "95vw", "90vw"]}
     >
       <Grid
-        bg={"#141218"}
+        bg={{ base: "#f5f5f5d7", _dark: "#141218"}}
         borderX={"1px solid #444746"}
         templateColumns={"repeat(24, 1fr)"}
         borderBottom={"1px solid #444746"}
@@ -45,7 +45,11 @@ export const Header = () => {
             w={"100%"}
             fontSize={["25px", "25px", "40px", "40px", "45px"]}
           >
-            <Text color={"#3bc8f6d6"} fontFamily={"sans-serif"} fontWeight={"bold"}>
+            <Text
+              color={"#3bc8f6d6"}
+              fontFamily={"sans-serif"}
+              fontWeight={"bold"}
+            >
               Gyaan Tuitions
             </Text>
           </Flex>
@@ -66,7 +70,7 @@ export const Header = () => {
         </GridItem>
       </Grid>
       <Grid
-        bg={"#141218"}
+        bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
         roundedBottom={"lg"}
         borderX={"1px solid #444746"}
         templateColumns={"repeat(24, 1fr)"}

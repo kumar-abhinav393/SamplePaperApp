@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
 import { Flex, Box, Input, Button, Text, Fieldset, Field, InputGroup } from "@chakra-ui/react";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
 export const Signup = () => {
 
   const { signup } = useSignup();
   const navigate = useNavigate();
+  const textColor = useColorModeValue("black", "white");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -150,9 +152,10 @@ export const Signup = () => {
             >
               <Button
                 w={100}
-                color={"black"}
+                color={textColor}
                 bg={"#3bc8f6d6"}
                 fontWeight={"bold"}
+                border={"1px solid black"}
                 onClick={() => { navigate("/") }}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
@@ -160,10 +163,11 @@ export const Signup = () => {
               </Button>
               <Button
                 w={100}
-                color={"black"}
+                color={textColor}
                 bg={"#3bc8f6d6"}
                 fontWeight={"bold"}
                 onClick={handleSubmit}
+                border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                 disabled={!email || !password || !confirmPassword || !displayName || password !== confirmPassword}
               >
