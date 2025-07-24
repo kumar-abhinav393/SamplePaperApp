@@ -1,4 +1,5 @@
 import { dialog } from "@/components/Modals/ResetPasswordModal";
+import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
 import { useLogin } from "@/hooks/useLogin";
@@ -10,6 +11,7 @@ export const Login = () => {
 
   const { login } = useLogin();
   const navigate = useNavigate();
+  const textColor = useColorModeValue("black", "white");
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -131,19 +133,21 @@ export const Login = () => {
           justifyContent={"space-between"}
         >
           <Button
-            color={"black"}
+            color={textColor}
             bg={"#3bc8f6d6"}
             fontWeight={"bold"}
+            border={"1px solid black"}
             onClick={() => navigate("/")}
             fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
           >
             Cancel
           </Button>
           <Button
-            color={"black"}
+            color={textColor}
             bg={"#3bc8f6d6"}
             fontWeight={"bold"}
             onClick={handleSubmit}
+            border={"1px solid black"}
             disabled={!email || !password}
             fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
           >
