@@ -1,15 +1,15 @@
-import { Provider } from "./components/ui/provider"
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
-import { RouterPaths } from "./global/enum"
-import { Authentication } from "./pages/Authentication/Authentication"
 import { Login } from "./pages/Login/Login"
+import { RouterPaths } from "./global/enum"
 import { Signup } from "./pages/Signup/Signup"
-import { FilterAssignments } from "./pages/FilterAssignments/FilterAssignments"
-import { MyAssignments } from "./pages/MyAssignments/MyAssignments"
-import { Flex, Grid, Spinner } from "@chakra-ui/react"
 import { Header } from "./components/Header/Header"
-import { Navigation } from "./components/Navigation/Navigation"
+import { Provider } from "./components/ui/provider"
+import { Flex, Grid, Spinner } from "@chakra-ui/react"
 import { useAuthContext } from "./hooks/useAuthContext"
+import { Navigation } from "./components/Navigation/Navigation"
+import { MyAssignments } from "./pages/MyAssignments/MyAssignments"
+import { Authentication } from "./pages/Authentication/Authentication"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { FilterAssignments } from "./pages/FilterAssignments/FilterAssignments"
 
 function App() {
 
@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         {!authIsReady && (
           <Flex w={"100vw"} h={"100dvh"} align={"center"} justify={"center"}>
-            <Spinner size={"md"} color={"blue"} colorPalette={"blue"} />
+            <Spinner size={"md"} color={"#3bc8f6d6"} colorPalette={"#3bc8f6d6"} />
           </Flex>
         )}
         {authIsReady && (

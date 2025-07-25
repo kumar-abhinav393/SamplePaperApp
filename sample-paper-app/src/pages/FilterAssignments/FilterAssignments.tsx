@@ -1,18 +1,20 @@
 import { Filter } from "@/components/Filter/Filter"
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
+import { useColorModeValue } from "@/components/ui/color-mode";
 import { Box, Button, Flex, SimpleGrid, Stack, useBreakpointValue } from "@chakra-ui/react"
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false })
+  const textColor = useColorModeValue("black", "white");
   return (
     <Box id="filter-assignment"
       mx={"auto"}
       maxW={"1200px"}
-      w={["100vw", "100vw", "100vw", "100vw", "95vw"]}
       display={"flex"}
       flexDirection={"column"}
       justifyContent={"center"}
+      w={["100vw", "100vw", "100vw", "100vw", "95vw"]}
     >
       {isTablet && (
         <Box mb={4} display={"flex"} justifyContent={"center"}>
@@ -28,56 +30,58 @@ export const FilterAssignments = () => {
       
       <SimpleGrid
         w={"100%"}
-        columns={{ base: 1, md: isTablet ? 1 : 5, lg: 5 }}
         alignItems={"stretch"}
         gridTemplateColumns={{
           base: "1fr",
           md: isTablet ? "1fr" : "180px 24px 1fr 24px 180px",
           lg: "220px 24px 2.5fr 24px 220px"
         }}
+        columns={{ base: 1, md: isTablet ? 1 : 5, lg: 5 }}
       >
         <Box
-          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
-          alignItems={"center"}
-          justifyContent={"center"}
           h={"100%"}
           as={"aside"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
           <LeftSidebar />
         </Box>
         <Box
-          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
           alignItems={"stretch"}
           justifyContent={"center"}
+          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
           <Box w={"1px"} bg={"#444746"} h={"100%"} />
         </Box>
         <Box
-          as={"form"}
           w={"100%"}
-          maxW={["100%", "100%", "100%"]}
           mx={"auto"}
-          borderRadius={"lg"}
+          as={"form"}
           p={[4, 6, 8]}
+          borderRadius={"lg"}
+          maxW={["100%", "100%", "100%"]}
         >
           <Stack gap={4}>
             <Filter />
             <Flex
-              w={"100%"}
               mt={4}
+              w={"100%"}
               justifyContent={"space-between"}
             >
               <Button
-                color={"black"}
+                color={textColor}
                 bg={"#3bc8f6d6"}
+                border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
                 Clear All
               </Button>
               <Button
                 disabled
-                color={"black"}
+                color={textColor}
                 bg={"#3bc8f6d6"}
+                border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
                 Filter Paper
@@ -86,18 +90,18 @@ export const FilterAssignments = () => {
           </Stack>
         </Box>
         <Box
-          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
           alignItems={"stretch"}
           justifyContent={"center"}
+          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
           <Box w={"1px"} bg={"#444746"} h={"100%"} />
         </Box>
         <Box
-          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
-          alignItems={"center"}
-          justifyContent={"center"}
           h={"100%"}
           as={"aside"}
+          alignItems={"center"}
+          justifyContent={"center"}
+          display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
           <RightSidebar isHorizontal={false} />
         </Box>

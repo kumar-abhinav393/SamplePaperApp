@@ -1,8 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { GyaanLogo } from "@/assets/gyaan-logo";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
+import { useColorModeValue } from "../ui/color-mode";
 
 export const Navigation = () => {
+
+  const textColor = useColorModeValue("black", "white");
+
   return (
     <Box
       id="navigation"
@@ -11,7 +15,7 @@ export const Navigation = () => {
       w={["100vw", "100vw", "100vw", "95vw", "90vw"]}
     >
       <Grid
-        bg={"#141218"}
+        bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
         roundedBottom={"lg"}
         roundedTop={"lg"}
         borderX={"1px solid #444746"}
@@ -33,7 +37,7 @@ export const Navigation = () => {
             <NavLink
               to={"/filter-assignments"}
               style={({ isActive }) => ({
-                color: isActive ? "#3bc8f6d6" : "white",
+                color: isActive ? "#3bc8f6d6" : textColor,
               })}
             >
               <Text>Filter Assignments</Text>
@@ -88,7 +92,7 @@ export const Navigation = () => {
             <NavLink
               to={"/my-assignments"}
               style={({ isActive }) => ({
-                color: isActive ? "#3bc8f6d6" : "white",
+                color: isActive ? "#3bc8f6d6" : textColor,
               })}
             >
               <Text>My Assignments</Text>

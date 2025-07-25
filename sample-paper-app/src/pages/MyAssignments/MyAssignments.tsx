@@ -13,9 +13,11 @@ import { FaSortNumericUp } from "react-icons/fa";
 import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
 import { useState } from "react";
 import { AssignmentCard } from "@/components/AssignmentCard/AssignmentCard";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
 export const MyAssignments = () => {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
+  const textColor = useColorModeValue("black", "white");
 
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
@@ -58,9 +60,9 @@ export const MyAssignments = () => {
             >
               <Button
                 ml={1}
-                color={"white"}
+                color={textColor}
                 bg={"#3bc8f6d6"}
-                border={"1px solid #444746"}
+                border={"1px solid black"}
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
@@ -80,36 +82,40 @@ export const MyAssignments = () => {
                 <Button
                   h={"40px"}
                   w={"100px"}
-                  bg={"#3bc8f6d6"}
-                  color={"black"}
                   fontSize={"lg"}
+                  color={textColor}
+                  bg={"#3bc8f6d6"}
+                  border={"1px solid black"}
                 >
                   This Month
                 </Button>
                 <Button
                   h={"40px"}
                   w={"100px"}
-                  bg={"#3bc8f6d6"}
-                  color={"black"}
                   fontSize={"lg"}
+                  color={textColor}
+                  bg={"#3bc8f6d6"}
+                  border={"1px solid black"}
                 >
                   Last Month
                 </Button>
                 <Button
                   h={"40px"}
                   w={"100px"}
-                  bg={"#3bc8f6d6"}
-                  color={"black"}
                   fontSize={"lg"}
+                  color={textColor}
+                  bg={"#3bc8f6d6"}
+                  border={"1px solid black"}
                 >
                   Upcoming
                 </Button>
                 <Button
                   h={"40px"}
                   w={"100px"}
-                  bg={"#3bc8f6d6"}
-                  color={"black"}
                   fontSize={"lg"}
+                  color={textColor}
+                  bg={"#3bc8f6d6"}
+                  border={"1px solid black"}
                 >
                   All
                 </Button>
@@ -124,10 +130,10 @@ export const MyAssignments = () => {
             >
               <Button
                 ml={1}
-                color={"white"}
+                color={textColor}
                 bg={"#3bc8f6d6"}
                 onClick={handleSortToggle}
-                border={"1px solid #444746"}
+                border={"1px solid black"}
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
@@ -141,14 +147,14 @@ export const MyAssignments = () => {
           </Grid>
         </Box>
         <Box
-          pb={[2, 2, 4, 4, 10]}
           mt={[5, 5, 6]}
-          bg={"#141218"}
           overflowX={"auto"}
           borderRadius={"lg"}
           whiteSpace={"nowrap"}
+          pb={[2, 2, 4, 4, 10]}
           mx={[0, 0, 8, 10, 10]}
           border={"1px solid #444746"}
+          bg={{ base: "white", _dark: "black"}}
         >
           <AssignmentCard />
         </Box>

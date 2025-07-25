@@ -11,6 +11,7 @@ import { GiClick } from "react-icons/gi";
 import { toaster } from "../ui/toaster";
 import { useResetPassword } from "@/hooks/useResetPassword";
 import { useState } from "react";
+import { useColorModeValue } from "../ui/color-mode";
 
 interface DialoagProps {
   title?: string;
@@ -22,6 +23,7 @@ export const dialog = createOverlay<DialoagProps>((props) => {
   const { title, description, content, ...rest } = props;
 
   const { resetPassword } = useResetPassword();
+  const textColor = useColorModeValue("black", "white")
 
   const [email, setEmail] = useState("");
 
@@ -51,19 +53,20 @@ export const dialog = createOverlay<DialoagProps>((props) => {
           <Dialog.Content>
             {title && (
               <Dialog.Header
+                color={textColor}
                 justifyContent={"center"}
                 alignItems={"center"}
-                bg={"#141218"}
+                bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
               >
                 <Dialog.Title fontSize={["l", "l", "xl", "1xl", "1xl"]}>
                   {title}
                 </Dialog.Title>
               </Dialog.Header>
             )}
-            <Dialog.Body bg={"#141218"}>
+            <Dialog.Body bg={{ base: "#f5f5f5ff", _dark: "#141218"}}>
               {description && (
                 <Dialog.Description
-                  color={"white"}
+                  color={textColor}
                   fontSize={["lg", "lg", "xl", "1xl", "1xl"]}
                 >
                   {description}
@@ -77,9 +80,10 @@ export const dialog = createOverlay<DialoagProps>((props) => {
                       fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                     />
                     <Button
-                      color={"white"}
+                      color={textColor}
                       bg={"#3bc8f6d6"}
                       disabled={!email}
+                      border={"1px solid black"}
                       onClick={handleResetPassword}
                       fontSize={["xl", "xl", "xl", "1xl", "1xl"]}
                     >
