@@ -3,8 +3,8 @@ import { useSignup } from "@/hooks/useSignup";
 import { useNavigate } from "react-router-dom";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
-import { Flex, Box, Input, Button, Text, Fieldset, Field, InputGroup } from "@chakra-ui/react";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { Flex, Box, Input, Button, Text, Fieldset, Field, InputGroup } from "@chakra-ui/react";
 
 export const Signup = () => {
 
@@ -39,6 +39,7 @@ export const Signup = () => {
         setPassword("")
         setDisplayName("")
         setConfirmPassword("")
+        
         navigate("/login")
       }
     } catch (error: unknown) {
@@ -90,19 +91,19 @@ export const Signup = () => {
             <Fieldset.Root>
               <Fieldset.Content>
                 <Field.Root>
-                  <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>EMAIL</Field.Label>
+                  <Field.Label fontSize={["l", "l", "xl", "1xl", "1xl"]}>EMAIL</Field.Label>
                   <Input
                     value={email}
                     variant={"outline"}
                     placeholder="user@domain.com"
                     css={{ "--focus-color": "#3bc8f6d6" }}
                     onChange={(e) => setEmail(e.target.value)}
-                    fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                    fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                   />
                 </Field.Root>
 
                 <Field.Root>
-                  <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>PASSWORD</Field.Label>
+                  <Field.Label fontSize={["l", "l", "xl", "1xl", "1xl"]}>PASSWORD</Field.Label>
                   <InputGroup endElement={getPasswordIcon(showPassword, setShowPassword)}>
                     <Input
                       value={password}
@@ -110,20 +111,20 @@ export const Signup = () => {
                       placeholder="password >= 8"
                       css={{ "--focus-color": "#3bc8f6d6" }}
                       type={showPassword ? "text" : "password"}
-                      fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                      fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </InputGroup>
                 </Field.Root>
 
                 <Field.Root>
-                  <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>CONFIRM PASSWORD</Field.Label>
+                  <Field.Label fontSize={["l", "l", "xl", "1xl", "1xl"]}>CONFIRM PASSWORD</Field.Label>
                   <InputGroup endElement={getPasswordIcon(showConfirmPassword, setShowConfirmPassword)}>
                     <Input
                       variant={"outline"}
                       value={confirmPassword}
                       placeholder="password >= 8"
-                      fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                      fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                       type={showConfirmPassword ? "text" : "password"}
                       onChange={(e) => setConfirmPassword(e.target.value)}
                       css={{ "--focus-color": (password === confirmPassword) ? "#3bc8f6d6" : "red" }}
@@ -132,13 +133,13 @@ export const Signup = () => {
                 </Field.Root>
 
                 <Field.Root>
-                  <Field.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>DISPLAY NAME</Field.Label>
+                  <Field.Label fontSize={["l", "l", "xl", "1xl", "1xl"]}>DISPLAY NAME</Field.Label>
                   <Input
                     variant={"outline"}
                     value={displayName}
                     placeholder="Robert Pinto"
                     css={{ "--focus-color": "#3bc8f6d6" }}
-                    fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                    fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                     onChange={(e) => setDisplayName(e.target.value)}
                   />
                 </Field.Root>

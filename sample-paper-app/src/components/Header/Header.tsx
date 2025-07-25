@@ -16,18 +16,18 @@ export const Header = () => {
       w={["100vw", "100vw", "100vw", "95vw", "90vw"]}
     >
       <Grid
-        bg={{ base: "#f5f5f5d7", _dark: "#141218"}}
         borderX={"1px solid #444746"}
         templateColumns={"repeat(24, 1fr)"}
         borderBottom={"1px solid #444746"}
         h={["45px", "45px", "60px", "60px", "70px"]}
+        bg={{ base: "#f5f5f5d7", _dark: "#141218"}}
       >
         <GridItem
           pl={1}
+          colEnd={20}
           display={"flex"}
           alignItems={"center"}
           colStart={[1, 1, 2, 2, 2]}
-          colEnd={20}
           borderRight={"1px solid #444746"}
         >
           <Flex
@@ -46,9 +46,9 @@ export const Header = () => {
             fontSize={["25px", "25px", "40px", "40px", "45px"]}
           >
             <Text
+              fontWeight={"bold"}
               color={"#3bc8f6d6"}
               fontFamily={"sans-serif"}
-              fontWeight={"bold"}
             >
               Gyaan Tuitions
             </Text>
@@ -56,12 +56,12 @@ export const Header = () => {
         </GridItem>
         <GridItem
           p={1}
-          gap={[0, 0, 0, 3, 3]}
-          colStart={[20, 23, 23, 23, 23]}
           display={"flex"}
           alignItems={"center"}
+          gap={[0, 0, 0, 3, 3]}
           justifyContent={"flex-end"}
           colEnd={[25, 25, 24, 24, 24]}
+          colStart={[20, 23, 23, 23, 23]}
         >
           <ColorModeButton />
           {user && (
@@ -70,17 +70,17 @@ export const Header = () => {
         </GridItem>
       </Grid>
       <Grid
-        bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
         roundedBottom={"lg"}
         borderX={"1px solid #444746"}
         templateColumns={"repeat(24, 1fr)"}
         borderBottom={"1px solid #444746"}
         h={["45px", "45px", "60px", "60px", "70px"]}
+        bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
       >
         <GridItem
           colEnd={13}
-          display={"flex"}
           paddingLeft={1}
+          display={"flex"}
           overflow={"hidden"}
           flexDirection={"column"}
           colStart={[1, 1, 2, 2, 2]}
