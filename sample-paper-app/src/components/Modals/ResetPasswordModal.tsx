@@ -54,11 +54,11 @@ export const dialog = createOverlay<DialoagProps>((props) => {
             {title && (
               <Dialog.Header
                 color={textColor}
-                justifyContent={"center"}
                 alignItems={"center"}
+                justifyContent={"center"}
                 bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
               >
-                <Dialog.Title fontSize={["l", "l", "xl", "1xl", "1xl"]}>
+                <Dialog.Title fontSize={"md"}>
                   {title}
                 </Dialog.Title>
               </Dialog.Header>
@@ -67,7 +67,6 @@ export const dialog = createOverlay<DialoagProps>((props) => {
               {description && (
                 <Dialog.Description
                   color={textColor}
-                  fontSize={["lg", "lg", "xl", "1xl", "1xl"]}
                 >
                   {description}
                   <Flex mt={2} gap={2}>
@@ -77,7 +76,6 @@ export const dialog = createOverlay<DialoagProps>((props) => {
                       placeholder="abc@domain.com"
                       css={{ "--focus-color": "#3bc8f6d6" }}
                       onChange={(e) => setEmail(e.target.value)}
-                      fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
                     />
                     <Button
                       color={textColor}
