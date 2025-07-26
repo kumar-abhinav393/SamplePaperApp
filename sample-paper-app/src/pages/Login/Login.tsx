@@ -3,12 +3,20 @@ import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
 import { useLogin } from "@/hooks/useLogin";
-import { Box, Button, Field, Flex, Input, InputGroup, Text } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  Field,
+  Fieldset,
+  Flex,
+  Input,
+  InputGroup,
+  Text,
+} from "@chakra-ui/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-
   const { login } = useLogin();
   const navigate = useNavigate();
   const textColor = useColorModeValue("black", "white");
@@ -17,38 +25,36 @@ export const Login = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
 
-  const emailError = (email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email));
+  const passwordError = password !== "" && password.length < 8;
+  const emailError = email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   
-  const handleSubmit = async() => {
-    try{
-      await login({email, password})
-      navigate("/filter-assignments")
+  const handleSubmit = async () => {
+    try {
+      await login({ email, password });
+      navigate("/filter-assignments");
     } catch {
       toaster.create({
         type: "error",
         title: "Login failed",
         description: "Please check your credentials and try again",
-      })
-      setEmail("")
-      setPassword("")
+      });
+      setEmail("");
+      setPassword("");
     }
-  }
+  };
 
   return (
-    <Flex id="login"
+    <Flex
+      id="login"
       mx={"auto"}
       alignItems={"center"}
       flexDirection={"column"}
       justifyContent={"center"}
     >
-      <Flex
-        w={"100%"}
-        alignItems={"center"}
-        flexDirection={"column"}
-      >
+      <Flex w={"100%"} alignItems={"center"} flexDirection={"column"}>
         <Text
           fontWeight={"bold"}
-          fontSize={["2xl", "2xl", "3xl", "4xl", "4xl"]}
+          fontSize={["2xl", "2xl", "3xl", "3xl", "3xl"]}
         >
           Login
         </Text>
@@ -56,15 +62,11 @@ export const Login = () => {
           mt={2}
           gap={2}
           alignItems={"center"}
-          fontSize={["l", "l", "1xl", "2xl", "2xl"]}
+          fontSize={["l", "l", "1xl", "1xl", "1xl"]}
         >
           <Text>No account yet?</Text>
           <Box onClick={() => navigate("/signup")}>
-            <Text
-              cursor={"pointer"}
-              fontWeight={"bold"}
-              color={"#3bc8f6d6"}
-            >
+            <Text cursor={"pointer"} fontWeight={"bold"} color={"#3bc8f6d6"}>
               Signup
             </Text>
           </Box>
@@ -72,20 +74,18 @@ export const Login = () => {
         <Flex
           gap={2}
           alignItems={"center"}
-          fontSize={["l", "l", "1xl", "2xl", "2xl"]}
+          fontSize={["l", "l", "1xl", "1xl", "1xl"]}
         >
           <Text>Forgot Password?</Text>
-          <Box onClick={() => {
-            dialog.open("a", {
-              title: "Reset Password",
-              description: "EMAIL",
-            })
-          }}>
-            <Text
-              cursor={"pointer"}
-              fontWeight={"bold"}
-              color={"#3bc8f6d6"}
-            >
+          <Box
+            onClick={() => {
+              dialog.open("a", {
+                title: "Reset Password",
+                description: "EMAIL",
+              });
+            }}
+          >
+            <Text cursor={"pointer"} fontWeight={"bold"} color={"#3bc8f6d6"}>
               Change Password
             </Text>
           </Box>
@@ -94,67 +94,68 @@ export const Login = () => {
         <Flex
           mt={4}
           gap={2}
+          alignItems={"column"}
           flexDirection={"column"}
-          alignItems={"flex-start"}
           w={["310px", "350px", "400px", "450px"]}
           fontSize={["l", "l", "xl", "1xl", "1xl"]}
         >
-          <Text>EMAIL</Text>
-          <Field.Root invalid={emailError}>
-            <Input
-              type="email"
-              value={email}
-              variant={"outline"}
-              placeholder="user@domain.com"
-              css={{ "--focus-color": "#3bc8f6d6" }}
-              onChange={(e) => setEmail(e.target.value)}
-              fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
-            />
-            {emailError && (
-              <Field.ErrorText>Please enter a valid email address</Field.ErrorText>
-            )}
-          </Field.Root>
-          <Text mt={2}>PASSWORD</Text>
-          <InputGroup endElement={getPasswordIcon(showPassword, setShowPassword)}>
-            <Input
-            value={password}
-            variant={"outline"}
-            placeholder="password >= 8"
-            css={{ "--focus-color": "#3bc8f6d6" }}
-            type={showPassword ? "text" : "password"}
-            fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          </InputGroup>
+          <form>
+            <Fieldset.Root>
+              <Fieldset.Content>
+                <Field.Root invalid={emailError}>
+                  <Field.Label>EMAIL</Field.Label>
+                  <Input
+                    type="email"
+                    value={email}
+                    variant={"outline"}
+                    placeholder="user@domain.com"
+                    css={{ "--focus-color": "#3bc8f6d6" }}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </Field.Root>
+
+                <Field.Root invalid={passwordError}>
+                  <Field.Label>PASSWORD</Field.Label>
+                  <InputGroup
+                    endElement={getPasswordIcon(showPassword, setShowPassword)}
+                  >
+                    <Input
+                      value={password}
+                      variant={"outline"}
+                      placeholder="password >= 8"
+                      css={{ "--focus-color": "#3bc8f6d6" }}
+                      type={showPassword ? "text" : "password"}
+                      onChange={(e) => setPassword(e.target.value)}
+                    />
+                  </InputGroup>
+                </Field.Root>
+              </Fieldset.Content>
+            </Fieldset.Root>
+          </form>
         </Flex>
-        <Flex
-          mt={4}
-          w={"100%"}
-          justifyContent={"space-between"}
-        >
+        
+        <Flex mt={3} w={"100%"} justifyContent={"space-between"}>
           <Button
             color={textColor}
             bg={"#3bc8f6d6"}
-            fontWeight={"bold"}
             border={"1px solid black"}
             onClick={() => navigate("/")}
-            fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+            fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
           >
             Cancel
           </Button>
           <Button
             color={textColor}
             bg={"#3bc8f6d6"}
-            fontWeight={"bold"}
             onClick={handleSubmit}
             border={"1px solid black"}
             disabled={!email || !password}
-            fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+            fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
           >
             Login
           </Button>
         </Flex>
       </Flex>
     </Flex>
-  )
-}
+  );
+};
