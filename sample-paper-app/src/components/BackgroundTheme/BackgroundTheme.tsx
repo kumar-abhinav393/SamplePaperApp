@@ -37,8 +37,12 @@ const mathGlyphs = [
   "ω",
 ];
 
-const useSymbolCount = () =>
-  useBreakpointValue({ base: 420, sm: 420, md: 450, lg: 450, xl: 450 }) ?? 300;
+const useGrid = () =>
+  useBreakpointValue({
+    base: { rows: 20, cols: 20 },
+    md: { rows: 25, cols: 25 },
+    lg: { rows: 20, cols: 20 },
+  }) ?? { rows: 20, cols: 20 };
 
 const useSymbolSizeRange = () =>
   useBreakpointValue({
@@ -47,37 +51,47 @@ const useSymbolSizeRange = () =>
     lg: { min: 32, max: 55 },
   }) ?? { min: 18, max: 47 };
 
-const createSymbol = (
-  id: number,
+const createGridSymbols = (
+  rows: number,
+  cols: number,
   minSize: number,
   maxSize: number
-): MathSymbol => ({
-  id,
-  top: Math.random() * 100,
-  left: Math.random() * 100,
-  size: Math.random() * (maxSize - minSize) + minSize,
-  rotation: Math.random() * 360,
-  animationDelay: Math.random() * 150,
-  animationDuration: Math.random() * 90 + 70,
-  symbol: mathGlyphs[Math.floor(Math.random() * mathGlyphs.length)],
-});
+): MathSymbol[] => {
+  const list: MathSymbol[] = [];
+  const cellW = 100 / cols;
+  const cellH = 100 / rows;
+
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const jitterX = (Math.random() - 0.5) * cellW * 0.6;
+      const jitterY = (Math.random() - 0.5) * cellH * 0.6;
+
+      list.push({
+        id: r * cols + c,
+        rotation: Math.random() * 360,
+        animationDelay: Math.random() * 150,
+        top: r * cellH + cellH / 2 + jitterY,
+        left: c * cellW + cellW / 2 + jitterX,
+        animationDuration: Math.random() * 90 + 70,
+        size: Math.random() * (maxSize - minSize) + minSize,
+        symbol: mathGlyphs[Math.floor(Math.random() * mathGlyphs.length)],
+      });
+    }
+  }
+  return list;
+};
 
 export const BackgroundTheme = () => {
   const [symbols, setSymbols] = useState<MathSymbol[]>([]);
 
-  const symbolCount = useSymbolCount();
+  const { rows, cols } = useGrid();
+  const symbolColor = useColorModeValue("1px solid grey", "1px solid grey");
   const { min, max } = useSymbolSizeRange();
   const backgroundOpacity = useColorModeValue(0.08, 0.06);
-  const symbolColor = useColorModeValue(
-    "1px solid #3bc8f6d6",
-    "1px solid #63B3ED"
-  );
 
   useEffect(() => {
-    setSymbols(
-      Array.from({ length: symbolCount }, (_, i) => createSymbol(i, min, max))
-    );
-  }, [symbolCount, min, max]);
+    setSymbols(createGridSymbols(rows, cols, min, max));
+  }, [rows, cols, min, max]);
 
   return (
     <Box
@@ -94,12 +108,12 @@ export const BackgroundTheme = () => {
       {symbols.map((s) => (
         <Box
           key={s.id}
+          fontWeight="bold"
+          userSelect="none"
           top={`${s.top}%`}
           left={`${s.left}%`}
           color={symbolColor}
-          fontWeight="bold"
-          userSelect="none"
-          position="absolute"
+          position={"absolute"}
           fontSize={`${s.size}px`}
           fontFamily="Times New Roman, serif"
           transform={`rotate(${s.rotation}deg)`}
