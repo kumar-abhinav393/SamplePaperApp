@@ -10,6 +10,7 @@ import { MyAssignments } from "./pages/MyAssignments/MyAssignments"
 import { Authentication } from "./pages/Authentication/Authentication"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { FilterAssignments } from "./pages/FilterAssignments/FilterAssignments"
+import { BackgroundTheme } from "./components/BackgroundTheme/BackgroundTheme"
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
 
   return (
     <Provider>
+      <BackgroundTheme />
       <BrowserRouter>
         {!authIsReady && (
           <Flex w={"100vw"} h={"100dvh"} align={"center"} justify={"center"}>
