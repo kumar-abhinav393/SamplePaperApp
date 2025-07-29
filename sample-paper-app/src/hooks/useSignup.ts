@@ -1,4 +1,4 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, signOut, updateProfile } from "firebase/auth";
 import { useAuthContext } from "./useAuthContext"
 import { auth } from "../../firebase.config";
 
@@ -22,7 +22,10 @@ export const useSignup = () => {
                 email,
                 password
             )
+            await signOut(auth)
+
             await updateProfile(response.user, { displayName: displayName })
+            dispatch({type: "LOGOUT"})
         } catch (error: unknown) {
             console.log("Signup error: ", error)
         }
