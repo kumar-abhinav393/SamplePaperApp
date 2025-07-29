@@ -38,8 +38,6 @@ export const Login = () => {
         title: "Login failed",
         description: "Please check your credentials and try again",
       });
-      setEmail("");
-      setPassword("");
     }
   };
 
@@ -100,7 +98,7 @@ export const Login = () => {
           fontSize={["l", "l", "xl", "1xl", "1xl"]}
         >
           <form>
-            <Fieldset.Root>
+            <Fieldset.Root onSubmit={handleSubmit}>
               <Fieldset.Content>
                 <Field.Root invalid={emailError}>
                   <Field.Label>EMAIL</Field.Label>
