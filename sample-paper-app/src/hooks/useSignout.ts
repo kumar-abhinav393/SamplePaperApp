@@ -9,8 +9,7 @@ export const useSignout = () => {
     if (user) {
       try {
         dispatch({ type: "LOGOUT" });
-        const response = await signOut(auth);
-        console.log("logout response: ", response);
+        await signOut(auth);
       } catch (error: unknown) {
         throw error as Error;
       }

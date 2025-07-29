@@ -1,3 +1,4 @@
+import { createUserDocument } from "@/helpers/createUserDocument";
 import { auth } from "../../firebase.config";
 import { useAuthContext } from "./useAuthContext"
 import { browserSessionPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
@@ -11,7 +12,9 @@ export const useLogin = () => {
 
             await setPersistence(auth, browserSessionPersistence)
             const response = await signInWithEmailAndPassword(auth, email, password)
-            console.log("login response: ", response)
+            
+            await createUserDocument(response.user)
+            dispatch({ type: "LOGIN", payload: response.user })
         } catch (error: unknown) {
             throw error as Error
         }
