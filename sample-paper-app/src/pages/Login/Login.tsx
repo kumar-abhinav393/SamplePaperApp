@@ -89,6 +89,24 @@ export const Login = () => {
           </Box>
           <dialog.Viewport />
         </Flex>
+        <Flex pt={5}>
+        <Button
+          fontSize={"l"}
+          color={textColor}
+          bg={"#3bc8f6d6"}
+          border={"1px solid black"}
+          w={["310px", "350px", "400px", "450px"]}
+        >
+          LOG IN WITH GOOGLE
+        </Button>
+      </Flex>
+      <Flex align="center" w={["310px", "350px", "400px", "450px"]} pt={3}>
+        <Box flex="1" h="1px" bg="#444746" />
+        <Text px={4} fontWeight="semibold" color={textColor}>
+          OR
+        </Text>
+        <Box flex="1" h="1px" bg="#444746" />
+      </Flex>
         <Flex
           mt={4}
           gap={2}
