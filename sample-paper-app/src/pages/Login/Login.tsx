@@ -2,6 +2,7 @@ import { dialog } from "@/components/Modals/ResetPasswordModal";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
+import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
 import { useLogin } from "@/hooks/useLogin";
 import {
   Box,
@@ -20,6 +21,7 @@ export const Login = () => {
   const { login } = useLogin();
   const navigate = useNavigate();
   const textColor = useColorModeValue("black", "white");
+  const { handleGoogleLogin } = useGoogleAuthenticationHandler();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -94,6 +96,7 @@ export const Login = () => {
           fontSize={"l"}
           color={textColor}
           bg={"#3bc8f6d6"}
+          onClick={handleGoogleLogin}
           border={"1px solid black"}
           w={["310px", "350px", "400px", "450px"]}
         >

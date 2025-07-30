@@ -14,11 +14,13 @@ import {
   Field,
   InputGroup,
 } from "@chakra-ui/react";
+import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
 
 export const Signup = () => {
   const { signup } = useSignup();
   const navigate = useNavigate();
   const textColor = useColorModeValue("black", "white");
+  const { handleGoogleLogin } = useGoogleAuthenticationHandler();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +29,7 @@ export const Signup = () => {
 
   const emailError = email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const passwordError = password !== "" && password.length < 8;
-
+    
   const handleSubmit = async () => {
     const signupPromise = signup({ email, password, displayName });
     toaster.promise(signupPromise, {
@@ -77,10 +79,11 @@ export const Signup = () => {
           fontSize={"l"}
           color={textColor}
           bg={"#3bc8f6d6"}
+          onClick={handleGoogleLogin}
           border={"1px solid black"}
           w={["310px", "350px", "400px", "450px"]}
         >
-          SIGN UP WITH GOOGLE
+          LOG IN WITH GOOGLE
         </Button>
       </Flex>
       <Flex align="center" w={["310px", "350px", "400px", "450px"]} pt={3}>
