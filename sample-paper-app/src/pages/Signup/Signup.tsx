@@ -14,6 +14,7 @@ import {
   Field,
   InputGroup,
 } from "@chakra-ui/react";
+import { FcGoogle } from "react-icons/fc";
 import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
 
 export const Signup = () => {
@@ -83,6 +84,7 @@ export const Signup = () => {
           border={"1px solid black"}
           w={["310px", "350px", "400px", "450px"]}
         >
+          <FcGoogle />
           LOG IN WITH GOOGLE
         </Button>
       </Flex>

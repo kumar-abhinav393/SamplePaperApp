@@ -15,6 +15,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
@@ -100,6 +101,7 @@ export const Login = () => {
           border={"1px solid black"}
           w={["310px", "350px", "400px", "450px"]}
         >
+          <FcGoogle />
           LOG IN WITH GOOGLE
         </Button>
       </Flex>
