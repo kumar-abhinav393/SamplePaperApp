@@ -1,7 +1,7 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /Students/{document=**} {
+    match /students/{document=**} {
       // If a student is authenticated, allow them to read and create user documents
       allow read, create: if request.auth != null;
     }

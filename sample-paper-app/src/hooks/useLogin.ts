@@ -16,7 +16,7 @@ export const useLogin = () => {
             await createUserDocument(response.user)
             dispatch({ type: "LOGIN", payload: response.user })
         } catch (error: unknown) {
-            throw error as Error
+            console.log("login error: ", error)
         }
     }
     return { login };
