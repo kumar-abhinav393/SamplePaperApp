@@ -14,4 +14,24 @@ type AuthAction =
     | { type: "AUTH_IS_READY"; payload: User | null }
     | { type: "IS_PENDING" }
 
-export type { AuthState, AuthAction }
+interface FirestoreState {
+    isPending: boolean;
+    error: string | null;
+    success: boolean;
+}
+
+type FirestoreAction =
+    | { type: "IS_PENDING" }
+    | { type: "SUCCESS" }
+    | { type: "ERROR"; payload: string }
+
+interface ClassProps {
+    id: string;
+    props: {
+        active: boolean;
+        code: string;
+        name: string;
+    };
+}
+
+export type { AuthState, AuthAction, FirestoreState, FirestoreAction, ClassProps }
