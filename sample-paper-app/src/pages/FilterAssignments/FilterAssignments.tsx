@@ -2,11 +2,18 @@ import { Filter } from "@/components/Filter/Filter"
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { useCollection } from "@/hooks/useCollection";
+import type { ClassProps } from "@/types/types";
 import { Box, Button, Flex, SimpleGrid, Stack, useBreakpointValue } from "@chakra-ui/react"
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false })
   const textColor = useColorModeValue("black", "white");
+
+  const { documents: Classes, isPending, error } = useCollection<ClassProps>("Classes")
+
+  console.log("Classes from firestore: ", Classes)
+
   return (
     <Box id="filter-assignment"
       mx={"auto"}
