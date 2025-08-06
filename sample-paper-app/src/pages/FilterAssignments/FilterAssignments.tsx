@@ -1,21 +1,29 @@
-import { Filter } from "@/components/Filter/Filter"
+import { Filter } from "@/components/Filter/Filter";
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { useCollection } from "@/hooks/useCollection";
-import type { ClassProps } from "@/types/types";
-import { Box, Button, Flex, SimpleGrid, Stack, useBreakpointValue } from "@chakra-ui/react"
+import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
+import {
+  Box,
+  Button,
+  Flex,
+  SimpleGrid,
+  Stack,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 
 export const FilterAssignments = () => {
-  const isTablet = useBreakpointValue({ base: false, md: true, lg: false })
+  const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
   const textColor = useColorModeValue("black", "white");
 
-  const { documents: Classes, isPending, error } = useCollection<ClassProps>("Classes")
-
-  console.log("Classes from firestore: ", Classes)
+  const { documents: Classes } = useCollection<ClassProps>("Classes");
+  const { documents: Subjects } = useCollection<SubjectProps>("Subjects");
+  const { documents: Boards } = useCollection<BoardProps>("Boards");
 
   return (
-    <Box id="filter-assignment"
+    <Box
+      id="filter-assignment"
       mx={"auto"}
       maxW={"1200px"}
       display={"flex"}
@@ -30,18 +38,18 @@ export const FilterAssignments = () => {
       )}
 
       {isTablet && (
-        <Box display="flex" justifyContent="center" w="100%" p={"10"} >
+        <Box display="flex" justifyContent="center" w="100%" p={"10"}>
           <Box h="1px" bg="#444746" w="99%" borderRadius="1px" />
         </Box>
       )}
-      
+
       <SimpleGrid
         w={"100%"}
         alignItems={"stretch"}
         gridTemplateColumns={{
           base: "1fr",
           md: isTablet ? "1fr" : "180px 24px 1fr 24px 180px",
-          lg: "220px 24px 2.5fr 24px 220px"
+          lg: "220px 24px 2.5fr 24px 220px",
         }}
         columns={{ base: 1, md: isTablet ? 1 : 5, lg: 5 }}
       >
@@ -70,12 +78,8 @@ export const FilterAssignments = () => {
           maxW={["100%", "100%", "100%"]}
         >
           <Stack gap={4}>
-            <Filter />
-            <Flex
-              mt={4}
-              w={"100%"}
-              justifyContent={"space-between"}
-            >
+            <Filter classes={Classes} subjects={Subjects} boards={Boards} />
+            <Flex mt={4} w={"100%"} justifyContent={"space-between"}>
               <Button
                 color={textColor}
                 bg={"#3bc8f6d6"}
@@ -114,7 +118,7 @@ export const FilterAssignments = () => {
         </Box>
       </SimpleGrid>
       {isTablet && (
-        <Box display="flex" justifyContent="center" w="100%" p={"10"} >
+        <Box display="flex" justifyContent="center" w="100%" p={"10"}>
           <Box h="1px" bg="#444746" w="99%" borderRadius="1px" />
         </Box>
       )}
@@ -125,5 +129,5 @@ export const FilterAssignments = () => {
         </Box>
       )}
     </Box>
-  )
-}
+  );
+};

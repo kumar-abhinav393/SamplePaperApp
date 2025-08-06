@@ -1,22 +1,30 @@
+import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
 import { Select, Portal, createListCollection } from "@chakra-ui/react";
 
-export const Filter = () => {
+interface FilterProps {
+  classes: ClassProps[];
+  subjects: SubjectProps[];
+  boards: BoardProps[];
+}
+
+export const Filter = ({ classes, subjects, boards }: FilterProps) => {
   const classFrameworks = createListCollection({
-    items: [
-      { label: "Class 10", value: "class10" },
-      { label: "Class 12", value: "class12" },
-    ],
+    items: classes.map((c) => ({
+      label: c.props.name,
+      value: c.props.code,
+    })),
   });
   const subjectFrameworks = createListCollection({
-    items: [
-      { label: "Maths", value: "maths" },
-      { label: "Physics", value: "physics" },
-      { label: "English", value: "english" },
-      { label: "SST", value: "sst" },
-    ],
+    items: subjects.map((s) => ({
+      label: s.props.name,
+      value: s.props.code,
+    })),
   });
   const boardFrameworks = createListCollection({
-    items: [{ label: "CBSE", value: "cbse" }],
+    items: boards.map((b) => ({
+      label: b.props.shortName,
+      value: b.props.code,
+    })),
   });
   const paperFrameworks = createListCollection({
     items: [{ label: "Assignments", value: "assignments" }],
