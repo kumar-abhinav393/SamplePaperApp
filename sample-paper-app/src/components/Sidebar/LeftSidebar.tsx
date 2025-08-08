@@ -25,10 +25,10 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
             fontWeight="medium"
             fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
           >
-            Total Subjects
+            Status
           </Text>
           <Tag.Root>
-            <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>5</Tag.Label>
+            <Tag.Label colorScheme="green" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>active</Tag.Label>
           </Tag.Root>
         </Flex>
         <Flex
@@ -44,7 +44,7 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
             Total Classes
           </Text>
           <Tag.Root>
-            <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>2</Tag.Label>
+            <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>5</Tag.Label>
           </Tag.Root>
         </Flex>
         <Flex
@@ -57,10 +57,10 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
             fontWeight="medium"
             fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
           >
-            Status
+            Total Boards
           </Text>
           <Tag.Root>
-            <Tag.Label colorScheme="green" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>active</Tag.Label>
+            <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>2</Tag.Label>
           </Tag.Root>
         </Flex>
       </Stack>

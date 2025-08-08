@@ -40,7 +40,7 @@ export const RightSidebar = ({isHorizontal = false} : RightSidebarProps) => {
                         fontWeight="medium"
                         fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                     >
-                        Total Classes
+                        My Downloads
                     </Text>
                     <Tag.Root>
                         <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>2</Tag.Label>
@@ -56,10 +56,10 @@ export const RightSidebar = ({isHorizontal = false} : RightSidebarProps) => {
                         fontWeight="medium"
                         fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                     >
-                        Status
+                        My Notifications
                     </Text>
                     <Tag.Root>
-                        <Tag.Label colorScheme="green" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>active</Tag.Label>
+                        <Tag.Label colorScheme="green" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>0</Tag.Label>
                     </Tag.Root>
                 </Flex>
             </Stack>
