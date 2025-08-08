@@ -1,10 +1,17 @@
 import { Stack, Flex, Tag, Text } from "@chakra-ui/react";
+import { useColorModeValue } from "../ui/color-mode";
 
 interface LeftSidebarProps {
   isHorizontal?: boolean;
+  status: "active" | "inactive";
+  totalClasses: number;
+  totalBoards: number;
 }
 
-export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
+export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalBoards  }: LeftSidebarProps) => {
+
+  const textColor = useColorModeValue("#3bc8f6d6", undefined);
+
   return (
     <>
       <Stack
@@ -27,8 +34,8 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
           >
             Status
           </Text>
-          <Tag.Root>
-            <Tag.Label colorScheme="green" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>active</Tag.Label>
+          <Tag.Root border={"1px solid black"} colorPalette={status === "active" ? "green" : "red"}>
+            <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{status}</Tag.Label>
           </Tag.Root>
         </Flex>
         <Flex
@@ -43,8 +50,8 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
           >
             Total Classes
           </Text>
-          <Tag.Root>
-            <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>5</Tag.Label>
+          <Tag.Root bg={textColor} border={"1px solid black"}>
+            <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{totalClasses}</Tag.Label>
           </Tag.Root>
         </Flex>
         <Flex
@@ -59,8 +66,8 @@ export const LeftSidebar = ({ isHorizontal = false }: LeftSidebarProps) => {
           >
             Total Boards
           </Text>
-          <Tag.Root>
-            <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>2</Tag.Label>
+          <Tag.Root bg={textColor} border={"1px solid black"}>
+            <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{totalBoards}</Tag.Label>
           </Tag.Root>
         </Flex>
       </Stack>
