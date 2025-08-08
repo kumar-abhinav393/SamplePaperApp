@@ -65,40 +65,6 @@ export const Filter = ({ classes, subjects, boards }: FilterProps) => {
         </Portal>
       </Select.Root>
 
-      <Select.Root collection={subjectFrameworks} size="md" deselectable>
-        <Select.HiddenSelect />
-        <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
-          Subject
-        </Select.Label>
-        <Select.Control>
-          <Select.Trigger>
-            <Select.ValueText
-              placeholder="Select Subject"
-              fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-            />
-          </Select.Trigger>
-          <Select.IndicatorGroup>
-            <Select.Indicator />
-          </Select.IndicatorGroup>
-        </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {subjectFrameworks.items.map((framework) => (
-                <Select.Item
-                  item={framework}
-                  key={framework.value}
-                  fontSize={["md", "md", "lg", "lg", "lg"]}
-                >
-                  {framework.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
-      </Select.Root>
-
       <Select.Root collection={boardFrameworks} size="md" deselectable>
         <Select.HiddenSelect />
         <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
@@ -119,6 +85,40 @@ export const Filter = ({ classes, subjects, boards }: FilterProps) => {
           <Select.Positioner>
             <Select.Content>
               {boardFrameworks.items.map((framework) => (
+                <Select.Item
+                  item={framework}
+                  key={framework.value}
+                  fontSize={["md", "md", "lg", "lg", "lg"]}
+                >
+                  {framework.label}
+                  <Select.ItemIndicator />
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </Select.Positioner>
+        </Portal>
+      </Select.Root>
+
+      <Select.Root collection={subjectFrameworks} size="md" deselectable>
+        <Select.HiddenSelect />
+        <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
+          Subject
+        </Select.Label>
+        <Select.Control>
+          <Select.Trigger>
+            <Select.ValueText
+              placeholder="Select Subject"
+              fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+            />
+          </Select.Trigger>
+          <Select.IndicatorGroup>
+            <Select.Indicator />
+          </Select.IndicatorGroup>
+        </Select.Control>
+        <Portal>
+          <Select.Positioner>
+            <Select.Content>
+              {subjectFrameworks.items.map((framework) => (
                 <Select.Item
                   item={framework}
                   key={framework.value}
