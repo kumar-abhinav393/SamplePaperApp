@@ -2,6 +2,7 @@ import { Filter } from "@/components/Filter/Filter";
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCollection } from "@/hooks/useCollection";
 import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
 import {
@@ -17,9 +18,16 @@ export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
   const textColor = useColorModeValue("black", "white");
 
+  const { user } = useAuthContext();
+  
+  const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects");
-  const { documents: Boards } = useCollection<BoardProps>("Boards");
+  
+  const totalBoards = Boards.length;
+  const totalClasses = Classes.length;
+  const totalSubjects = Subjects.length;
+  const status = user ? "active" : "inactive";
 
   return (
     <Box
@@ -33,7 +41,7 @@ export const FilterAssignments = () => {
     >
       {isTablet && (
         <Box mb={4} display={"flex"} justifyContent={"center"}>
-          <LeftSidebar isHorizontal={true} />
+          <LeftSidebar isHorizontal={true} status={status} totalClasses={totalClasses} totalBoards={totalBoards} />
         </Box>
       )}
 
@@ -60,7 +68,7 @@ export const FilterAssignments = () => {
           justifyContent={"center"}
           display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
-          <LeftSidebar />
+          <LeftSidebar status={status} totalClasses={totalClasses} totalBoards={totalBoards} />
         </Box>
         <Box
           alignItems={"stretch"}
@@ -114,7 +122,7 @@ export const FilterAssignments = () => {
           justifyContent={"center"}
           display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
-          <RightSidebar isHorizontal={false} />
+          <RightSidebar isHorizontal={false} totalSubjects={totalSubjects} />
         </Box>
       </SimpleGrid>
       {isTablet && (
@@ -125,7 +133,7 @@ export const FilterAssignments = () => {
 
       {isTablet && (
         <Box mt={4} display="flex" justifyContent="center" w="100%">
-          <RightSidebar isHorizontal={true} />
+          <RightSidebar isHorizontal={true} totalSubjects={totalSubjects} />
         </Box>
       )}
     </Box>

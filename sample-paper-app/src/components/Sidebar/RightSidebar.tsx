@@ -1,10 +1,15 @@
 import { Stack, Flex, Tag, Text } from "@chakra-ui/react"
+import { useColorModeValue } from "../ui/color-mode";
 
 interface RightSidebarProps {
-        isHorizontal?: boolean
+        isHorizontal?: boolean;
+        totalSubjects: number;
     }
 
-export const RightSidebar = ({isHorizontal = false} : RightSidebarProps) => {
+export const RightSidebar = ({isHorizontal = false, totalSubjects} : RightSidebarProps) => {
+
+    const textColor = useColorModeValue("#3bc8f6d6", undefined);
+
     return (
         <>
             <Stack
@@ -26,8 +31,8 @@ export const RightSidebar = ({isHorizontal = false} : RightSidebarProps) => {
                     >
                         Total Subjects
                     </Text>
-                    <Tag.Root>
-                        <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>5</Tag.Label>
+                    <Tag.Root bg={textColor} border={"1px solid black"}>
+                        <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{totalSubjects}</Tag.Label>
                     </Tag.Root>
                 </Flex>
                 <Flex
@@ -42,8 +47,8 @@ export const RightSidebar = ({isHorizontal = false} : RightSidebarProps) => {
                     >
                         My Downloads
                     </Text>
-                    <Tag.Root>
-                        <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>2</Tag.Label>
+                    <Tag.Root bg={textColor} border={"1px solid black"}>
+                        <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>0</Tag.Label>
                     </Tag.Root>
                 </Flex>
                 <Flex
@@ -58,7 +63,7 @@ export const RightSidebar = ({isHorizontal = false} : RightSidebarProps) => {
                     >
                         My Notifications
                     </Text>
-                    <Tag.Root>
+                    <Tag.Root bg={textColor} border={"1px solid black"}>
                         <Tag.Label colorScheme="green" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>0</Tag.Label>
                     </Tag.Root>
                 </Flex>
