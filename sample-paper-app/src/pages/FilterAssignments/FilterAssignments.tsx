@@ -1,4 +1,5 @@
-import { Filter } from "@/components/Filter/Filter";
+import { useState } from "react";
+import { Filter } from "./Filter";
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import { useColorModeValue } from "@/components/ui/color-mode";
@@ -18,7 +19,6 @@ import {
   Stack,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { useState } from "react";
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
@@ -119,14 +119,15 @@ export const FilterAssignments = () => {
         >
           <Stack gap={4}>
             <Filter
+              boards={Boards}
               classes={Classes}
               subjects={Subjects}
-              boards={Boards}
               selectedClassCode={selectedClassCode}
               onClassCodeChange={setSelectedClassCode}
             />
             <Flex mt={4} w={"100%"} justifyContent={"space-between"}>
               <Button
+                w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 border={"1px solid black"}
@@ -135,13 +136,13 @@ export const FilterAssignments = () => {
                 Clear All
               </Button>
               <Button
-                disabled
+                w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
-                Filter Paper
+                Filter
               </Button>
             </Flex>
           </Stack>
