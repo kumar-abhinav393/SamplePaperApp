@@ -5,13 +5,21 @@ interface FilterProps {
   classes: ClassProps[];
   subjects: SubjectProps[];
   boards: BoardProps[];
+  selectedClassCode: number | null;
+  onClassCodeChange: (value: number | null) => void;
 }
 
-export const Filter = ({ classes, subjects, boards }: FilterProps) => {
+export const Filter = ({
+  classes,
+  subjects,
+  boards,
+  selectedClassCode,
+  onClassCodeChange,
+}: FilterProps) => {
   const classFrameworks = createListCollection({
     items: classes.map((c) => ({
       label: c.props.name,
-      value: c.props.code,
+      value: String(c.props.code),
     })),
   });
   const subjectFrameworks = createListCollection({
@@ -31,7 +39,16 @@ export const Filter = ({ classes, subjects, boards }: FilterProps) => {
   });
   return (
     <>
-      <Select.Root collection={classFrameworks} size="md" deselectable>
+      <Select.Root
+        collection={classFrameworks}
+        size="md"
+        deselectable
+        value={selectedClassCode != null ? [String(selectedClassCode)] : []}
+        onValueChange={(details) => {
+          const selectedValue = details.value[0];
+          onClassCodeChange(selectedValue ? Number(selectedValue) : null);
+        }}
+      >
         <Select.HiddenSelect />
         <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
           Class
