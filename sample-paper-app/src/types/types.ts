@@ -1,4 +1,5 @@
 import type { User } from "firebase/auth";
+import type { WhereFilterOp } from "firebase/firestore";
 import type React from "react";
 
 interface AuthState {
@@ -26,11 +27,17 @@ type FirestoreAction =
   | { type: "SUCCESS" }
   | { type: "ERROR"; payload: string };
 
+interface QueryParams {
+  fieldPath: string;
+  opStr: WhereFilterOp;
+  value: unknown;
+}
+
 interface ClassProps {
   id: string;
   props: {
     active: boolean;
-    code: string;
+    code: number;
     name: string;
   };
 }
@@ -61,9 +68,10 @@ interface BoardProps {
 export type {
   AuthState,
   AuthAction,
+  ClassProps,
+  BoardProps,
+  QueryParams,
+  SubjectProps,
   FirestoreState,
   FirestoreAction,
-  ClassProps,
-  SubjectProps,
-  BoardProps,
 };
