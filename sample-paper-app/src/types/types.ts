@@ -65,6 +65,19 @@ interface BoardProps {
   };
 }
 
+interface AssignmentProps {
+  id: string;
+  props: {
+    active: boolean;
+    classLevels: number[];
+    boardFilters: string[];
+    createdAt: Date;
+    createdBy: string;
+    description: string;
+    subjectCode: string[];
+  }
+}
+
 export type {
   AuthState,
   AuthAction,
@@ -74,4 +87,5 @@ export type {
   SubjectProps,
   FirestoreState,
   FirestoreAction,
+  AssignmentProps,
 };
