@@ -4,7 +4,12 @@ import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCollection } from "@/hooks/useCollection";
-import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
+import type {
+  BoardProps,
+  ClassProps,
+  QueryParams,
+  SubjectProps,
+} from "@/types/types";
 import {
   Box,
   Button,
@@ -13,17 +18,35 @@ import {
   Stack,
   useBreakpointValue,
 } from "@chakra-ui/react";
+import { useState } from "react";
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
   const textColor = useColorModeValue("black", "white");
 
   const { user } = useAuthContext();
-  
+
+  const [selectedClassCode, setSelectedClassCode] = useState<number | null>(
+    null
+  );
+
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
-  const { documents: Subjects } = useCollection<SubjectProps>("Subjects");
-  
+
+  const subjectQuery: QueryParams | undefined =
+    selectedClassCode != null
+      ? {
+          fieldPath: "classLevels",
+          opStr: "array-contains",
+          value: selectedClassCode,
+        }
+      : undefined;
+
+  const { documents: Subjects } = useCollection<SubjectProps>(
+    "Subjects",
+    subjectQuery
+  );
+
   const totalBoards = Boards.length;
   const totalClasses = Classes.length;
   const totalSubjects = Subjects.length;
@@ -41,7 +64,12 @@ export const FilterAssignments = () => {
     >
       {isTablet && (
         <Box mb={4} display={"flex"} justifyContent={"center"}>
-          <LeftSidebar isHorizontal={true} status={status} totalClasses={totalClasses} totalBoards={totalBoards} />
+          <LeftSidebar
+            isHorizontal={true}
+            status={status}
+            totalClasses={totalClasses}
+            totalBoards={totalBoards}
+          />
         </Box>
       )}
 
@@ -68,7 +96,11 @@ export const FilterAssignments = () => {
           justifyContent={"center"}
           display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
-          <LeftSidebar status={status} totalClasses={totalClasses} totalBoards={totalBoards} />
+          <LeftSidebar
+            status={status}
+            totalClasses={totalClasses}
+            totalBoards={totalBoards}
+          />
         </Box>
         <Box
           alignItems={"stretch"}
@@ -86,7 +118,13 @@ export const FilterAssignments = () => {
           maxW={["100%", "100%", "100%"]}
         >
           <Stack gap={4}>
-            <Filter classes={Classes} subjects={Subjects} boards={Boards} />
+            <Filter
+              classes={Classes}
+              subjects={Subjects}
+              boards={Boards}
+              selectedClassCode={selectedClassCode}
+              onClassCodeChange={setSelectedClassCode}
+            />
             <Flex mt={4} w={"100%"} justifyContent={"space-between"}>
               <Button
                 color={textColor}

@@ -1,11 +1,19 @@
-import { collection, onSnapshot, type DocumentData } from "firebase/firestore";
-import { useEffect, useState } from "react";
+import type { QueryParams } from "@/types/types";
+import {
+  collection,
+  onSnapshot,
+  query,
+  where,
+  type DocumentData,
+} from "firebase/firestore";
+import { useEffect, useMemo, useState } from "react";
 import { db } from "../../firebase.config";
 
 export const useCollection = <
   DocumentType extends { id: string; props: DocumentData }
 >(
-  collectionId: string
+  collectionId: string,
+  queryParams?: QueryParams
 ): {
   documents: DocumentType[];
   error: string | undefined;
@@ -15,11 +23,30 @@ export const useCollection = <
   const [isPending, setIsPending] = useState(false);
   const [documents, setDocuments] = useState<DocumentType[]>([]);
 
+  const queryKey = useMemo(() => {
+    if (!queryParams) return "";
+    return `${queryParams.fieldPath}|${queryParams.opStr}|${JSON.stringify(
+      queryParams.value
+    )}`;
+  }, [
+    queryParams?.fieldPath,
+    queryParams?.opStr,
+    JSON.stringify(queryParams?.value),
+  ]);
+
   useEffect(() => {
     setIsPending(true);
     const colRef = collection(db, collectionId);
+
+    const finalQuery = queryParams
+      ? query(
+          colRef,
+          where(queryParams.fieldPath, queryParams.opStr, queryParams.value)
+        )
+      : colRef;
+
     const unsubscribe = onSnapshot(
-      colRef,
+      finalQuery,
       (snapshot) => {
         const results: DocumentType[] = snapshot.docs.map(
           (doc) =>
@@ -35,6 +62,7 @@ export const useCollection = <
       },
       (e) => {
         setError(e.message);
+        setIsPending(false);
         console.error(
           `[Firestore] Error fetching ${collectionId}: `,
           e.message
@@ -43,6 +71,6 @@ export const useCollection = <
     );
 
     return () => unsubscribe();
-  }, [collectionId]);
+  }, [collectionId, queryKey]);
   return { documents, error, isPending };
 };
