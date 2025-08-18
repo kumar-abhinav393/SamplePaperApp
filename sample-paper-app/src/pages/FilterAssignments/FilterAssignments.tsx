@@ -5,20 +5,8 @@ import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useCollection } from "@/hooks/useCollection";
-import type {
-  BoardProps,
-  ClassProps,
-  QueryParams,
-  SubjectProps,
-} from "@/types/types";
-import {
-  Box,
-  Button,
-  Flex,
-  SimpleGrid,
-  Stack,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import type { BoardProps, ClassProps, QueryParams, SubjectProps } from "@/types/types";
+import { Box, Button, Flex, SimpleGrid, Stack, useBreakpointValue } from "@chakra-ui/react";
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
@@ -26,9 +14,7 @@ export const FilterAssignments = () => {
 
   const { user } = useAuthContext();
 
-  const [selectedClassCode, setSelectedClassCode] = useState<number | null>(
-    null
-  );
+  const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
@@ -42,10 +28,7 @@ export const FilterAssignments = () => {
         }
       : undefined;
 
-  const { documents: Subjects } = useCollection<SubjectProps>(
-    "Subjects",
-    subjectQuery
-  );
+  const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
 
   const totalBoards = Boards.length;
   const totalClasses = Classes.length;
