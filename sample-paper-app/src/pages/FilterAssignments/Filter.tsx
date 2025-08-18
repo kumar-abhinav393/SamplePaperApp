@@ -1,10 +1,11 @@
 import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
 import { Select, Portal, createListCollection } from "@chakra-ui/react";
+import { useEffect, useState } from "react";
 
 interface FilterProps {
+  boards: BoardProps[];
   classes: ClassProps[];
   subjects: SubjectProps[];
-  boards: BoardProps[];
   selectedClassCode: number | null;
   onClassCodeChange: (value: number | null) => void;
 }
@@ -16,6 +17,22 @@ export const Filter = ({
   selectedClassCode,
   onClassCodeChange,
 }: FilterProps) => {
+  const [selectedPaper, setSelectedPaper] = useState<string | null>(null);
+  const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
+  const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    setSelectedBoardCode(null);
+  }, [selectedClassCode]);
+
+  useEffect(() => {
+    setSelectedSubjectCode(null);
+  }, [selectedBoardCode]);
+
+  useEffect(() => {
+    setSelectedPaper(null);
+  }, [selectedSubjectCode]);
+
   const classFrameworks = createListCollection({
     items: classes.map((c) => ({
       label: c.props.name,
@@ -82,7 +99,17 @@ export const Filter = ({
         </Portal>
       </Select.Root>
 
-      <Select.Root collection={boardFrameworks} size="md" deselectable>
+      <Select.Root
+        collection={boardFrameworks}
+        size="md"
+        deselectable
+        value={selectedBoardCode ? [selectedBoardCode] : []}
+        onValueChange={(details) => {
+          const selectedValue = details.value[0];
+          setSelectedBoardCode(selectedValue || null);
+        }}
+        disabled={selectedClassCode == null}
+      >
         <Select.HiddenSelect />
         <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
           Board
@@ -116,7 +143,17 @@ export const Filter = ({
         </Portal>
       </Select.Root>
 
-      <Select.Root collection={subjectFrameworks} size="md" deselectable>
+      <Select.Root
+        collection={subjectFrameworks}
+        size="md"
+        deselectable
+        value={selectedSubjectCode ? [selectedSubjectCode] : []}
+        onValueChange={(details) => {
+          const selectedValue = details.value[0];
+          setSelectedSubjectCode(selectedValue || null);
+        }}
+        disabled={selectedBoardCode == null}
+      >
         <Select.HiddenSelect />
         <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
           Subject
@@ -150,7 +187,17 @@ export const Filter = ({
         </Portal>
       </Select.Root>
 
-      <Select.Root collection={paperFrameworks} size="md" deselectable>
+      <Select.Root
+        collection={paperFrameworks}
+        size="md"
+        deselectable
+        value={selectedPaper ? [selectedPaper] : []}
+        onValueChange={(details) => {
+          const selectedValue = details.value[0];
+          setSelectedPaper(selectedValue || null);
+        }}
+        disabled={selectedSubjectCode == null}
+      >
         <Select.HiddenSelect />
         <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
           Paper
