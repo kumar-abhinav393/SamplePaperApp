@@ -14,8 +14,16 @@ export const FilterAssignments = () => {
 
   const { user } = useAuthContext();
 
-  const [resetTrigger, setResetTrigger] = useState(0);
-  const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
+  const [selectedPaper, setSelectedPaper] = useState<string | null>(null);
+  const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(
+    null
+  );
+  const [selectedClassCode, setSelectedClassCode] = useState<number | null>(
+    null
+  );
+  const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(
+    null
+  );
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
@@ -37,9 +45,27 @@ export const FilterAssignments = () => {
   const status = user ? "active" : "inactive";
 
   const handleClearAll = () => {
-    setResetTrigger((prev) => prev + 1)
-    setSelectedClassCode(null)
-  }
+    setSelectedPaper(null);
+    setSelectedClassCode(null);
+    setSelectedBoardCode(null);
+    setSelectedSubjectCode(null);
+  };
+
+  const handleFilter = () => {
+    if (
+      !selectedPaper ||
+      !selectedClassCode ||
+      !selectedBoardCode ||
+      !selectedSubjectCode
+    ) {
+      toaster.create({
+        title: "Missing Selection",
+        type: "warning",
+        description: "Please make the selection before filtering",
+      });
+      return;
+    }
+  };
 
   return (
     <Box
@@ -111,9 +137,14 @@ export const FilterAssignments = () => {
               boards={Boards}
               classes={Classes}
               subjects={Subjects}
-              resetTrigger={resetTrigger}
+              selectedPaper={selectedPaper}
+              selectedBoardCode={selectedBoardCode}
               selectedClassCode={selectedClassCode}
+              selectedSubjectCode={selectedSubjectCode}
+              setSelectedPaper={setSelectedPaper}
               onClassCodeChange={setSelectedClassCode}
+              setSelectedBoardCode={setSelectedBoardCode}
+              setSelectedSubjectCode={setSelectedSubjectCode}
             />
             <Flex mt={4} w={"100%"} justifyContent={"space-between"}>
               <Button
@@ -130,6 +161,7 @@ export const FilterAssignments = () => {
                 w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
+                onClick={handleFilter}
                 border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
