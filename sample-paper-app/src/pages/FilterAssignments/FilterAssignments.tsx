@@ -5,8 +5,21 @@ import { useAuthContext } from "@/hooks/useAuthContext";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
-import type { BoardProps, ClassProps, QueryParams, SubjectProps } from "@/types/types";
-import { Box, Button, Flex, SimpleGrid, Stack, useBreakpointValue } from "@chakra-ui/react";
+import type {
+  BoardProps,
+  ClassProps,
+  QueryParams,
+  SubjectProps,
+} from "@/types/types";
+import {
+  Box,
+  Button,
+  Flex,
+  SimpleGrid,
+  Stack,
+  useBreakpointValue,
+} from "@chakra-ui/react";
+import { toaster } from "@/components/ui/toaster";
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
@@ -37,7 +50,10 @@ export const FilterAssignments = () => {
         }
       : undefined;
 
-  const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
+  const { documents: Subjects } = useCollection<SubjectProps>(
+    "Subjects",
+    subjectQuery
+  );
 
   const totalBoards = Boards.length;
   const totalClasses = Classes.length;
