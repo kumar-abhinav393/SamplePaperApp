@@ -3,6 +3,7 @@ import { Select, Portal, createListCollection } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 interface FilterProps {
+  resetTrigger: number;
   boards: BoardProps[];
   classes: ClassProps[];
   subjects: SubjectProps[];
@@ -14,6 +15,7 @@ export const Filter = ({
   classes,
   subjects,
   boards,
+  resetTrigger,
   selectedClassCode,
   onClassCodeChange,
 }: FilterProps) => {
@@ -32,6 +34,12 @@ export const Filter = ({
   useEffect(() => {
     setSelectedPaper(null);
   }, [selectedSubjectCode]);
+
+  useEffect(() => {
+    setSelectedBoardCode(null)
+    setSelectedSubjectCode(null)
+    setSelectedPaper(null)
+  }, [resetTrigger])
 
   const classFrameworks = createListCollection({
     items: classes.map((c) => ({

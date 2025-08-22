@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Filter } from "./Filter";
+import { useCollection } from "@/hooks/useCollection";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useColorModeValue } from "@/components/ui/color-mode";
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
-import { useColorModeValue } from "@/components/ui/color-mode";
-import { useAuthContext } from "@/hooks/useAuthContext";
-import { useCollection } from "@/hooks/useCollection";
 import type { BoardProps, ClassProps, QueryParams, SubjectProps } from "@/types/types";
 import { Box, Button, Flex, SimpleGrid, Stack, useBreakpointValue } from "@chakra-ui/react";
 
@@ -14,6 +14,7 @@ export const FilterAssignments = () => {
 
   const { user } = useAuthContext();
 
+  const [resetTrigger, setResetTrigger] = useState(0);
   const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
@@ -34,6 +35,11 @@ export const FilterAssignments = () => {
   const totalClasses = Classes.length;
   const totalSubjects = Subjects.length;
   const status = user ? "active" : "inactive";
+
+  const handleClearAll = () => {
+    setResetTrigger((prev) => prev + 1)
+    setSelectedClassCode(null)
+  }
 
   return (
     <Box
@@ -105,6 +111,7 @@ export const FilterAssignments = () => {
               boards={Boards}
               classes={Classes}
               subjects={Subjects}
+              resetTrigger={resetTrigger}
               selectedClassCode={selectedClassCode}
               onClassCodeChange={setSelectedClassCode}
             />
@@ -113,6 +120,7 @@ export const FilterAssignments = () => {
                 w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
+                onClick={handleClearAll}
                 border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
