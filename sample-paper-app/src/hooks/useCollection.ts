@@ -23,16 +23,12 @@ export const useCollection = <
   const [isPending, setIsPending] = useState(false);
   const [documents, setDocuments] = useState<DocumentType[]>([]);
 
+  const queryParamsValueString = JSON.stringify(queryParams?.value)
+  
   const queryKey = useMemo(() => {
     if (!queryParams) return "";
-    return `${queryParams.fieldPath}|${queryParams.opStr}|${JSON.stringify(
-      queryParams.value
-    )}`;
-  }, [
-    queryParams?.fieldPath,
-    queryParams?.opStr,
-    JSON.stringify(queryParams?.value),
-  ]);
+    return `${queryParams.fieldPath}|${queryParams.opStr}|${queryParamsValueString}`;
+  }, [queryParams, queryParamsValueString]);
 
   useEffect(() => {
     setIsPending(true);
