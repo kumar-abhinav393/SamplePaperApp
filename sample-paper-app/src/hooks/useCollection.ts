@@ -9,9 +9,7 @@ import {
 import { useEffect, useMemo, useState } from "react";
 import { db } from "../../firebase.config";
 
-export const useCollection = <
-  DocumentType extends { id: string; props: DocumentData }
->(
+export const useCollection = <DocumentType extends { id: string; props: DocumentData }>(
   collectionId: string,
   queryParams?: QueryParams
 ): {
