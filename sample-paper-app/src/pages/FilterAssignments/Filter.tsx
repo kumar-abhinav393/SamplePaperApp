@@ -1,27 +1,34 @@
 import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
 import { Select, Portal, createListCollection } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 interface FilterProps {
-  resetTrigger: number;
   boards: BoardProps[];
   classes: ClassProps[];
   subjects: SubjectProps[];
+  selectedPaper: string | null;
+  selectedBoardCode: string | null;
   selectedClassCode: number | null;
+  selectedSubjectCode: string | null;
+  setSelectedPaper: (value: string | null) => void;
   onClassCodeChange: (value: number | null) => void;
+  setSelectedBoardCode: (value: string | null) => void;
+  setSelectedSubjectCode: (value: string | null) => void;
 }
 
 export const Filter = ({
   classes,
   subjects,
   boards,
-  resetTrigger,
+  selectedPaper,
   selectedClassCode,
+  selectedBoardCode,
+  selectedSubjectCode,
+  setSelectedPaper,
   onClassCodeChange,
+  setSelectedBoardCode,
+  setSelectedSubjectCode,
 }: FilterProps) => {
-  const [selectedPaper, setSelectedPaper] = useState<string | null>(null);
-  const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
-  const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
 
   useEffect(() => {
     setSelectedBoardCode(null);
@@ -34,12 +41,6 @@ export const Filter = ({
   useEffect(() => {
     setSelectedPaper(null);
   }, [selectedSubjectCode]);
-
-  useEffect(() => {
-    setSelectedBoardCode(null)
-    setSelectedSubjectCode(null)
-    setSelectedPaper(null)
-  }, [resetTrigger])
 
   const classFrameworks = createListCollection({
     items: classes.map((c) => ({
