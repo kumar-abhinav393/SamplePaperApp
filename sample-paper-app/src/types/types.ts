@@ -68,13 +68,15 @@ interface BoardProps {
 interface AssignmentProps {
   id: string;
   props: {
+    code: string;
+    name: string;
     active: boolean;
-    classLevels: number[];
-    boardFilters: string[];
     createdAt: Date;
     createdBy: string;
     description: string;
     subjectCode: string[];
+    classLevels: number[];
+    boardFilters: string[];
   }
 }
 
