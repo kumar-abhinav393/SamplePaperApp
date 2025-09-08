@@ -1,4 +1,4 @@
-import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
+import type { AssignmentProps, BoardProps, ClassProps, SubjectProps } from "@/types/types";
 import { Select, Portal, createListCollection } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -6,12 +6,13 @@ interface FilterProps {
   boards: BoardProps[];
   classes: ClassProps[];
   subjects: SubjectProps[];
-  selectedPaper: string | null;
+  assignments: AssignmentProps[];
+  selectedPaperCode: string | null;
   selectedBoardCode: string | null;
   selectedClassCode: number | null;
   selectedSubjectCode: string | null;
-  setSelectedPaper: (value: string | null) => void;
   onClassCodeChange: (value: number | null) => void;
+  setSelectedPaperCode: (value: string | null) => void;
   setSelectedBoardCode: (value: string | null) => void;
   setSelectedSubjectCode: (value: string | null) => void;
 }
@@ -20,11 +21,12 @@ export const Filter = ({
   classes,
   subjects,
   boards,
-  selectedPaper,
+  assignments,
+  selectedPaperCode,
   selectedClassCode,
   selectedBoardCode,
   selectedSubjectCode,
-  setSelectedPaper,
+  setSelectedPaperCode,
   onClassCodeChange,
   setSelectedBoardCode,
   setSelectedSubjectCode,
@@ -39,7 +41,7 @@ export const Filter = ({
   }, [selectedBoardCode]);
 
   useEffect(() => {
-    setSelectedPaper(null);
+    setSelectedPaperCode(null);
   }, [selectedSubjectCode]);
 
   const classFrameworks = createListCollection({
@@ -61,7 +63,10 @@ export const Filter = ({
     })),
   });
   const paperFrameworks = createListCollection({
-    items: [{ label: "Assignments", value: "assignments" }],
+    items: assignments.map((a) => ({
+      label: a.props.name,
+      value: a.props.code,
+    }))
   });
   return (
     <>
@@ -200,10 +205,10 @@ export const Filter = ({
         collection={paperFrameworks}
         size="md"
         deselectable
-        value={selectedPaper ? [selectedPaper] : []}
+        value={selectedPaperCode ? [selectedPaperCode] : []}
         onValueChange={(details) => {
           const selectedValue = details.value[0];
-          setSelectedPaper(selectedValue || null);
+          setSelectedPaperCode(selectedValue || null);
         }}
         disabled={selectedSubjectCode == null}
       >
