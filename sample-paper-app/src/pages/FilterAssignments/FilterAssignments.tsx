@@ -46,10 +46,7 @@ export const FilterAssignments = () => {
         }
       : undefined;
 
-  const { documents: Subjects } = useCollection<SubjectProps>(
-    "Subjects",
-    subjectQuery
-  );
+  const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
 
   const totalBoards = Boards.length;
   const totalClasses = Classes.length;
