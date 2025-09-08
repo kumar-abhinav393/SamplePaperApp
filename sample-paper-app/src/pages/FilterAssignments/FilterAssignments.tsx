@@ -6,6 +6,7 @@ import { useColorModeValue } from "@/components/ui/color-mode";
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
 import type {
+  AssignmentProps,
   BoardProps,
   ClassProps,
   QueryParams,
@@ -27,19 +28,14 @@ export const FilterAssignments = () => {
 
   const { user } = useAuthContext();
 
-  const [selectedPaper, setSelectedPaper] = useState<string | null>(null);
-  const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(
-    null
-  );
-  const [selectedClassCode, setSelectedClassCode] = useState<number | null>(
-    null
-  );
-  const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(
-    null
-  );
+  const [selectedPaperCode, setSelectedPaperCode] = useState<string | null>(null);
+  const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
+  const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
+  const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
+  const {documents: Assignments} = useCollection<AssignmentProps>("Papers");
 
   const subjectQuery: QueryParams | undefined =
     selectedClassCode != null
@@ -61,7 +57,7 @@ export const FilterAssignments = () => {
   const status = user ? "active" : "inactive";
 
   const handleClearAll = () => {
-    setSelectedPaper(null);
+    setSelectedPaperCode(null);
     setSelectedClassCode(null);
     setSelectedBoardCode(null);
     setSelectedSubjectCode(null);
@@ -69,7 +65,7 @@ export const FilterAssignments = () => {
 
   const handleFilter = () => {
     if (
-      !selectedPaper ||
+      !selectedPaperCode ||
       !selectedClassCode ||
       !selectedBoardCode ||
       !selectedSubjectCode
@@ -153,11 +149,12 @@ export const FilterAssignments = () => {
               boards={Boards}
               classes={Classes}
               subjects={Subjects}
-              selectedPaper={selectedPaper}
+              assignments={Assignments}
+              selectedPaperCode={selectedPaperCode}
               selectedBoardCode={selectedBoardCode}
               selectedClassCode={selectedClassCode}
               selectedSubjectCode={selectedSubjectCode}
-              setSelectedPaper={setSelectedPaper}
+              setSelectedPaperCode={setSelectedPaperCode}
               onClassCodeChange={setSelectedClassCode}
               setSelectedBoardCode={setSelectedBoardCode}
               setSelectedSubjectCode={setSelectedSubjectCode}
