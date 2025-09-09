@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Filter } from "./Filter";
 import { useCollection } from "@/hooks/useCollection";
 import { useAuthContext } from "@/hooks/useAuthContext";
@@ -35,18 +35,38 @@ export const FilterAssignments = () => {
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
-  const {documents: Assignments} = useCollection<AssignmentProps>("Papers");
 
   const subjectQuery: QueryParams | undefined =
     selectedClassCode != null
       ? {
-          fieldPath: "classLevels",
-          opStr: "array-contains",
-          value: selectedClassCode,
-        }
+        fieldPath: "classLevels",
+        opStr: "array-contains",
+        value: selectedClassCode,
+      }
       : undefined;
 
+  const AssignmentQuery: QueryParams | undefined = {
+    fieldPath: "code",
+    opStr: "==",
+    value: "ASSIGNMENTS"
+  }
+
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
+  const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
+
+  useEffect(() => {
+    console.log(
+      Assignments.map(a => ({
+        author: a.props.createdBy,
+        topicName: a.props.topicName,
+        createdAt: a.props.createdAt,
+        classLevel: a.props.classLevels,
+        subjectCode: a.props.subjectCode,
+        boardLevel: a.props.boardFilters,
+        description: a.props.description,
+      }))
+    )
+  }, [Assignments])
 
   const totalBoards = Boards.length;
   const totalClasses = Classes.length;
@@ -73,6 +93,18 @@ export const FilterAssignments = () => {
         description: "Please make the selection before filtering",
       });
       return;
+    } else {
+      console.log(
+        Assignments.map(a => ({
+          author: a.props.createdBy,
+          topicName: a.props.topicName,
+          createdAt: a.props.createdAt,
+          classLevel: a.props.classLevels,
+          subjectCode: a.props.subjectCode,
+          boardLevel: a.props.boardFilters,
+          description: a.props.description,
+        }))
+      )
     }
   };
 
