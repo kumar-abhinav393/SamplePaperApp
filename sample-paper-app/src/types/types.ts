@@ -73,6 +73,7 @@ interface AssignmentProps {
     active: boolean;
     createdAt: Date;
     createdBy: string;
+    topicName: string;
     description: string;
     subjectCode: string[];
     classLevels: number[];
