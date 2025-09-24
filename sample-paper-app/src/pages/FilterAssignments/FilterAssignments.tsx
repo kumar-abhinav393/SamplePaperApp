@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Filter } from "./Filter";
 import { useCollection } from "@/hooks/useCollection";
 import { useAuthContext } from "@/hooks/useAuthContext";
@@ -45,28 +45,10 @@ export const FilterAssignments = () => {
       }
       : undefined;
 
-  const AssignmentQuery: QueryParams | undefined = {
-    fieldPath: "code",
-    opStr: "==",
-    value: "ASSIGNMENTS"
-  }
+  const AssignmentQuery: QueryParams | undefined = { fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" }
 
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
-
-  useEffect(() => {
-    console.log(
-      Assignments.map(a => ({
-        author: a.props.createdBy,
-        topicName: a.props.topicName,
-        createdAt: a.props.createdAt,
-        classLevel: a.props.classLevels,
-        subjectCode: a.props.subjectCode,
-        boardLevel: a.props.boardFilters,
-        description: a.props.description,
-      }))
-    )
-  }, [Assignments])
 
   const totalBoards = Boards.length;
   const totalClasses = Classes.length;
@@ -93,20 +75,34 @@ export const FilterAssignments = () => {
         description: "Please make the selection before filtering",
       });
       return;
-    } else {
-      console.log(
-        Assignments.map(a => ({
-          author: a.props.createdBy,
-          topicName: a.props.topicName,
-          createdAt: a.props.createdAt,
-          classLevel: a.props.classLevels,
-          subjectCode: a.props.subjectCode,
-          boardLevel: a.props.boardFilters,
-          description: a.props.description,
-        }))
-      )
     }
-  };
+
+    // In-memory filtering (simple, effecitve for small datasets)
+    const filtered = Assignments
+      .filter(a => a.props.classLevels.includes(selectedClassCode))
+      .filter(a => a.props.boardFilters.includes(selectedBoardCode))
+      .filter(a => a.props.subjectCode.includes(selectedSubjectCode));
+
+    if (filtered.length === 0) {
+      toaster.create({
+        title: "No Results",
+        type: "info",
+        description: "No assignments found for your current filter."
+      });
+      return
+    }
+    console.log(
+      filtered.map(a => ({
+        author: a.props.createdBy,
+        topicName: a.props.topicName,
+        createdAt: a.props.createdAt,
+        classLevel: a.props.classLevels,
+        subjectCode: a.props.subjectCode,
+        boardLevel: a.props.boardFilters,
+        description: a.props.description,
+      }))
+    )
+  }
 
   return (
     <Box
@@ -241,5 +237,5 @@ export const FilterAssignments = () => {
         </Box>
       )}
     </Box>
-  );
+  )
 };
