@@ -21,12 +21,15 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
+import { useNavigate } from "react-router-dom";
+import { RouterPaths } from "@/global/enum";
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
   const textColor = useColorModeValue("black", "white");
 
   const { user } = useAuthContext();
+  const navigate = useNavigate();
 
   const [selectedPaperCode, setSelectedPaperCode] = useState<string | null>(null);
   const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
@@ -102,6 +105,7 @@ export const FilterAssignments = () => {
         description: a.props.description,
       }))
     )
+    navigate(RouterPaths.MyAssignments)
   }
 
   return (
