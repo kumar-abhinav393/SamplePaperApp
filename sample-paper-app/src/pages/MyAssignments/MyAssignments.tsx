@@ -12,7 +12,7 @@ import { FaSortNumericDown } from "react-icons/fa";
 import { FaSortNumericUp } from "react-icons/fa";
 import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
 import { useState } from "react";
-import { AssignmentCard } from "@/components/AssignmentCard/AssignmentCard";
+import { AssignmentCard } from "@/pages/MyAssignments/AssignmentCard";
 import { useColorModeValue } from "@/components/ui/color-mode";
 
 export const MyAssignments = () => {
@@ -154,7 +154,7 @@ export const MyAssignments = () => {
           pb={[2, 2, 4, 4, 10]}
           mx={[0, 0, 8, 10, 10]}
           border={"1px solid #444746"}
-          bg={{ base: "white", _dark: "black"}}
+          bg={{ base: "white", _dark: "black" }}
         >
           <AssignmentCard />
         </Box>
