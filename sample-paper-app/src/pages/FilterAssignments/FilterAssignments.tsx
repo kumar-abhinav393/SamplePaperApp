@@ -94,18 +94,26 @@ export const FilterAssignments = () => {
       });
       return
     }
-    console.log(
-      filtered.map(a => ({
-        author: a.props.createdBy,
-        topicName: a.props.topicName,
-        createdAt: a.props.createdAt,
-        classLevel: a.props.classLevels,
-        subjectCode: a.props.subjectCode,
-        boardLevel: a.props.boardFilters,
-        description: a.props.description,
-      }))
-    )
-    navigate(RouterPaths.MyAssignments)
+    console.log(filtered.map(a => ({
+      author: a.props.createdBy,
+      topicName: a.props.topicName,
+      createdAt: a.props.createdAt,
+      classLevel: a.props.classLevels,
+      subjectCode: a.props.subjectCode,
+      boardLevel: a.props.boardFilters,
+      description: a.props.description,
+    })))
+    navigate(RouterPaths.MyAssignments, {
+      state: {
+        assignments: filtered,
+        filters: {
+          class: selectedClassCode,
+          board: selectedBoardCode,
+          subject: selectedSubjectCode,
+          paper: selectedPaperCode
+        }
+      }
+    })
   }
 
   return (

@@ -7,24 +7,27 @@ import {
   Heading,
   Link,
 } from "@chakra-ui/react";
+import { MdTopic } from "react-icons/md";
 import { MdPreview } from "react-icons/md";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { MdSubject } from "react-icons/md";
+import type { AssignmentProps } from "@/types/types";
+import { GiTeacher } from "react-icons/gi";
+import { MdOutlineUpdate } from "react-icons/md";
+import { formatFirestoreDate } from "@/helpers/dateFormatting";
+import { MdOutlineUpdateDisabled } from "react-icons/md";
+import { useColorModeValue } from "@/components/ui/color-mode";
 
-const Assignments = Array.from({ length: 10 }, (_, index) => ({
-  id: index + 1,
-  title: "Assignment Name",
-  subjectName: "Subject",
-  topicName: "Topic",
-  dateOfRelease: "DOR",
-  facultyName: "Faculty",
-  desc: "Description",
-}));
+interface AssignmenCardProps {
+  assignments: AssignmentProps[];
+}
 
-export const AssignmentCard = () => {
+export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
+  const textColor = useColorModeValue("black", "white");
   return (
     <div>
-      {Assignments.map((item) => (
-        <Card.Root key={item.id} size="lg" m={4} border={"1px solid black"} bg={{ base: "#f5f5f5ff", _dark: "#141218"}}>
+      {assignments.map((item) => (
+        <Card.Root key={item.id} size="lg" m={2} border={"1px solid black"} bg={{ base: "#f5f5f5ff", _dark: "#141218" }}>
           <SimpleGrid
             gridTemplateColumns={{
               base: "auto auto auto",
