@@ -14,11 +14,26 @@ import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect
 import { useState } from "react";
 import { AssignmentCard } from "@/pages/MyAssignments/AssignmentCard";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import type { AssignmentProps } from "@/types/types";
+import { useLocation } from "react-router-dom";
+
+type LocationState = {
+    assignments?: AssignmentProps[];
+    filters?: {
+      paper: string | null;
+      classCode: number | null;
+      boardCode: string | null;
+      subjectCode: string | null;
+    };
+  } | undefined;
 
 export const MyAssignments = () => {
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const textColor = useColorModeValue("black", "white");
 
+  const { state } = useLocation() as { state: LocationState };
+  const assignments = state?.assignments ?? []
+  
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
   };
@@ -156,7 +171,7 @@ export const MyAssignments = () => {
           border={"1px solid #444746"}
           bg={{ base: "white", _dark: "black" }}
         >
-          <AssignmentCard />
+          <AssignmentCard assignments={assignments} />
         </Box>
       </SimpleGrid>
     </Box>

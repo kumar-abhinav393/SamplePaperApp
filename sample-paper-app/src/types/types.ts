@@ -1,5 +1,5 @@
 import type { User } from "firebase/auth";
-import type { WhereFilterOp } from "firebase/firestore";
+import type { Timestamp, WhereFilterOp } from "firebase/firestore";
 import type React from "react";
 
 interface AuthState {
@@ -71,7 +71,7 @@ interface AssignmentProps {
     code: string;
     name: string;
     active: boolean;
-    createdAt: Date;
+    createdAt: Timestamp;
     createdBy: string;
     topicName: string;
     description: string;
