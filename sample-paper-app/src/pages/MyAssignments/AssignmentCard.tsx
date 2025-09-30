@@ -36,48 +36,89 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
             }}
           >
             <Box
-              m={3}
+              m={1}
               display={"flex"}
               flexDirection={"column"}
               alignItems={"flex-start"}
             >
               <Heading
+                gap={2}
+                display={"flex"}
                 color={"#3bc8f6d6"}
+                flexDirection={"row"}
+                alignItems={"center"}
                 fontSize={["13px", "13px", "18px", "18px", "20px"]}
               >
-                {item.title}
+                <MdTopic />
+                <Text color={textColor}>{item.props.topicName}</Text>
               </Heading>
               <Flex
-                flexDirection={"column"}
+                gap={2}
+                color={"#3bc8f6d6"}
+                alignItems={"center"}
+                flexDirection={"row"}
                 fontSize={["12px", "12px", "18px", "18px", "20px"]}
               >
-                <Text>{item.subjectName}</Text>
-                <Text>{item.facultyName}</Text>
-                <Text>{item.dateOfRelease}</Text>
+                <MdSubject />
+                <Text color={textColor}>{item.props.subjectCode}</Text>
+              </Flex>
+              <Flex
+                gap={2}
+                color={"#3bc8f6d6"}
+                alignItems={"center"}
+                flexDirection={"row"}
+                fontSize={["12px", "12px", "18px", "18px", "20px"]}
+              >
+                <GiTeacher />
+                <Text color={textColor}>{item.props.createdBy}</Text>
+              </Flex>
+              <Flex
+                gap={2}
+                color={"#3bc8f6d6"}
+                alignItems={"center"}
+                flexDirection={"row"}
+                fontSize={["12px", "12px", "18px", "18px", "20px"]}
+              >
+                <MdOutlineUpdate />
+                <Text color={textColor}>{formatFirestoreDate(item.props.createdAt, "PP")}</Text>
+              </Flex>
+              <Flex
+                gap={2}
+                color={"#3bc8f6d6"}
+                alignItems={"center"}
+                flexDirection={"row"}
+                fontSize={["12px", "12px", "18px", "18px", "20px"]}
+              >
+                <MdOutlineUpdateDisabled />
+                <Text color={textColor}></Text>
               </Flex>
             </Box>
             <Box
-              mt={3}
+              m={1}
               display={"flex"}
-              alignItems={"center"}
-              flexDirection={"column"}
               justifyContent={"flex-start"}
             >
-              <Heading fontSize={["13px", "13px", "18px", "18px", "20px"]}>
-                <Link variant={"underline"} color={"#3bc8f6d6"}>
+              <Heading
+                mx={"auto"}
+                display={"flex"}
+                alignItems={"center"}
+                flexDirection={"column"}
+                fontSize={["13px", "13px", "18px", "18px", "20px"]}
+              >
+                <Link variant={"underline"} color={textColor}>
                   Description
                 </Link>
               </Heading>
             </Box>
             <Box
-              m={4}
+              m={1}
               display={"flex"}
               alignItems={"flex-start"}
               justifyContent={"flex-end"}
               fontSize={["12px", "12px", "18px", "18px", "20px"]}
             >
-              <Heading color={"#3bc8f6d6"}>
-                <Flex gap={1}>
+              <Heading color={textColor}>
+                <Flex mt={1} gap={1}>
                   <MdPreview />
                   <MdOutlineFileDownload />
                 </Flex>
