@@ -94,7 +94,7 @@ export const FilterAssignments = () => {
       });
       return
     }
-    console.log(filtered.map(a => ({
+    filtered.map(a => ({
       author: a.props.createdBy,
       topicName: a.props.topicName,
       createdAt: a.props.createdAt,
@@ -102,7 +102,7 @@ export const FilterAssignments = () => {
       subjectCode: a.props.subjectCode,
       boardLevel: a.props.boardFilters,
       description: a.props.description,
-    })))
+    }))
     navigate(RouterPaths.MyAssignments, {
       state: {
         assignments: filtered,
