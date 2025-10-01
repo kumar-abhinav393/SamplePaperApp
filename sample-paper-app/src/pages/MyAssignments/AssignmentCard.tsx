@@ -5,7 +5,11 @@ import {
   Text,
   Flex,
   Heading,
+  Dialog,
   Link,
+  Portal,
+  Button,
+  CloseButton,
 } from "@chakra-ui/react";
 import { MdTopic } from "react-icons/md";
 import { MdPreview } from "react-icons/md";
@@ -105,9 +109,34 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
                 flexDirection={"column"}
                 fontSize={["13px", "13px", "18px", "18px", "20px"]}
               >
-                <Link variant={"underline"} color={textColor}>
-                  Description
-                </Link>
+                <Dialog.Root size={{ smToMd: "full", md: "lg" }}>
+                  <Dialog.Trigger asChild>
+                    <Link variant={"underline"}>Description</Link>
+                  </Dialog.Trigger>
+                  <Portal>
+                    <Dialog.Backdrop />
+                    <Dialog.Positioner>
+                      <Dialog.Content>
+                        <Dialog.Header>
+                          <Dialog.Title mx={"auto"}>Short Description</Dialog.Title>
+                        </Dialog.Header>
+                        <Dialog.Body>
+                          <Text textAlign={"justify"} whiteSpace={"pre-wrap"}>
+                            {item.props.description}
+                          </Text>
+                        </Dialog.Body>
+                        <Dialog.Footer>
+                          <Dialog.ActionTrigger asChild>
+                            <Button mx={"auto"} color={textColor} bg={"#3bc8f6d6"} variant={"outline"}>Cancel</Button>
+                          </Dialog.ActionTrigger>
+                        </Dialog.Footer>
+                        <Dialog.CloseTrigger asChild>
+                          <CloseButton size={"sm"} />
+                        </Dialog.CloseTrigger>
+                      </Dialog.Content>
+                    </Dialog.Positioner>
+                  </Portal>
+                </Dialog.Root>
               </Heading>
             </Box>
             <Box
