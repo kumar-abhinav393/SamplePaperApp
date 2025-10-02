@@ -2,6 +2,8 @@ import type { User } from "firebase/auth";
 import type { Timestamp, WhereFilterOp } from "firebase/firestore";
 import type React from "react";
 
+type PaperCode = "ASSIGNMENTS" | "QUESTION_PAPER";
+
 interface AuthState {
   pending: boolean;
   user: User | null;
@@ -68,13 +70,14 @@ interface BoardProps {
 interface AssignmentProps {
   id: string;
   props: {
-    code: string;
     name: string;
+    year: number;
+    code: PaperCode;
     active: boolean;
-    createdAt: Timestamp;
     createdBy: string;
     topicName: string;
     description: string;
+    createdAt: Timestamp;
     subjectCode: string[];
     classLevels: number[];
     boardFilters: string[];
@@ -83,6 +86,7 @@ interface AssignmentProps {
 
 export type {
   AuthState,
+  PaperCode,
   AuthAction,
   ClassProps,
   BoardProps,

@@ -1,4 +1,4 @@
-import type { AssignmentProps, BoardProps, ClassProps, SubjectProps } from "@/types/types";
+import type { AssignmentProps, BoardProps, ClassProps, PaperCode, SubjectProps } from "@/types/types";
 import { Select, Portal, createListCollection } from "@chakra-ui/react";
 import { useEffect } from "react";
 
@@ -7,21 +7,22 @@ interface FilterProps {
   classes: ClassProps[];
   subjects: SubjectProps[];
   assignments: AssignmentProps[];
-  selectedPaperCode: string | null;
   selectedBoardCode: string | null;
   selectedClassCode: number | null;
   selectedSubjectCode: string | null;
+  selectedPaperCode: PaperCode | null;
+  paperTypes: { code: PaperCode; name: string }[];
   onClassCodeChange: (value: number | null) => void;
-  setSelectedPaperCode: (value: string | null) => void;
   setSelectedBoardCode: (value: string | null) => void;
   setSelectedSubjectCode: (value: string | null) => void;
+  setSelectedPaperCode: (value: PaperCode | null) => void;
 }
 
 export const Filter = ({
   classes,
   subjects,
   boards,
-  assignments,
+  paperTypes,
   selectedPaperCode,
   selectedClassCode,
   selectedBoardCode,
@@ -63,9 +64,9 @@ export const Filter = ({
     })),
   });
   const paperFrameworks = createListCollection({
-    items: assignments.map((a) => ({
-      label: a.props.name,
-      value: a.props.code,
+    items: paperTypes.map((p) => ({
+      label: p.name,
+      value: p.code,
     }))
   });
   return (
@@ -202,12 +203,12 @@ export const Filter = ({
       </Select.Root>
 
       <Select.Root
-        collection={paperFrameworks}
         size="md"
         deselectable
+        collection={paperFrameworks}
         value={selectedPaperCode ? [selectedPaperCode] : []}
         onValueChange={(details) => {
-          const selectedValue = details.value[0];
+          const selectedValue = details.value[0] as PaperCode | undefined;
           setSelectedPaperCode(selectedValue || null);
         }}
         disabled={selectedSubjectCode == null}

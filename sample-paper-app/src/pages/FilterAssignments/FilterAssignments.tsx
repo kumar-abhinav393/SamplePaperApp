@@ -9,6 +9,7 @@ import type {
   AssignmentProps,
   BoardProps,
   ClassProps,
+  PaperCode,
   QueryParams,
   SubjectProps,
 } from "@/types/types";
@@ -31,13 +32,18 @@ export const FilterAssignments = () => {
   const { user } = useAuthContext();
   const navigate = useNavigate();
 
-  const [selectedPaperCode, setSelectedPaperCode] = useState<string | null>(null);
+  const [selectedPaperCode, setSelectedPaperCode] = useState<PaperCode | null>(null);
   const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
   const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
   const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
+
+  const paperTypes: { code: PaperCode; name: string }[] = [
+    { code: "ASSIGNMENTS", name: "Assignments" },
+    { code: "QUESTION_PAPER", name: "Question Papers" },
+  ]
 
   const subjectQuery: QueryParams | undefined =
     selectedClassCode != null
@@ -48,7 +54,8 @@ export const FilterAssignments = () => {
       }
       : undefined;
 
-  const AssignmentQuery: QueryParams | undefined = { fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" }
+  const AssignmentQuery: QueryParams | undefined =
+      selectedPaperCode === "ASSIGNMENTS" ? { fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" } : undefined;
 
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
@@ -79,6 +86,15 @@ export const FilterAssignments = () => {
       });
       return;
     }
+
+    if(selectedPaperCode === "QUESTION_PAPER") {
+    toaster.create({
+      title: "Coming Soon",
+      type: "info",
+      description: "Filtering 'Question Papers' will be added soon."
+    });
+    return
+  }
 
     // In-memory filtering (simple, effecitve for small datasets)
     const filtered = Assignments
@@ -186,13 +202,14 @@ export const FilterAssignments = () => {
               boards={Boards}
               classes={Classes}
               subjects={Subjects}
+              paperTypes={paperTypes}
               assignments={Assignments}
               selectedPaperCode={selectedPaperCode}
               selectedBoardCode={selectedBoardCode}
               selectedClassCode={selectedClassCode}
+              onClassCodeChange={setSelectedClassCode}
               selectedSubjectCode={selectedSubjectCode}
               setSelectedPaperCode={setSelectedPaperCode}
-              onClassCodeChange={setSelectedClassCode}
               setSelectedBoardCode={setSelectedBoardCode}
               setSelectedSubjectCode={setSelectedSubjectCode}
             />
