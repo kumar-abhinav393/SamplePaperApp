@@ -126,7 +126,9 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
                 fontSize={["12px", "12px", "18px", "18px", "20px"]}
               >
                 <MdOutlineUpdateDisabled />
-                <Text color={textColor}></Text>
+                <Text color={textColor} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
+                  {formatFirestoreDate(item.props.submittedAt, "PP")}
+                </Text>
               </Flex>
             </Box>
             <Box
@@ -145,7 +147,7 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
               >
                 <Dialog.Root size={{ smToMd: "full", md: "lg" }}>
                   <Dialog.Trigger asChild>
-                    <Link variant={"underline"}><MdOutlineDescription/></Link>
+                    <Link variant={"underline"}><MdOutlineDescription /></Link>
                   </Dialog.Trigger>
                   <Portal>
                     <Dialog.Backdrop />
