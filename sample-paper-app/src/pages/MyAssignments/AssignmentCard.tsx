@@ -21,6 +21,8 @@ import { MdOutlineUpdate } from "react-icons/md";
 import { formatFirestoreDate } from "@/helpers/dateFormatting";
 import { MdOutlineUpdateDisabled } from "react-icons/md";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { MdOutlineDescription } from "react-icons/md";
+
 
 interface AssignmenCardProps {
   assignments: AssignmentProps[];
@@ -33,14 +35,18 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
       {assignments.map((item) => (
         <Card.Root key={item.id} size="lg" m={2} border={"1px solid black"} bg={{ base: "#f5f5f5ff", _dark: "#141218" }}>
           <SimpleGrid
+            gap={3}
+            alignItems="start"
             gridTemplateColumns={{
-              base: "auto auto auto",
-              md: "auto auto auto",
-              lg: "auto auto auto",
+              base: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr)",
+              sm: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
+              md: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
+              lg: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
             }}
           >
             <Box
               m={1}
+              minW={0}
               display={"flex"}
               flexDirection={"column"}
               alignItems={"flex-start"}
@@ -54,7 +60,15 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
                 fontSize={["13px", "13px", "18px", "18px", "20px"]}
               >
                 <MdTopic />
-                <Text color={textColor}>{item.props.topicName}</Text>
+                <Text
+                  color={textColor}
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  title={item.props.topicName}
+                >
+                  {item.props.topicName}
+                </Text>
               </Heading>
               <Flex
                 gap={2}
@@ -64,7 +78,15 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
                 fontSize={["12px", "12px", "18px", "18px", "20px"]}
               >
                 <MdSubject />
-                <Text color={textColor}>{item.props.subjectCode}</Text>
+                <Text
+                  color={textColor}
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  title={String(item.props.subjectCode)}
+                >
+                  {item.props.subjectCode}
+                </Text>
               </Flex>
               <Flex
                 gap={2}
@@ -74,7 +96,15 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
                 fontSize={["12px", "12px", "18px", "18px", "20px"]}
               >
                 <GiTeacher />
-                <Text color={textColor}>{item.props.createdBy}</Text>
+                <Text
+                  color={textColor}
+                  overflow="hidden"
+                  textOverflow="ellipsis"
+                  whiteSpace="nowrap"
+                  title={item.props.createdBy}
+                >
+                  {item.props.createdBy}
+                </Text>
               </Flex>
               <Flex
                 gap={2}
@@ -84,7 +114,9 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
                 fontSize={["12px", "12px", "18px", "18px", "20px"]}
               >
                 <MdOutlineUpdate />
-                <Text color={textColor}>{formatFirestoreDate(item.props.createdAt, "PP")}</Text>
+                <Text color={textColor} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
+                  {formatFirestoreDate(item.props.createdAt, "PP")}
+                </Text>
               </Flex>
               <Flex
                 gap={2}
@@ -99,19 +131,21 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
             </Box>
             <Box
               m={1}
+              minW={0}
               display={"flex"}
-              justifyContent={"flex-start"}
+              justifyContent={"center"}
+              alignItems={"center"}
             >
               <Heading
-                mx={"auto"}
+                mt={"1"}
                 display={"flex"}
                 alignItems={"center"}
                 flexDirection={"column"}
-                fontSize={["13px", "13px", "18px", "18px", "20px"]}
+                fontSize={["20px", "20px", "20px", "20px", "20px"]}
               >
                 <Dialog.Root size={{ smToMd: "full", md: "lg" }}>
                   <Dialog.Trigger asChild>
-                    <Link variant={"underline"}>Description</Link>
+                    <Link variant={"underline"}><MdOutlineDescription/></Link>
                   </Dialog.Trigger>
                   <Portal>
                     <Dialog.Backdrop />
@@ -141,6 +175,7 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
             </Box>
             <Box
               m={1}
+              minW={0}
               display={"flex"}
               alignItems={"flex-start"}
               justifyContent={"flex-end"}
