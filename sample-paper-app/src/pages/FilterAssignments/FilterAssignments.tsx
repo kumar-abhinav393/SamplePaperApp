@@ -118,6 +118,7 @@ export const FilterAssignments = () => {
       subjectCode: a.props.subjectCode,
       boardLevel: a.props.boardFilters,
       description: a.props.description,
+      submittedAt: a.props.submittedAt,
     }))
     navigate(RouterPaths.MyAssignments, {
       state: {
