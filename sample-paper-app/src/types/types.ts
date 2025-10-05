@@ -81,6 +81,7 @@ interface AssignmentProps {
     subjectCode: string[];
     classLevels: number[];
     boardFilters: string[];
+    submittedAt: Timestamp;
   }
 }
 
