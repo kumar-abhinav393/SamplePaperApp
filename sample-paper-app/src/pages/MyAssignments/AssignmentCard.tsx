@@ -19,7 +19,6 @@ import type { AssignmentProps } from "@/types/types";
 import { GiTeacher } from "react-icons/gi";
 import { MdOutlineUpdate } from "react-icons/md";
 import { formatFirestoreDate } from "@/helpers/dateFormatting";
-import { MdOutlineUpdateDisabled } from "react-icons/md";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { MdOutlineDescription } from "react-icons/md";
 
@@ -116,18 +115,6 @@ export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
                 <MdOutlineUpdate />
                 <Text color={textColor} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
                   {formatFirestoreDate(item.props.createdAt, "PP")}
-                </Text>
-              </Flex>
-              <Flex
-                gap={2}
-                color={"#3bc8f6d6"}
-                alignItems={"center"}
-                flexDirection={"row"}
-                fontSize={["12px", "12px", "18px", "18px", "20px"]}
-              >
-                <MdOutlineUpdateDisabled />
-                <Text color={textColor} overflow="hidden" textOverflow="ellipsis" whiteSpace="nowrap">
-                  {formatFirestoreDate(item.props.submittedAt, "PP")}
                 </Text>
               </Flex>
             </Box>
