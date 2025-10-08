@@ -48,14 +48,17 @@ export const FilterAssignments = () => {
   const subjectQuery: QueryParams | undefined =
     selectedClassCode != null
       ? {
-        fieldPath: "classLevels",
-        opStr: "array-contains",
-        value: selectedClassCode,
-      }
+          where: { fieldPath: "classLevels", opStr: "array-contains", value: selectedClassCode, }
+        }
       : undefined;
 
   const AssignmentQuery: QueryParams | undefined =
-      selectedPaperCode === "ASSIGNMENTS" ? { fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" } : undefined;
+      selectedPaperCode === "ASSIGNMENTS"
+        ? {
+            where: {fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" },
+            orderBy: { fieldPath: "createdAt", direction: "desc" }
+          }
+        : undefined;
 
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
