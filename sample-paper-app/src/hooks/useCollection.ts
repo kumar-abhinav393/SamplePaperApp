@@ -3,7 +3,9 @@ import {
   collection,
   onSnapshot,
   query,
+  QueryConstraint,
   where,
+  orderBy as fbOrderBy,
   type DocumentData,
 } from "firebase/firestore";
 import { useEffect, useMemo, useState } from "react";
@@ -21,33 +23,35 @@ export const useCollection = <DocumentType extends { id: string; props: Document
   const [isPending, setIsPending] = useState(false);
   const [documents, setDocuments] = useState<DocumentType[]>([]);
 
-  const queryParamsValueString = JSON.stringify(queryParams?.value)
-  
-  const queryKey = useMemo(() => {
-    if (!queryParams) return "";
-    return `${queryParams.fieldPath}|${queryParams.opStr}|${queryParamsValueString}`;
-  }, [queryParams, queryParamsValueString]);
+  const queryKey = useMemo(() => JSON.stringify(queryParams ?? {}), [queryParams])
 
   useEffect(() => {
     setIsPending(true);
     const colRef = collection(db, collectionId);
 
-    const finalQuery = queryParams
-      ? query(
-          colRef,
-          where(queryParams.fieldPath, queryParams.opStr, queryParams.value)
-        )
-      : colRef;
+    const constraints: QueryConstraint[] = [];
+
+    if (queryParams?.where) {
+      const wheres = Array.isArray(queryParams.where) ? queryParams.where : [queryParams.where];
+      wheres.forEach(w => constraints.push(where(w.fieldPath, w.opStr, w.value)));
+    }
+
+    if (queryParams?.orderBy) {
+      const orders = Array.isArray(queryParams.orderBy) ? queryParams.orderBy : [queryParams.orderBy];
+      orders.forEach(o => constraints.push(fbOrderBy(o.fieldPath, o.direction)));
+    }
+
+    const q = constraints.length ? query(colRef, ...constraints) : colRef;
 
     const unsubscribe = onSnapshot(
-      finalQuery,
+      q,
       (snapshot) => {
         const results: DocumentType[] = snapshot.docs.map(
           (doc) =>
-            ({
-              id: doc.id,
-              props: { ...doc.data() },
-            } as DocumentType)
+          ({
+            id: doc.id,
+            props: { ...doc.data() },
+          } as DocumentType)
         );
 
         setDocuments(results);
