@@ -1,5 +1,5 @@
 import type { User } from "firebase/auth";
-import type { Timestamp, WhereFilterOp } from "firebase/firestore";
+import type { OrderByDirection, Timestamp, WhereFilterOp } from "firebase/firestore";
 import type React from "react";
 
 type PaperCode = "ASSIGNMENTS" | "QUESTION_PAPER";
@@ -29,10 +29,20 @@ type FirestoreAction =
   | { type: "SUCCESS" }
   | { type: "ERROR"; payload: string };
 
-interface QueryParams {
+type WhereParam = {
   fieldPath: string;
   opStr: WhereFilterOp;
   value: unknown;
+}
+
+type OrderParam = {
+  fieldPath: string;
+  direction?: OrderByDirection;
+}
+
+interface QueryParams {
+  where?: WhereParam | WhereParam[];
+  orderBy?: OrderParam | OrderParam[];
 }
 
 interface ClassProps {
@@ -93,6 +103,8 @@ export type {
   BoardProps,
   QueryParams,
   SubjectProps,
+  OrderParam,
+  WhereParam,
   FirestoreState,
   FirestoreAction,
   AssignmentProps,
