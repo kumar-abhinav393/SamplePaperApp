@@ -102,6 +102,16 @@ export const MyAssignments = () => {
                   bg={"#3bc8f6d6"}
                   border={"1px solid black"}
                 >
+                  All
+                </Button>
+                <Button
+                  h={"40px"}
+                  w={"100px"}
+                  fontSize={"lg"}
+                  color={textColor}
+                  bg={"#3bc8f6d6"}
+                  border={"1px solid black"}
+                >
                   This Month
                 </Button>
                 <Button
@@ -123,16 +133,6 @@ export const MyAssignments = () => {
                   border={"1px solid black"}
                 >
                   Upcoming
-                </Button>
-                <Button
-                  h={"40px"}
-                  w={"100px"}
-                  fontSize={"lg"}
-                  color={textColor}
-                  bg={"#3bc8f6d6"}
-                  border={"1px solid black"}
-                >
-                  All
                 </Button>
               </Flex>
             </GridItem>
