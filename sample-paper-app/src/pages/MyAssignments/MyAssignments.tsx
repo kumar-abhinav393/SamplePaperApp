@@ -7,35 +7,75 @@ import {
   Input,
   SimpleGrid,
 } from "@chakra-ui/react";
+import { useMemo, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
-import { FaSortNumericDown } from "react-icons/fa";
-import { FaSortNumericUp } from "react-icons/fa";
-import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
-import { useState } from "react";
-import { AssignmentCard } from "@/pages/MyAssignments/AssignmentCard";
-import { useColorModeValue } from "@/components/ui/color-mode";
-import type { AssignmentProps } from "@/types/types";
 import { useLocation } from "react-router-dom";
+import { FaSortNumericUp } from "react-icons/fa";
+import { FaSortNumericDown } from "react-icons/fa";
+import type { AssignmentProps } from "@/types/types";
+import { useColorModeValue } from "@/components/ui/color-mode";
+import { TimeFilter, SortOrder, ColorMode } from "@/helpers/enum";
+import { AssignmentCard } from "@/pages/MyAssignments/AssignmentCard";
+import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
+import { formatFirestoreDate } from "@/helpers/dateFormatting";
 
 type LocationState = {
-    assignments?: AssignmentProps[];
-    filters?: {
-      paper: string | null;
-      classCode: number | null;
-      boardCode: string | null;
-      subjectCode: string | null;
-    };
-  } | undefined;
+  assignments?: AssignmentProps[];
+  filters?: {
+    paper: string | null;
+    classCode: number | null;
+    boardCode: string | null;
+    subjectCode: string | null;
+  };
+};
 
 export const MyAssignments = () => {
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
-  const textColor = useColorModeValue("black", "white");
+  const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
+  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.desc);
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>(TimeFilter.All);
 
   const { state } = useLocation() as { state: LocationState };
-  const assignments = state?.assignments ?? []
+  const assignments: AssignmentProps[] = state?.assignments ?? []
+
+  const getCreatedMillis = (assignment: AssignmentProps) => {
+    return new Date(formatFirestoreDate((assignment.props.createdAt))).getTime()
+  }
   
+  const visibleAssignments = useMemo(() => {
+    if (!assignments?.length) return []
+
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = now.getMonth()
+    const startOfThisMonth = new Date(year, month, 1).getTime()
+    const startOfNextMonth = new Date(year, month + 1, 1).getTime()
+    const startOfLastMonth = new Date(year, month - 1, 1).getTime()
+    
+    let list = assignments;
+
+    if(timeFilter === TimeFilter.ThisMonth) {
+      list = assignments.filter(a => {
+        const t = getCreatedMillis(a)
+        return t >= startOfThisMonth && t < startOfNextMonth
+      });
+    }
+
+    if(timeFilter === TimeFilter.LastMonth) {
+      list = assignments.filter(a => {
+        const t = getCreatedMillis(a)
+        return t >= startOfLastMonth && t < startOfThisMonth
+      })
+    }
+
+    return [...list].sort((a, b) => {
+      const x = a.props.createdAt?.toMillis?.() ?? 0;
+      const y = b.props.createdAt?.toMillis?.() ?? 0;
+      return sortOrder === SortOrder.asc ? x - y : y - x;
+    })
+  }, [assignments, timeFilter, sortOrder])
+
   const handleSortToggle = () => {
-    setSortOrder((prev) => (prev === "desc" ? "asc" : "desc"));
+    setSortOrder((prev) => (prev === SortOrder.desc ? SortOrder.asc : SortOrder.desc));
   };
 
   return (
@@ -99,8 +139,9 @@ export const MyAssignments = () => {
                   w={"100px"}
                   fontSize={"lg"}
                   color={textColor}
-                  bg={"#3bc8f6d6"}
                   border={"1px solid black"}
+                  onClick={() => setTimeFilter(TimeFilter.All)}
+                  bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   All
                 </Button>
@@ -109,8 +150,9 @@ export const MyAssignments = () => {
                   w={"100px"}
                   fontSize={"lg"}
                   color={textColor}
-                  bg={"#3bc8f6d6"}
                   border={"1px solid black"}
+                  onClick={() => setTimeFilter(TimeFilter.ThisMonth)}
+                  bg={timeFilter === TimeFilter.ThisMonth ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   This Month
                 </Button>
@@ -119,18 +161,21 @@ export const MyAssignments = () => {
                   w={"100px"}
                   fontSize={"lg"}
                   color={textColor}
-                  bg={"#3bc8f6d6"}
                   border={"1px solid black"}
+                  onClick={() => setTimeFilter(TimeFilter.LastMonth)}
+                  bg={timeFilter === TimeFilter.LastMonth ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   Last Month
                 </Button>
                 <Button
                   h={"40px"}
                   w={"100px"}
+                  disabled
                   fontSize={"lg"}
                   color={textColor}
-                  bg={"#3bc8f6d6"}
                   border={"1px solid black"}
+                  onClick={() => setTimeFilter(TimeFilter.Upcoming)}
+                  bg={timeFilter === TimeFilter.Upcoming ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   Upcoming
                 </Button>
@@ -152,7 +197,7 @@ export const MyAssignments = () => {
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
-                {sortOrder === "desc" ? (
+                {sortOrder === SortOrder.desc ? (
                   <FaSortNumericUp />
                 ) : (
                   <FaSortNumericDown />
@@ -171,7 +216,7 @@ export const MyAssignments = () => {
           border={"1px solid #444746"}
           bg={{ base: "white", _dark: "black" }}
         >
-          <AssignmentCard assignments={assignments} />
+          <AssignmentCard assignments={visibleAssignments} />
         </Box>
       </SimpleGrid>
     </Box>
