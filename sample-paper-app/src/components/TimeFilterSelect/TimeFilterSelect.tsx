@@ -1,12 +1,18 @@
+import { TimeFilter } from "@/helpers/enum";
 import { createListCollection, Flex, Portal, Select } from "@chakra-ui/react";
 
-export const TimeFilterSelect = () => {
+type props = {
+  value: TimeFilter;
+  onChange: (v: TimeFilter) => void 
+}
+
+export const TimeFilterSelect = ({ value, onChange }: props) => {
   const filterFrameworks = createListCollection({
     items: [
-      { label: "This Month", value: "thismonth" },
-      { label: "Last Month", value: "lastmonth" },
-      { label: "Upcoming", value: "upcoming" },
-      { label: "All", value: "all" },
+      { label: "All", value: TimeFilter.All },
+      { label: "This Month", value: TimeFilter.ThisMonth },
+      { label: "Last Month", value: TimeFilter.LastMonth },
+      { label: "Upcoming", value: TimeFilter.Upcoming },
     ],
   });
   return (
@@ -15,6 +21,11 @@ export const TimeFilterSelect = () => {
         collection={filterFrameworks}
         size={["xs", "xs", "md"]}
         deselectable
+        value={value ? [value] : []}
+        onValueChange={(details) => {
+          const selectedValue = details.value[0];
+          onChange(selectedValue as TimeFilter ?? TimeFilter.All);
+        }}
       >
         <Select.HiddenSelect />
         <Select.Control border={"1px solid #444746"} borderRadius={4}>

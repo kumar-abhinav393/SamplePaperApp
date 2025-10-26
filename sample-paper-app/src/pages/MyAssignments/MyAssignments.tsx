@@ -13,11 +13,11 @@ import { useLocation } from "react-router-dom";
 import { FaSortNumericUp } from "react-icons/fa";
 import { FaSortNumericDown } from "react-icons/fa";
 import type { AssignmentProps } from "@/types/types";
+import { formatFirestoreDate } from "@/helpers/dateFormatting";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { TimeFilter, SortOrder, ColorMode } from "@/helpers/enum";
 import { AssignmentCard } from "@/pages/MyAssignments/AssignmentCard";
 import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
-import { formatFirestoreDate } from "@/helpers/dateFormatting";
 
 type LocationState = {
   assignments?: AssignmentProps[];
@@ -132,7 +132,7 @@ export const MyAssignments = () => {
             h={["30px", "30px", "40px", "40px", "40px"]}
           >
             <GridItem colEnd={[23]} display={"flex"} colStart={[1, 1, 2, 2, 2]}>
-              <TimeFilterSelect />
+              <TimeFilterSelect value={timeFilter} onChange={setTimeFilter} />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
                 <Button
                   h={"40px"}
