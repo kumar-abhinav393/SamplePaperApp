@@ -17,11 +17,12 @@ import {
 import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
+import { ColorMode } from "@/helpers/enum";
 
 export const Login = () => {
   const { login } = useLogin();
   const navigate = useNavigate();
-  const textColor = useColorModeValue("black", "white");
+  const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
   const { handleGoogleLogin } = useGoogleAuthenticationHandler();
 
   const [email, setEmail] = useState("");
