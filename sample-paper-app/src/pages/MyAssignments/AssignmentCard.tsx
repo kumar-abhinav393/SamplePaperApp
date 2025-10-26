@@ -21,6 +21,7 @@ import { MdOutlineUpdate } from "react-icons/md";
 import { formatFirestoreDate } from "@/helpers/dateFormatting";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { MdOutlineDescription } from "react-icons/md";
+import { ColorMode } from "@/helpers/enum";
 
 
 interface AssignmenCardProps {
@@ -28,7 +29,7 @@ interface AssignmenCardProps {
 }
 
 export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
-  const textColor = useColorModeValue("black", "white");
+  const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
   return (
     <div>
       {assignments.map((item) => (
