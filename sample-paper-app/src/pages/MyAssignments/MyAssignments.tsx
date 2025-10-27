@@ -30,18 +30,28 @@ type LocationState = {
 };
 
 export const MyAssignments = () => {
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.desc);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>(TimeFilter.All);
-
+  
   const { state } = useLocation() as { state: LocationState };
-  const assignments: AssignmentProps[] = state?.assignments ?? []
 
+  const normalize = (s: unknown): string =>
+    typeof s === "string" ? s
+    .normalize("NFKD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, " ") : ""
+  
   const getCreatedMillis = (assignment: AssignmentProps) => {
     return new Date(formatFirestoreDate((assignment.props.createdAt))).getTime()
   }
   
+
   const visibleAssignments = useMemo(() => {
+    const assignments: AssignmentProps[] = state?.assignments ?? []
     if (!assignments?.length) return []
 
     const now = new Date()
@@ -51,7 +61,7 @@ export const MyAssignments = () => {
     const startOfNextMonth = new Date(year, month + 1, 1).getTime()
     const startOfLastMonth = new Date(year, month - 1, 1).getTime()
     
-    let list = assignments;
+    let list = [...assignments];
 
     if(timeFilter === TimeFilter.ThisMonth) {
       list = assignments.filter(a => {
@@ -67,12 +77,26 @@ export const MyAssignments = () => {
       })
     }
 
+    if (searchTerm.trim() !== "") {
+      const q = normalize(searchTerm)
+      list = list.filter((a) => {
+        const topic = normalize((a)?.props?.topicName ?? "")
+        const facultyName = normalize((a)?.props?.createdBy)
+        const uploadDate = normalize(
+          (a)?.props?.createdAt
+          ? formatFirestoreDate((a)?.props?.createdAt)
+          : ""
+        )
+        return topic.includes(q) || facultyName.includes(q) || uploadDate.includes(q)
+      })
+    }
+    
     return [...list].sort((a, b) => {
       const x = a.props.createdAt?.toMillis?.() ?? 0;
       const y = b.props.createdAt?.toMillis?.() ?? 0;
       return sortOrder === SortOrder.asc ? x - y : y - x;
     })
-  }, [assignments, timeFilter, sortOrder])
+  }, [timeFilter, sortOrder, searchTerm])
 
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === SortOrder.desc ? SortOrder.asc : SortOrder.desc));
@@ -97,9 +121,11 @@ export const MyAssignments = () => {
               colEnd={[24, 24, 23, 23, 23]}
             >
               <Input
+                value={searchTerm}
                 placeholder="Search assignments..."
                 fontSize={["l", "l", "xl", "1xl", "1xl"]}
                 h={["30px", "30px", "40px", "40px", "40px"]}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 css={{
                   "--focus-color": "#3bc8f6d6",
                   border: "1px solid #444746",
