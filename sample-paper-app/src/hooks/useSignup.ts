@@ -22,9 +22,11 @@ export const useSignup = () => {
                 email,
                 password
             )
-            await signOut(auth)
 
+            await signOut(auth)
+            
             await updateProfile(response.user, { displayName: displayName })
+            
             dispatch({type: "LOGOUT"})
         } catch (error: unknown) {
             console.log("Signup error: ", error)
