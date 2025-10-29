@@ -3,7 +3,7 @@ import { collection, doc, getDoc, serverTimestamp, setDoc } from "firebase/fires
 import { db } from "../../firebase.config";
 
 export async function createUserDocument (user: User) {
-    const colRef = collection(db, "students")
+    const colRef = collection(db, "users")
     const docRef = doc(colRef, user.uid)
     const docSnap = await getDoc(docRef)
     if(!docSnap.exists()) {
