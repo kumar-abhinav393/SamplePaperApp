@@ -3,6 +3,7 @@ import type { OrderByDirection, Timestamp, WhereFilterOp } from "firebase/firest
 import type React from "react";
 
 type PaperCode = "ASSIGNMENTS" | "QUESTION_PAPER";
+type UserRole = "admin" | "faculty" | "student";
 
 interface AuthState {
   pending: boolean;
@@ -54,6 +55,11 @@ interface ClassProps {
   };
 }
 
+interface UserDoc {
+  uid: string;
+  role: UserRole;
+}
+
 interface SubjectProps {
   id: string;
   props: {
@@ -96,6 +102,8 @@ interface AssignmentProps {
 }
 
 export type {
+  UserDoc,
+  UserRole,
   AuthState,
   PaperCode,
   AuthAction,
