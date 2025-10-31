@@ -7,11 +7,12 @@ import { PiStudentFill } from "react-icons/pi";
 import { GrUserAdmin } from "react-icons/gr";
 import { GiTeacher } from "react-icons/gi";
 import { useUserRole } from "@/hooks/useUserRole";
+import { UserRole } from "@/helpers/enum";
 
 export const Header = () => {
 
-  const { user } = useAuthContext();
   const { role } = useUserRole();
+  const { user } = useAuthContext();
 
   return (
     <Box id="header"
@@ -134,9 +135,9 @@ export const Header = () => {
             {
               user && role && (
                 <Box fontSize={["20px", "20px", "30px", "30px", "30px"]}>
-                  {role.role === "student" && <PiStudentFill color="#3bc8f6d6" />}
-                  {role.role === "admin" && <GrUserAdmin color="#3bc8f6d6" />}
-                  {role.role === "faculty" && <GiTeacher color="#3bc8f6d6" />}
+                  {role.role === UserRole.STUDENT && <PiStudentFill color="#3bc8f6d6" />}
+                  {role.role === UserRole.ADMIN && <GrUserAdmin color="#3bc8f6d6" />}
+                  {role.role === UserRole.FACULTY && <GiTeacher color="#3bc8f6d6" />}
                 </Box>
               )
             }
