@@ -13,6 +13,12 @@ enum SortOrder {
 enum ColorMode {
     black = "black",
     white = "white",
-} 
+}
 
-export {TimeFilter, SortOrder, ColorMode}
+enum UserRole {
+  STUDENT = "student",
+  ADMIN = "admin",
+  FACULTY = "faculty"
+}
+
+export {TimeFilter, SortOrder, ColorMode, UserRole}
