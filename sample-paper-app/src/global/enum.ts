@@ -1,9 +1,9 @@
 enum RouterPaths {
     Root = "/",
-    Signup = "/signup",
     Login = "/login",
-    FilterAssignments = "/filter-assignments",
+    Signup = "/signup",
     MyAssignments = "/my-assignments",
+    FilterAssignments = "/filter-assignments",
 }
 
 export { RouterPaths }
