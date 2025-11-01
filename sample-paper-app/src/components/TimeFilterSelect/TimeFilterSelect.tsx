@@ -3,10 +3,11 @@ import { createListCollection, Flex, Portal, Select } from "@chakra-ui/react";
 
 type props = {
   value: TimeFilter;
-  onChange: (v: TimeFilter) => void 
+  onChange: (v: TimeFilter) => void
+  disabled?: boolean
 }
 
-export const TimeFilterSelect = ({ value, onChange }: props) => {
+export const TimeFilterSelect = ({ value, onChange, disabled }: props) => {
   const filterFrameworks = createListCollection({
     items: [
       { label: "All", value: TimeFilter.All },
@@ -18,14 +19,15 @@ export const TimeFilterSelect = ({ value, onChange }: props) => {
   return (
     <Flex display={{ base: "block", lg: "none" }} w={"50%"}>
       <Select.Root
-        collection={filterFrameworks}
-        size={["xs", "xs", "md"]}
         deselectable
+        size={["xs", "xs", "md"]}
         value={value ? [value] : []}
+        collection={filterFrameworks}
         onValueChange={(details) => {
           const selectedValue = details.value[0];
           onChange(selectedValue as TimeFilter ?? TimeFilter.All);
         }}
+        disabled={disabled}
       >
         <Select.HiddenSelect />
         <Select.Control border={"1px solid #444746"} borderRadius={4}>
