@@ -87,6 +87,13 @@ export const MyAssignments = () => {
       })
     }
 
+    if (timeFilter === TimeFilter.Upcoming) {
+      list = assignments.filter(a => {
+        const t = getCreatedMillis(a)
+        return t > startOfNextMonth
+      })
+    }
+
     if (searchTerm.trim() !== "") {
       const q = normalize(searchTerm)
       list = list.filter((a) => {
