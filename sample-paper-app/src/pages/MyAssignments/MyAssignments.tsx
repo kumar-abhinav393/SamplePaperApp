@@ -111,6 +111,8 @@ export const MyAssignments = () => {
     return sortAssignments(list, sortOrder)
   }, [state?.assignments, timeFilter, sortOrder, searchTerm, requireFilterFirst])
 
+  const hasNoResults = !requireFilterFirst && visibleAssignments.length === 0; 
+  
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === SortOrder.desc ? SortOrder.asc : SortOrder.desc));
   };
@@ -272,6 +274,20 @@ export const MyAssignments = () => {
                 fontSize={["l", "l", "xl", "1xl", "1xl"]}
                 >
                   Please open <b>Filter Assignment</b> tab and select your filters first.
+                </Alert.Title>
+            </Alert.Root>
+          )}
+          {hasNoResults && (
+            <Alert.Root
+              status="info"
+              textWrap={"wrap"}
+              title="This is the alert title"
+              size={["sm", "sm", "md", "md", "lg"]}>
+              <Alert.Indicator />
+              <Alert.Title
+                fontSize={["l", "l", "xl", "1xl", "1xl"]}
+                >
+                  No Assignment found for the current filter.
                 </Alert.Title>
             </Alert.Root>
           )}
