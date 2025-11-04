@@ -15,7 +15,7 @@ export const Authentication = () => {
       justifyContent={"center"}
       w={["80%", "80%", "45%", "35%", "35%"]}
     >
-      <Button 
+      <Button
         mb={3}
         color={textColor}
         bg={"#3bc8f6d6"}

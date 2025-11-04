@@ -8,7 +8,7 @@ interface LeftSidebarProps {
   totalBoards: number;
 }
 
-export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalBoards  }: LeftSidebarProps) => {
+export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalBoards }: LeftSidebarProps) => {
 
   const textColor = useColorModeValue("#3bc8f6d6", undefined);
 
@@ -17,7 +17,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalB
       <Stack
         display={"flex"}
         direction={isHorizontal ? "row" : "column"}
-        gap={ isHorizontal ? 8 : 20}
+        gap={isHorizontal ? 8 : 20}
         justifyContent={isHorizontal ? "space-around" : "center"}
         align="center"
         w="100%"

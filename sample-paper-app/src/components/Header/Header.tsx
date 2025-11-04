@@ -98,7 +98,7 @@ export const Header = () => {
           >
             Gyaan Haridwar
           </Text>
-          <Text>Sample Paper App</Text>
+          <Text>GyaanKosh</Text>
         </GridItem>
         <GridItem
           colEnd={[19, 19, 18, 18, 17]}

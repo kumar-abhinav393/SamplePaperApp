@@ -48,17 +48,17 @@ export const FilterAssignments = () => {
   const subjectQuery: QueryParams | undefined =
     selectedClassCode != null
       ? {
-          where: { fieldPath: "classLevels", opStr: "array-contains", value: selectedClassCode, }
-        }
+        where: { fieldPath: "classLevels", opStr: "array-contains", value: selectedClassCode, }
+      }
       : undefined;
 
   const AssignmentQuery: QueryParams | undefined =
-      selectedPaperCode === "ASSIGNMENTS"
-        ? {
-            where: {fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" },
-            orderBy: { fieldPath: "createdAt", direction: "desc" }
-          }
-        : undefined;
+    selectedPaperCode === "ASSIGNMENTS"
+      ? {
+        where: { fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" },
+        orderBy: { fieldPath: "createdAt", direction: "desc" }
+      }
+      : undefined;
 
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
@@ -90,14 +90,14 @@ export const FilterAssignments = () => {
       return;
     }
 
-    if(selectedPaperCode === "QUESTION_PAPER") {
-    toaster.create({
-      title: "Coming Soon",
-      type: "info",
-      description: "Filtering 'Question Papers' will be added soon."
-    });
-    return
-  }
+    if (selectedPaperCode === "QUESTION_PAPER") {
+      toaster.create({
+        title: "Coming Soon",
+        type: "info",
+        description: "Filtering 'Question Papers' will be added soon."
+      });
+      return
+    }
 
     // In-memory filtering (simple, effecitve for small datasets)
     const filtered = Assignments
