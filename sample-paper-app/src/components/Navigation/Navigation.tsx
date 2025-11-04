@@ -15,7 +15,7 @@ export const Navigation = () => {
       w={["100vw", "100vw", "100vw", "95vw", "90vw"]}
     >
       <Grid
-        bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
+        bg={{ base: "#f5f5f5ff", _dark: "#141218" }}
         roundedBottom={"lg"}
         roundedTop={"lg"}
         borderX={"1px solid #444746"}

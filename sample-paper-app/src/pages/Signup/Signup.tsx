@@ -30,7 +30,7 @@ export const Signup = () => {
 
   const emailError = email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const passwordError = password !== "" && password.length < 8;
-    
+
   const handleSubmit = async () => {
     const signupPromise = signup({ email, password, displayName });
     toaster.promise(signupPromise, {

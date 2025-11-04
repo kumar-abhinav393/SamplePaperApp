@@ -31,7 +31,7 @@ export const Login = () => {
 
   const passwordError = password !== "" && password.length < 8;
   const emailError = email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-  
+
   const handleSubmit = async () => {
     try {
       await login({ email, password });
@@ -94,25 +94,25 @@ export const Login = () => {
           <dialog.Viewport />
         </Flex>
         <Flex pt={5}>
-        <Button
-          fontSize={"l"}
-          color={textColor}
-          bg={"#3bc8f6d6"}
-          onClick={handleGoogleLogin}
-          border={"1px solid black"}
-          w={["310px", "350px", "400px", "450px"]}
-        >
-          <FcGoogle />
-          LOG IN WITH GOOGLE
-        </Button>
-      </Flex>
-      <Flex align="center" w={["310px", "350px", "400px", "450px"]} pt={3}>
-        <Box flex="1" h="1px" bg="#444746" />
-        <Text px={4} fontWeight="semibold" color={textColor}>
-          OR
-        </Text>
-        <Box flex="1" h="1px" bg="#444746" />
-      </Flex>
+          <Button
+            fontSize={"l"}
+            color={textColor}
+            bg={"#3bc8f6d6"}
+            onClick={handleGoogleLogin}
+            border={"1px solid black"}
+            w={["310px", "350px", "400px", "450px"]}
+          >
+            <FcGoogle />
+            LOG IN WITH GOOGLE
+          </Button>
+        </Flex>
+        <Flex align="center" w={["310px", "350px", "400px", "450px"]} pt={3}>
+          <Box flex="1" h="1px" bg="#444746" />
+          <Text px={4} fontWeight="semibold" color={textColor}>
+            OR
+          </Text>
+          <Box flex="1" h="1px" bg="#444746" />
+        </Flex>
         <Flex
           mt={4}
           gap={2}
@@ -155,7 +155,7 @@ export const Login = () => {
             </Fieldset.Root>
           </form>
         </Flex>
-        
+
         <Flex mt={3} w={"100%"} justifyContent={"space-between"}>
           <Button
             color={textColor}
