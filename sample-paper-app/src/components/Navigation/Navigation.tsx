@@ -2,10 +2,24 @@ import { NavLink } from "react-router-dom";
 import { GyaanLogo } from "@/assets/gyaan-logo";
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
+import { useUserRole } from "@/hooks/useUserRole";
+import { UserRole } from "@/helpers/enum";
 
 export const Navigation = () => {
 
+  const { role } = useUserRole();
   const textColor = useColorModeValue("black", "white");
+
+  const getNavText = () => {
+    switch (role?.role) {
+      case UserRole.STUDENT:
+        return "Filter Assignments"
+      case UserRole.FACULTY:
+        return "Upload Assignments"
+      case UserRole.ADMIN:
+        return "Dashboard"
+    }
+  }
 
   return (
     <Box
@@ -15,7 +29,7 @@ export const Navigation = () => {
       w={["100vw", "100vw", "100vw", "95vw", "90vw"]}
     >
       <Grid
-        bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
+        bg={{ base: "#f5f5f5ff", _dark: "#141218" }}
         roundedBottom={"lg"}
         roundedTop={"lg"}
         borderX={"1px solid #444746"}
@@ -40,7 +54,9 @@ export const Navigation = () => {
                 color: isActive ? "#3bc8f6d6" : textColor,
               })}
             >
-              <Text>Filter Assignments</Text>
+              <Text>
+                {getNavText()}
+              </Text>
             </NavLink>
           </Flex>
         </GridItem>
@@ -95,7 +111,12 @@ export const Navigation = () => {
                 color: isActive ? "#3bc8f6d6" : textColor,
               })}
             >
-              <Text>My Assignments</Text>
+              <Text>{role?.role === UserRole.FACULTY || role?.role === UserRole.STUDENT
+                ?
+                "My Assignments"
+                :
+                "All Assignments"}
+              </Text>
             </NavLink>
           </Flex>
         </GridItem>
