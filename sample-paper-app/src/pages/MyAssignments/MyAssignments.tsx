@@ -1,4 +1,5 @@
 import {
+  Alert,
   Box,
   Button,
   Flex,
@@ -49,7 +50,10 @@ export const MyAssignments = () => {
     return new Date(formatFirestoreDate((assignment.props.createdAt))).getTime()
   }
 
+  const requireFilterFirst = !state?.filters;
+
   const visibleAssignments = useMemo(() => {
+    if (requireFilterFirst) return [];
     const sortAssignments = (arr: AssignmentProps[], order: SortOrder = sortOrder) => {
       return [...arr].sort((a, b) => {
         const dateA = new Date(formatFirestoreDate(a.props.createdAt)).getTime()
@@ -83,6 +87,13 @@ export const MyAssignments = () => {
       })
     }
 
+    if (timeFilter === TimeFilter.Upcoming) {
+      list = assignments.filter(a => {
+        const t = getCreatedMillis(a)
+        return t > startOfNextMonth
+      })
+    }
+
     if (searchTerm.trim() !== "") {
       const q = normalize(searchTerm)
       list = list.filter((a) => {
@@ -98,7 +109,9 @@ export const MyAssignments = () => {
     }
 
     return sortAssignments(list, sortOrder)
-  }, [state?.assignments, timeFilter, sortOrder, searchTerm])
+  }, [state?.assignments, timeFilter, sortOrder, searchTerm, requireFilterFirst])
+
+  const hasNoResults = !requireFilterFirst && visibleAssignments.length === 0;
 
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === SortOrder.desc ? SortOrder.asc : SortOrder.desc));
@@ -124,6 +137,7 @@ export const MyAssignments = () => {
             >
               <Input
                 value={searchTerm}
+                disabled={requireFilterFirst}
                 placeholder="Search assignments..."
                 fontSize={["l", "l", "xl", "1xl", "1xl"]}
                 h={["30px", "30px", "40px", "40px", "40px"]}
@@ -146,6 +160,7 @@ export const MyAssignments = () => {
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 border={"1px solid black"}
+                disabled={requireFilterFirst}
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
@@ -160,7 +175,7 @@ export const MyAssignments = () => {
             h={["30px", "30px", "40px", "40px", "40px"]}
           >
             <GridItem colEnd={[23]} display={"flex"} colStart={[1, 1, 2, 2, 2]}>
-              <TimeFilterSelect value={timeFilter} onChange={setTimeFilter} />
+              <TimeFilterSelect value={timeFilter} onChange={setTimeFilter} disabled={requireFilterFirst} />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
                 <Button
                   h={"40px"}
@@ -168,8 +183,9 @@ export const MyAssignments = () => {
                   fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
+                  disabled={requireFilterFirst}
                   onClick={() => setTimeFilter(TimeFilter.All)}
-                  bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
+                  bg={timeFilter === TimeFilter.All && !requireFilterFirst ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   All
                 </Button>
@@ -179,6 +195,7 @@ export const MyAssignments = () => {
                   fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
+                  disabled={requireFilterFirst}
                   onClick={() => setTimeFilter(TimeFilter.ThisMonth)}
                   bg={timeFilter === TimeFilter.ThisMonth ? "#70f63bd6" : "#3bc8f6d6"}
                 >
@@ -190,6 +207,7 @@ export const MyAssignments = () => {
                   fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
+                  disabled={requireFilterFirst}
                   onClick={() => setTimeFilter(TimeFilter.LastMonth)}
                   bg={timeFilter === TimeFilter.LastMonth ? "#70f63bd6" : "#3bc8f6d6"}
                 >
@@ -198,10 +216,10 @@ export const MyAssignments = () => {
                 <Button
                   h={"40px"}
                   w={"100px"}
-                  disabled
                   fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
+                  disabled={requireFilterFirst}
                   onClick={() => setTimeFilter(TimeFilter.Upcoming)}
                   bg={timeFilter === TimeFilter.Upcoming ? "#70f63bd6" : "#3bc8f6d6"}
                 >
@@ -222,6 +240,7 @@ export const MyAssignments = () => {
                 bg={"#3bc8f6d6"}
                 onClick={handleSortToggle}
                 border={"1px solid black"}
+                disabled={requireFilterFirst}
                 h={["30px", "30px", "40px", "40px", "40px"]}
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
@@ -244,6 +263,34 @@ export const MyAssignments = () => {
           border={"1px solid #444746"}
           bg={{ base: "white", _dark: "black" }}
         >
+          {requireFilterFirst && (
+            <Alert.Root
+              status="info"
+              textWrap={"wrap"}
+              title="This is the alert title"
+              size={["sm", "sm", "md", "md", "lg"]}>
+              <Alert.Indicator />
+              <Alert.Title
+                fontSize={["l", "l", "xl", "1xl", "1xl"]}
+              >
+                Please open <b>Filter Assignment</b> tab and select your filters first.
+              </Alert.Title>
+            </Alert.Root>
+          )}
+          {hasNoResults && (
+            <Alert.Root
+              status="info"
+              textWrap={"wrap"}
+              title="This is the alert title"
+              size={["sm", "sm", "md", "md", "lg"]}>
+              <Alert.Indicator />
+              <Alert.Title
+                fontSize={["l", "l", "xl", "1xl", "1xl"]}
+              >
+                No Assignment found for the current filter.
+              </Alert.Title>
+            </Alert.Root>
+          )}
           <AssignmentCard assignments={visibleAssignments} />
         </Box>
       </SimpleGrid>

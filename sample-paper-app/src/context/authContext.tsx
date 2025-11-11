@@ -8,10 +8,10 @@ export const AuthContext = React.createContext<AuthState>({
     user: null,
     authIsReady: false,
     pending: false,
-    dispatch: () => {},
+    dispatch: () => { },
 })
 
-export const AuthContextProvider = ({ children } : { children: ReactNode }) => {
+export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [state, dispatch] = useReducer(authReducer, {
         user: null,
         authIsReady: false,
@@ -20,7 +20,7 @@ export const AuthContextProvider = ({ children } : { children: ReactNode }) => {
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, (user) => {
-            if(user) {
+            if (user) {
                 dispatch({ type: "AUTH_IS_READY", payload: user })
             } else {
                 dispatch({ type: "AUTH_IS_READY", payload: null })

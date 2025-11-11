@@ -56,14 +56,14 @@ export const dialog = createOverlay<DialoagProps>((props) => {
                 color={textColor}
                 alignItems={"center"}
                 justifyContent={"center"}
-                bg={{ base: "#f5f5f5ff", _dark: "#141218"}}
+                bg={{ base: "#f5f5f5ff", _dark: "#141218" }}
               >
                 <Dialog.Title fontSize={"md"}>
                   {title}
                 </Dialog.Title>
               </Dialog.Header>
             )}
-            <Dialog.Body bg={{ base: "#f5f5f5ff", _dark: "#141218"}}>
+            <Dialog.Body bg={{ base: "#f5f5f5ff", _dark: "#141218" }}>
               {description && (
                 <Dialog.Description
                   color={textColor}
