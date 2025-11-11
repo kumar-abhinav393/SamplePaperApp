@@ -1,5 +1,7 @@
 import { Stack, Flex, Tag, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
+import { useUserRole } from "@/hooks/useUserRole";
+import { UserRole } from "@/helpers/enum";
 
 interface RightSidebarProps {
   isHorizontal?: boolean;
@@ -10,6 +12,7 @@ export const RightSidebar = ({
   isHorizontal = false,
   totalSubjects,
 }: RightSidebarProps) => {
+  const { role } = useUserRole();
   const textColor = useColorModeValue("#3bc8f6d6", undefined);
 
   return (
@@ -21,6 +24,116 @@ export const RightSidebar = ({
         align="center"
         w="100%"
       >
+        {role?.role === UserRole.STUDENT && (
+          <>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                Total Subjects
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="blue"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                >
+                  {totalSubjects}
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                My Downloads
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="blue"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                >
+                  0
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                My Notifications
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="green"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                >
+                  0
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+          </>
+        )}
+        {role?.role === UserRole.FACULTY && (
+          <>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                My Profile
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="blue"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                >
+                  
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                My Uploads
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="blue"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                >
+                  0
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                My Notifications
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="green"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                >
+                  0
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+          </>
+        )}
         <Flex gap={3} flexDirection="column" alignItems="center">
           <Text
             color={"#3bc8f6d6"}
