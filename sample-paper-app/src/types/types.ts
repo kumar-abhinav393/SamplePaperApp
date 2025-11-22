@@ -83,6 +83,17 @@ interface BoardProps {
   };
 }
 
+interface InvitesProps {
+  id: string;
+  props: {
+    role: UserRole;
+    issuedBy: string;
+    expiresAt: Timestamp;
+    createdAt: Timestamp;
+    usedBy: string | null;
+  }
+}
+
 interface AssignmentProps {
   id: string;
   props: {
@@ -113,6 +124,7 @@ export type {
   SubjectProps,
   OrderParam,
   WhereParam,
+  InvitesProps,
   FirestoreState,
   FirestoreAction,
   AssignmentProps,

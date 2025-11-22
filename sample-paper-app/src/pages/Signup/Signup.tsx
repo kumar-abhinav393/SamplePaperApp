@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSignup } from "@/hooks/useSignup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
 import { useColorModeValue } from "@/components/ui/color-mode";
@@ -16,10 +16,12 @@ import {
 } from "@chakra-ui/react";
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
+import { validateInviteToken } from "@/helpers/validateInviteToken";
 
 export const Signup = () => {
   const { signup } = useSignup();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const textColor = useColorModeValue("black", "white");
   const { handleGoogleLogin } = useGoogleAuthenticationHandler();
 
@@ -27,6 +29,29 @@ export const Signup = () => {
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  const inviteToken = searchParams.get("invite");
+  const hasShownToastRef = useRef(false);
+
+  useEffect(() => {
+    const checkInvite = async () => {
+      if (!inviteToken || hasShownToastRef.current) return;
+      try{
+        hasShownToastRef.current = true;
+        await validateInviteToken(inviteToken);
+        localStorage.setItem("inviteToken", inviteToken)
+      } catch (error) {
+        toaster.create({
+          title: "Invalid Invite Token",
+          description: (error as Error).message,
+          type: "error",
+        });
+
+        navigate("/login");
+      }
+    };
+    checkInvite();
+  }, [inviteToken, navigate]);
 
   const emailError = email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   const passwordError = password !== "" && password.length < 8;
