@@ -91,7 +91,22 @@ interface InvitesProps {
     expiresAt: Timestamp;
     createdAt: Timestamp;
     usedBy: string | null;
-  }
+  };
+}
+
+interface FacultyProfileProps {
+  id: string;
+  props: {
+    uid: string;
+    email: string;
+    displayName: string;
+    uploadCount: number;
+    createdAt: Timestamp;
+    assignedBoards: string[];
+    lastUploadDate: Timestamp;
+    assignedClasses: string[];
+    assignedSubjects: string[];
+  };
 }
 
 interface AssignmentProps {
@@ -128,4 +143,5 @@ export type {
   FirestoreState,
   FirestoreAction,
   AssignmentProps,
+  FacultyProfileProps,
 };
