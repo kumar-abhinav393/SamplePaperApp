@@ -5,15 +5,9 @@ import { getAuth } from "firebase/auth";
 interface FacultyProfileProps {
     displayName: string;
     email: string;
-<<<<<<< HEAD
     assignedClass: string[];
     assignedBoard: string[];
     assignedSubject: string[];
-=======
-    assignedClass: string;
-    assignedBoard: string;
-    assignedSubject: string;
->>>>>>> 1432c82773dc08086c1357ddd42048ef9778b23c
 }
 
 export const createFacultyProfileDocument = async ({
