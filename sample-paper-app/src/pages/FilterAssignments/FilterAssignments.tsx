@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Filter } from "./Filter";
+import { UserRole } from "@/helpers/enum";
 import { useCollection } from "@/hooks/useCollection";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { LeftSidebar } from "@/components/Sidebar/LeftSidebar";
 import { RightSidebar } from "@/components/Sidebar/RightSidebar";
-import type {
-  AssignmentProps,
-  BoardProps,
-  ClassProps,
-  PaperCode,
-  QueryParams,
-  SubjectProps,
+import {
+  type AssignmentProps,
+  type BoardProps,
+  type ClassProps,
+  type PaperCode,
+  type QueryParams,
+  type SubjectProps,
 } from "@/types/types";
 import {
   Box,
@@ -24,17 +25,25 @@ import {
 import { toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
 import { RouterPaths } from "@/global/enum";
+import { useUserRole } from "@/hooks/useUserRole";
+import { useFacultyProfile } from "@/hooks/useFacultyProfile";
+import { FacultyProfile } from "@/components/Modals/FacultyProfile";
 
 export const FilterAssignments = () => {
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
   const textColor = useColorModeValue("black", "white");
 
-  const { user } = useAuthContext();
   const navigate = useNavigate();
+  const { role } = useUserRole();
+  const { user } = useAuthContext();
+  const { profile } = useFacultyProfile();
 
-  const [selectedPaperCode, setSelectedPaperCode] = useState<PaperCode | null>(null);
+  const isFaculty = role?.role === UserRole.FACULTY;
+
+  const [showFacultyProfileModal, setShowFacultyProfileModal] = useState(false);
   const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
   const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
+  const [selectedPaperCode, setSelectedPaperCode] = useState<PaperCode | null>(null);
   const [selectedSubjectCode, setSelectedSubjectCode] = useState<string | null>(null);
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
@@ -62,6 +71,12 @@ export const FilterAssignments = () => {
 
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
+
+  useEffect(() => {
+    if (isFaculty && user && !profile) {
+      setShowFacultyProfileModal(true);
+    }
+  }, [isFaculty, user, profile]);
 
   const totalBoards = Boards.length;
   const totalClasses = Classes.length;
@@ -267,6 +282,28 @@ export const FilterAssignments = () => {
       {isTablet && (
         <Box mt={4} display="flex" justifyContent="center" w="100%">
           <RightSidebar isHorizontal={true} totalSubjects={totalSubjects} />
+        </Box>
+      )}
+      {showFacultyProfileModal && (
+        <Box
+          top={0}
+          left={0}
+          w={"100vw"}
+          h={"100vh"}
+          zIndex={1000}
+          display={"flex"}
+          position={"fixed"}
+          alignItems={"center"}
+          bg="rgba(0, 0, 0, 0.8)"
+          justifyContent={"center"}
+          backdropFilter={"blur(3px)"}
+        >
+          <FacultyProfile
+            user={{
+              displayName: user?.displayName || "",
+              email: user?.email || ""
+            }}
+            onClose={() => setShowFacultyProfileModal(false)}/>
         </Box>
       )}
     </Box>
