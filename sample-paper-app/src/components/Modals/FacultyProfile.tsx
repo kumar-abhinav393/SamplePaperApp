@@ -17,9 +17,15 @@ interface FacultyProfileProps {
 
 export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
 
+<<<<<<< HEAD
   const [assignedClass, setAssignedClass] = useState<string[]>([]);
   const [assignedBoard, setAssignedBoard] = useState<string[]>([]);
   const [assignedSubject, setAssignedSubject] = useState<string[]>([]);
+=======
+  const [assignedClass, setAssignedClass] = useState("");
+  const [assignedBoard, setAssignedBoard] = useState("");
+  const [assignedSubject, setAssignedSubject] = useState("");
+>>>>>>> 1432c82773dc08086c1357ddd42048ef9778b23c
 
   const handleSubmit = async () => {
     try {
@@ -93,7 +99,11 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
                         value={assignedClass}
                         placeholder="10 or 12"
                         css={{ "--focus-color": "#3bc8f6d6" }}
+<<<<<<< HEAD
                         onChange={(e) => {setAssignedClass(e.target.value.split(",").map(c => c.trim()))}}
+=======
+                        onChange={(e) => setAssignedClass(e.target.value)}
+>>>>>>> 1432c82773dc08086c1357ddd42048ef9778b23c
                       />
                     </InputGroup>
                   </Field.Root>
@@ -106,9 +116,13 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
                         value={assignedSubject}
                         placeholder="Physics/English/Maths/SST"
                         css={{ "--focus-color": "#3bc8f6d6" }}
+<<<<<<< HEAD
                         onChange={(e) => {
                           const value = e.target.value.toLocaleUpperCase();
                           setAssignedSubject(value.split(",").map(c => c.trim()))}}
+=======
+                        onChange={(e) => setAssignedSubject(e.target.value.toLocaleUpperCase())}
+>>>>>>> 1432c82773dc08086c1357ddd42048ef9778b23c
                       />
                     </InputGroup>
                   </Field.Root>
@@ -121,9 +135,13 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
                         value={assignedBoard}
                         placeholder="CBSE/ICSE"
                         css={{ "--focus-color": "#3bc8f6d6" }}
+<<<<<<< HEAD
                         onChange={(e) => {
                           const value = e.target.value.toLocaleUpperCase();
                           setAssignedBoard(value.split(",").map(c => c.trim()))}}
+=======
+                        onChange={(e) => setAssignedBoard(e.target.value.toLocaleUpperCase())}
+>>>>>>> 1432c82773dc08086c1357ddd42048ef9778b23c
                       />
                     </InputGroup>
                   </Field.Root>
