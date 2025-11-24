@@ -1,4 +1,5 @@
 import { createFacultyProfileDocument } from "@/helpers/createFacultyProfileDocument";
+import { Boards, Subjects } from "@/helpers/enum";
 import {
   Flex,
   Button,
@@ -16,10 +17,54 @@ interface FacultyProfileProps {
 }
 
 export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
-
   const [assignedClass, setAssignedClass] = useState<string[]>([]);
   const [assignedBoard, setAssignedBoard] = useState<string[]>([]);
   const [assignedSubject, setAssignedSubject] = useState<string[]>([]);
+
+  // Check for errors only if field has values
+  const classError =
+    assignedClass.length > 0 &&
+    assignedClass.some((c) => c !== "" && c !== "10" && c !== "12");
+
+  const subjectError =
+    assignedSubject.length > 0 &&
+    assignedSubject.some(
+      (c) =>
+        c !== "" &&
+        c !== Subjects.PHYSICS &&
+        c !== Subjects.ENGLISH &&
+        c !== Subjects.MATHS &&
+        c !== Subjects.SST
+    );
+
+  const boardError =
+    assignedBoard.length > 0 &&
+    assignedBoard.some((c) => c !== "" && c !== Boards.CBSE && c !== Boards.ICSE);
+
+  // Check if fields have valid non-empty values
+  const hasValidClass =
+    assignedClass.length > 0 &&
+    assignedClass.every((c) => c === "10" || c === "12");
+
+  const hasValidSubject =
+    assignedSubject.length > 0 &&
+    assignedSubject.every(
+      (c) =>
+        c === Subjects.PHYSICS ||
+        c === Subjects.ENGLISH ||
+        c === Subjects.MATHS ||
+        c === Subjects.SST
+    );
+
+  const hasValidBoard =
+    assignedBoard.length > 0 &&
+    assignedBoard.every(
+      (c) =>
+        c === Boards.CBSE ||
+        c === Boards.ICSE);
+
+  // Form is valid only when all fields have valid values
+  const isFormValid = hasValidClass && hasValidSubject && hasValidBoard;
 
   const handleSubmit = async () => {
     try {
@@ -28,7 +73,7 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
         email: user.email,
         assignedClass,
         assignedBoard,
-        assignedSubject
+        assignedSubject,
       });
       onClose();
     } catch (error) {
@@ -85,20 +130,28 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
                     </InputGroup>
                   </Field.Root>
 
-                  <Field.Root>
+                  <Field.Root invalid={classError}>
                     <Field.Label>ASSIGNED CLASS</Field.Label>
                     <InputGroup>
                       <Input
+                        inputMode="numeric"
                         variant={"outline"}
                         value={assignedClass}
                         placeholder="10 or 12"
                         css={{ "--focus-color": "#3bc8f6d6" }}
-                        onChange={(e) => {setAssignedClass(e.target.value.split(",").map(c => c.trim()))}}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          const numericValue = value.replace(/[^0-9,\s]/g, "");
+                          const classes = numericValue
+                            .split(",")
+                            .map((c) => c.trim());
+                          setAssignedClass(classes);
+                        }}
                       />
                     </InputGroup>
                   </Field.Root>
 
-                  <Field.Root>
+                  <Field.Root invalid={subjectError}>
                     <Field.Label>ASSIGNED SUBJECT</Field.Label>
                     <InputGroup>
                       <Input
@@ -107,13 +160,18 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
                         placeholder="Physics/English/Maths/SST"
                         css={{ "--focus-color": "#3bc8f6d6" }}
                         onChange={(e) => {
-                          const value = e.target.value.toLocaleUpperCase();
-                          setAssignedSubject(value.split(",").map(c => c.trim()))}}
+                          const value = e.target.value.toUpperCase();
+                          const stringValue = value.replace(/[^A-Z,\s]/g, "");
+                          const subjects = stringValue
+                            .split(",")
+                            .map((c) => c.trim());
+                          setAssignedSubject(subjects);
+                        }}
                       />
                     </InputGroup>
                   </Field.Root>
 
-                  <Field.Root>
+                  <Field.Root invalid={boardError}>
                     <Field.Label>ASSIGNED BOARD</Field.Label>
                     <InputGroup>
                       <Input
@@ -122,8 +180,13 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
                         placeholder="CBSE/ICSE"
                         css={{ "--focus-color": "#3bc8f6d6" }}
                         onChange={(e) => {
-                          const value = e.target.value.toLocaleUpperCase();
-                          setAssignedBoard(value.split(",").map(c => c.trim()))}}
+                          const value = e.target.value.toUpperCase();
+                          const stringValue = value.replace(/[^A-Z,\s]/g, "");
+                          const boards = stringValue
+                            .split(",")
+                            .map((c) => c.trim());
+                          setAssignedBoard(boards);
+                        }}
                       />
                     </InputGroup>
                   </Field.Root>
@@ -136,10 +199,10 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
             <Button
               bg={"#3bc8f6d6"}
               onClick={handleSubmit}
+              disabled={!isFormValid}
               border={"1px solid black"}
               fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
               w={["310px", "350px", "450px", "450px", "450px"]}
-              disabled={!assignedBoard || !assignedClass || !assignedSubject}
             >
               Submit
             </Button>

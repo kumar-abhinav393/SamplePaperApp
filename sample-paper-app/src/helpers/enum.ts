@@ -21,4 +21,16 @@ enum UserRole {
   FACULTY = "faculty"
 }
 
-export {TimeFilter, SortOrder, ColorMode, UserRole}
+enum Subjects {
+  PHYSICS = "PHYSICS",
+  ENGLISH = "ENGLISH",
+  MATHS = "MATHS",
+  SST = "SST"
+}
+
+enum Boards {
+  CBSE = "CBSE",
+  ICSE = "ICSE",
+}
+
+export {TimeFilter, SortOrder, ColorMode, UserRole, Subjects, Boards}
