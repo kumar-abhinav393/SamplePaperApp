@@ -303,7 +303,11 @@ export const FilterAssignments = () => {
               displayName: user?.displayName || "",
               email: user?.email || ""
             }}
-            onClose={() => setShowFacultyProfileModal(false)}/>
+            onClose={() => setShowFacultyProfileModal(false)}
+            classes={Classes}
+            subjects={Subjects}
+            boards={Boards}
+            />
         </Box>
       )}
     </Box>
