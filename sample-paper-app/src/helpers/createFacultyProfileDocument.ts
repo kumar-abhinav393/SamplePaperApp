@@ -3,16 +3,16 @@ import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 interface FacultyProfileProps {
-    displayName: string;
     email: string;
+    displayName: string;
     assignedClass: string[];
     assignedBoard: string[];
     assignedSubject: string[];
 }
 
 export const createFacultyProfileDocument = async ({
-    displayName,
     email,
+    displayName,
     assignedClass,
     assignedBoard,
     assignedSubject,
@@ -23,11 +23,12 @@ export const createFacultyProfileDocument = async ({
     if (currentUser) {
         const docRef = doc(db, "Faculties", currentUser.uid);
         await setDoc(docRef, {
-            displayName,
             email,
+            displayName,
             assignedClass,
             assignedBoard,
             assignedSubject,
+            uid: currentUser.uid,
             createdAt: serverTimestamp(),
         });
     }
