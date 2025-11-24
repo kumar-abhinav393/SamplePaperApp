@@ -1,5 +1,6 @@
 import { createFacultyProfileDocument } from "@/helpers/createFacultyProfileDocument";
-import { Boards, Subjects } from "@/helpers/enum";
+import { getBoardFramework, getClassFramework, getSubjectFramework } from "@/helpers/createFrameworkCollections";
+import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
 import {
   Flex,
   Button,
@@ -8,63 +9,29 @@ import {
   Input,
   InputGroup,
   Text,
+  Select,
+  Portal,
 } from "@chakra-ui/react";
 import { useState } from "react";
 
 interface FacultyProfileProps {
   user: { displayName: string; email: string };
   onClose: () => void;
+  classes: ClassProps[];
+  boards: BoardProps[];
+  subjects: SubjectProps[];
 }
 
-export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
+export const FacultyProfile = ({ user, onClose, classes, boards, subjects }: FacultyProfileProps) => {
   const [assignedClass, setAssignedClass] = useState<string[]>([]);
   const [assignedBoard, setAssignedBoard] = useState<string[]>([]);
   const [assignedSubject, setAssignedSubject] = useState<string[]>([]);
 
-  // Check for errors only if field has values
-  const classError =
-    assignedClass.length > 0 &&
-    assignedClass.some((c) => c !== "" && c !== "10" && c !== "12");
+  const boardFramework = getBoardFramework(boards);
+  const classFramework = getClassFramework(classes);
+  const subjectFramework = getSubjectFramework(subjects);
 
-  const subjectError =
-    assignedSubject.length > 0 &&
-    assignedSubject.some(
-      (c) =>
-        c !== "" &&
-        c !== Subjects.PHYSICS &&
-        c !== Subjects.ENGLISH &&
-        c !== Subjects.MATHS &&
-        c !== Subjects.SST
-    );
-
-  const boardError =
-    assignedBoard.length > 0 &&
-    assignedBoard.some((c) => c !== "" && c !== Boards.CBSE && c !== Boards.ICSE);
-
-  // Check if fields have valid non-empty values
-  const hasValidClass =
-    assignedClass.length > 0 &&
-    assignedClass.every((c) => c === "10" || c === "12");
-
-  const hasValidSubject =
-    assignedSubject.length > 0 &&
-    assignedSubject.every(
-      (c) =>
-        c === Subjects.PHYSICS ||
-        c === Subjects.ENGLISH ||
-        c === Subjects.MATHS ||
-        c === Subjects.SST
-    );
-
-  const hasValidBoard =
-    assignedBoard.length > 0 &&
-    assignedBoard.every(
-      (c) =>
-        c === Boards.CBSE ||
-        c === Boards.ICSE);
-
-  // Form is valid only when all fields have valid values
-  const isFormValid = hasValidClass && hasValidSubject && hasValidBoard;
+  const isFormValid = assignedClass.length > 0 && assignedBoard.length > 0 && assignedSubject.length > 0;
 
   const handleSubmit = async () => {
     try {
@@ -83,7 +50,7 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
   return (
     <>
       <Flex
-        id="login"
+        id="faculty-profile"
         mx={"auto"}
         alignItems={"center"}
         flexDirection={"column"}
@@ -130,64 +97,132 @@ export const FacultyProfile = ({ user, onClose }: FacultyProfileProps) => {
                     </InputGroup>
                   </Field.Root>
 
-                  <Field.Root invalid={classError}>
-                    <Field.Label>ASSIGNED CLASS</Field.Label>
+                  <Field.Root>
+                    <Field.Label>ASSIGNED CLASS(ES)</Field.Label>
                     <InputGroup>
-                      <Input
-                        inputMode="numeric"
-                        variant={"outline"}
+                      <Select.Root
+                        multiple
+                        collection={getClassFramework(classes)}
                         value={assignedClass}
-                        placeholder="10 or 12"
-                        css={{ "--focus-color": "#3bc8f6d6" }}
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          const numericValue = value.replace(/[^0-9,\s]/g, "");
-                          const classes = numericValue
-                            .split(",")
-                            .map((c) => c.trim());
-                          setAssignedClass(classes);
+                        onValueChange={(details) => {
+                          setAssignedClass(details.value);
                         }}
-                      />
+                      >
+                        <Select.HiddenSelect />
+                        <Select.Control>
+                          <Select.Trigger>
+                            <Select.ValueText
+                              placeholder="Select Class"
+                              fontSize={"l"}
+                            />
+                          </Select.Trigger>
+                          <Select.IndicatorGroup>
+                            <Select.Indicator />
+                          </Select.IndicatorGroup>
+                        </Select.Control>
+                        <Portal>
+                          <Select.Positioner>
+                            <Select.Content>
+                              {classFramework.items.map((framework) => (
+                                <Select.Item
+                                  item={framework}
+                                  key={framework.value}
+                                  fontSize={"l"}
+                                >
+                                  {framework.label}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              ))}
+                            </Select.Content>
+                          </Select.Positioner>
+                        </Portal>
+                      </Select.Root>
                     </InputGroup>
                   </Field.Root>
 
-                  <Field.Root invalid={subjectError}>
-                    <Field.Label>ASSIGNED SUBJECT</Field.Label>
+                  <Field.Root>
+                    <Field.Label>ASSIGNED BOARD(S)</Field.Label>
                     <InputGroup>
-                      <Input
-                        variant={"outline"}
-                        value={assignedSubject}
-                        placeholder="Physics/English/Maths/SST"
-                        css={{ "--focus-color": "#3bc8f6d6" }}
-                        onChange={(e) => {
-                          const value = e.target.value.toUpperCase();
-                          const stringValue = value.replace(/[^A-Z,\s]/g, "");
-                          const subjects = stringValue
-                            .split(",")
-                            .map((c) => c.trim());
-                          setAssignedSubject(subjects);
-                        }}
-                      />
-                    </InputGroup>
-                  </Field.Root>
-
-                  <Field.Root invalid={boardError}>
-                    <Field.Label>ASSIGNED BOARD</Field.Label>
-                    <InputGroup>
-                      <Input
-                        variant={"outline"}
+                      <Select.Root
+                        multiple
+                        collection={getBoardFramework(boards)}
                         value={assignedBoard}
-                        placeholder="CBSE/ICSE"
-                        css={{ "--focus-color": "#3bc8f6d6" }}
-                        onChange={(e) => {
-                          const value = e.target.value.toUpperCase();
-                          const stringValue = value.replace(/[^A-Z,\s]/g, "");
-                          const boards = stringValue
-                            .split(",")
-                            .map((c) => c.trim());
-                          setAssignedBoard(boards);
+                        onValueChange={(details) => {
+                          setAssignedBoard(details.value);
                         }}
-                      />
+                      >
+                        <Select.HiddenSelect />
+                        <Select.Control>
+                          <Select.Trigger>
+                            <Select.ValueText
+                              placeholder="Select Board"
+                              fontSize={"l"}
+                            />
+                          </Select.Trigger>
+                          <Select.IndicatorGroup>
+                            <Select.Indicator />
+                          </Select.IndicatorGroup>
+                        </Select.Control>
+                        <Portal>
+                          <Select.Positioner>
+                            <Select.Content>
+                              {boardFramework.items.map((framework) => (
+                                <Select.Item
+                                  item={framework}
+                                  key={framework.value}
+                                  fontSize={"l"}
+                                >
+                                  {framework.label}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              ))}
+                            </Select.Content>
+                          </Select.Positioner>
+                        </Portal>
+                      </Select.Root>
+                    </InputGroup>
+                  </Field.Root>
+
+                  <Field.Root>
+                    <Field.Label>ASSIGNED SUBJECT(S)</Field.Label>
+                    <InputGroup>
+                      <Select.Root
+                        multiple
+                        collection={getSubjectFramework(subjects)}
+                        value={assignedSubject}
+                        onValueChange={(details) => {
+                          setAssignedSubject(details.value);
+                        }}
+                      >
+                        <Select.HiddenSelect />
+                        <Select.Control>
+                          <Select.Trigger>
+                            <Select.ValueText
+                              placeholder="Select Subject"
+                              fontSize={"l"}
+                            />
+                          </Select.Trigger>
+                          <Select.IndicatorGroup>
+                            <Select.Indicator />
+                          </Select.IndicatorGroup>
+                        </Select.Control>
+                        <Portal>
+                          <Select.Positioner>
+                            <Select.Content>
+                              {subjectFramework.items.map((framework) => (
+                                <Select.Item
+                                  item={framework}
+                                  key={framework.value}
+                                  fontSize={"l"}
+                                >
+                                  {framework.label}
+                                  <Select.ItemIndicator />
+                                </Select.Item>
+                              ))}
+                            </Select.Content>
+                          </Select.Positioner>
+                        </Portal>
+                      </Select.Root>
                     </InputGroup>
                   </Field.Root>
                 </Fieldset.Content>
