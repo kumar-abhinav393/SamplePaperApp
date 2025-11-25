@@ -78,11 +78,6 @@ export const FilterAssignments = () => {
     }
   }, [isFaculty, user, profile]);
 
-  const totalBoards = Boards.length;
-  const totalClasses = Classes.length;
-  const totalSubjects = Subjects.length;
-  const status = user ? "active" : "inactive";
-
   const handleClearAll = () => {
     setSelectedPaperCode(null);
     setSelectedClassCode(null);
@@ -164,10 +159,10 @@ export const FilterAssignments = () => {
       {isTablet && (
         <Box mb={4} display={"flex"} justifyContent={"center"}>
           <LeftSidebar
-            isHorizontal={true}
             status={status}
-            totalClasses={totalClasses}
-            totalBoards={totalBoards}
+            role={role?.role}
+            profile={profile}
+            isHorizontal={true}
           />
         </Box>
       )}
@@ -197,8 +192,8 @@ export const FilterAssignments = () => {
         >
           <LeftSidebar
             status={status}
-            totalClasses={totalClasses}
-            totalBoards={totalBoards}
+            role={role?.role}
+            profile={profile}
           />
         </Box>
         <Box
@@ -307,7 +302,7 @@ export const FilterAssignments = () => {
             classes={Classes}
             subjects={Subjects}
             boards={Boards}
-            />
+          />
         </Box>
       )}
     </Box>
