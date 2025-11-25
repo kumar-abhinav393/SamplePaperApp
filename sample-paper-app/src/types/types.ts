@@ -96,15 +96,13 @@ interface InvitesProps {
 
 interface FacultyProfileProps {
   id: string;
-  props: {
-    email: string;
-    displayName: string;
-    createdAt: Timestamp;
-    assignedBoard: string[];
-    assignedClasse: string[];
-    assignedSubject: string[];
-  };
-}
+  email: string;
+  displayName: string;
+  createdAt: Timestamp;
+  assignedBoard: string[];
+  assignedClass: string[];
+  assignedSubject: string[];
+};
 
 interface AssignmentProps {
   id: string;
