@@ -1,18 +1,17 @@
 import { Stack, Flex, Tag, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
-import { useUserRole } from "@/hooks/useUserRole";
 import { UserRole } from "@/helpers/enum";
+import type { FacultyProfileProps } from "@/types/types";
 
 interface LeftSidebarProps {
   isHorizontal?: boolean;
+  role: UserRole | undefined,
   status: "active" | "inactive";
-  totalClasses: number;
-  totalBoards: number;
+  profile: FacultyProfileProps | null;
 }
 
-export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalBoards }: LeftSidebarProps) => {
+export const LeftSidebar = ({ isHorizontal = false, status, role, profile }: LeftSidebarProps) => {
 
-  const { role } = useUserRole();
   const textColor = useColorModeValue("#3bc8f6d6", undefined);
 
   return (
@@ -25,7 +24,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalB
         align="center"
         w="100%"
       >
-        {role?.role === UserRole.STUDENT && (
+        {role === UserRole.STUDENT && (
           <>
             <Flex
               gap={3}
@@ -56,7 +55,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalB
                 Total Classes
               </Text>
               <Tag.Root bg={textColor} border={"1px solid black"}>
-                <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{totalClasses}</Tag.Label>
+                <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{0}</Tag.Label>
               </Tag.Root>
             </Flex>
             <Flex
@@ -72,12 +71,12 @@ export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalB
                 Total Boards
               </Text>
               <Tag.Root bg={textColor} border={"1px solid black"}>
-                <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{totalBoards}</Tag.Label>
+                <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{0}</Tag.Label>
               </Tag.Root>
             </Flex>
           </>
         )}
-        {role?.role === UserRole.FACULTY && (
+        {role === UserRole.FACULTY && profile && (
           <>
             <Flex
               gap={3}
@@ -108,7 +107,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalB
                 My Classes
               </Text>
               <Tag.Root bg={textColor} border={"1px solid black"}>
-                <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{0}</Tag.Label>
+                <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{profile.assignedClass.length ?? 0}</Tag.Label>
               </Tag.Root>
             </Flex>
             <Flex
@@ -124,7 +123,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, totalClasses, totalB
                 My Subjects
               </Text>
               <Tag.Root bg={textColor} border={"1px solid black"}>
-                <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{0}</Tag.Label>
+                <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{profile.assignedSubject.length ?? 0}</Tag.Label>
               </Tag.Root>
             </Flex>
           </>
