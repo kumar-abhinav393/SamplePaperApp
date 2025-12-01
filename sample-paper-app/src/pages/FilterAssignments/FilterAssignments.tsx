@@ -30,14 +30,15 @@ import { useFacultyProfile } from "@/hooks/useFacultyProfile";
 import { FacultyProfile } from "@/components/Modals/FacultyProfile";
 
 export const FilterAssignments = () => {
-  const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
-  const textColor = useColorModeValue("black", "white");
-
   const navigate = useNavigate();
   const { role } = useUserRole();
   const { user } = useAuthContext();
   const { profile } = useFacultyProfile();
 
+  const textColor = useColorModeValue("black", "white");
+  const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
+  
+  const status = user ? "active" : "inactive";
   const isFaculty = role?.role === UserRole.FACULTY;
 
   const [showFacultyProfileModal, setShowFacultyProfileModal] = useState(false);
@@ -265,7 +266,11 @@ export const FilterAssignments = () => {
           justifyContent={"center"}
           display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
-          <RightSidebar isHorizontal={false} totalSubjects={totalSubjects} />
+          <RightSidebar
+            isHorizontal={false}
+            role={role?.role}
+            profile={profile}
+          />
         </Box>
       </SimpleGrid>
       {isTablet && (
@@ -276,7 +281,11 @@ export const FilterAssignments = () => {
 
       {isTablet && (
         <Box mt={4} display="flex" justifyContent="center" w="100%">
-          <RightSidebar isHorizontal={true} totalSubjects={totalSubjects} />
+          <RightSidebar
+            isHorizontal={true}
+            role={role?.role}
+            profile={profile}
+          />
         </Box>
       )}
       {showFacultyProfileModal && (
