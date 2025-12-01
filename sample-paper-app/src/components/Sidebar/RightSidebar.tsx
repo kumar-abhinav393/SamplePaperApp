@@ -1,18 +1,20 @@
 import { Stack, Flex, Tag, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
-import { useUserRole } from "@/hooks/useUserRole";
 import { UserRole } from "@/helpers/enum";
+import type { FacultyProfileProps } from "@/types/types";
 
 interface RightSidebarProps {
   isHorizontal?: boolean;
-  totalSubjects: number;
+  role: UserRole | undefined;
+  profile: FacultyProfileProps | null;
 }
 
 export const RightSidebar = ({
   isHorizontal = false,
-  totalSubjects,
+  role,
+  profile
 }: RightSidebarProps) => {
-  const { role } = useUserRole();
+
   const textColor = useColorModeValue("#3bc8f6d6", undefined);
 
   return (
@@ -24,7 +26,7 @@ export const RightSidebar = ({
         align="center"
         w="100%"
       >
-        {role?.role === UserRole.STUDENT && (
+        {role === UserRole.STUDENT && (
           <>
             <Flex gap={3} flexDirection="column" alignItems="center">
               <Text
@@ -39,7 +41,7 @@ export const RightSidebar = ({
                   colorScheme="blue"
                   fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                 >
-                  {totalSubjects}
+                  {0}
                 </Tag.Label>
               </Tag.Root>
             </Flex>
@@ -73,14 +75,31 @@ export const RightSidebar = ({
                   colorScheme="green"
                   fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                 >
-                  0
+                  {0}
                 </Tag.Label>
               </Tag.Root>
             </Flex>
           </>
         )}
-        {role?.role === UserRole.FACULTY && (
+        {role === UserRole.FACULTY && (
           <>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                My Boards
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="blue"
+                  fontSize={"l"}
+                >
+                  {profile?.assignedBoard?.join(" | ")}
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
             <Flex gap={3} flexDirection="column" alignItems="center">
               <Text
                 color={"#3bc8f6d6"}
@@ -94,7 +113,7 @@ export const RightSidebar = ({
                   colorScheme="blue"
                   fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                 >
-
+                  
                 </Tag.Label>
               </Tag.Root>
             </Flex>
@@ -105,23 +124,6 @@ export const RightSidebar = ({
                 fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
               >
                 My Uploads
-              </Text>
-              <Tag.Root bg={textColor} border={"1px solid black"}>
-                <Tag.Label
-                  colorScheme="blue"
-                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-                >
-                  0
-                </Tag.Label>
-              </Tag.Root>
-            </Flex>
-            <Flex gap={3} flexDirection="column" alignItems="center">
-              <Text
-                color={"#3bc8f6d6"}
-                fontWeight="medium"
-                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-              >
-                My Notifications
               </Text>
               <Tag.Root bg={textColor} border={"1px solid black"}>
                 <Tag.Label
