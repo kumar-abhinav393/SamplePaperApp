@@ -91,7 +91,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, role, profile }: Lef
                 Status
               </Text>
               <Tag.Root border={"1px solid black"} colorPalette={status === "active" ? "green" : "red"}>
-                <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{status}</Tag.Label>
+                <Tag.Label fontSize={["l", "l", "l", "l", "l"]}>{status}</Tag.Label>
               </Tag.Root>
             </Flex>
             <Flex
@@ -107,7 +107,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, role, profile }: Lef
                 My Classes
               </Text>
               <Tag.Root bg={textColor} border={"1px solid black"}>
-                <Tag.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{profile.assignedClass.length ?? 0}</Tag.Label>
+                <Tag.Label fontSize={"l"}>{profile.assignedClass?.join(" | ")}</Tag.Label>
               </Tag.Root>
             </Flex>
             <Flex
@@ -123,7 +123,7 @@ export const LeftSidebar = ({ isHorizontal = false, status, role, profile }: Lef
                 My Subjects
               </Text>
               <Tag.Root bg={textColor} border={"1px solid black"}>
-                <Tag.Label colorScheme="blue" fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>{profile.assignedSubject.length ?? 0}</Tag.Label>
+                <Tag.Label colorScheme="blue" fontSize={"l"}>{profile.assignedSubject?.join(" | ")}</Tag.Label>
               </Tag.Root>
             </Flex>
           </>
