@@ -214,6 +214,7 @@ export const FilterAssignments = () => {
         >
           <Stack gap={4}>
             <Filter
+              role={role?.role}
               boards={Boards}
               classes={Classes}
               subjects={Subjects}
@@ -247,7 +248,7 @@ export const FilterAssignments = () => {
                 border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
-                Filter
+                {role?.role === UserRole.FACULTY ? "Upload" : "Filter"}
               </Button>
             </Flex>
           </Stack>
