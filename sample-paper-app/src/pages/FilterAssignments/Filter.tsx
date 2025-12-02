@@ -1,11 +1,15 @@
 import type { AssignmentProps, BoardProps, ClassProps, PaperCode, SubjectProps } from "@/types/types";
-import { Select, Portal, createListCollection } from "@chakra-ui/react";
+import { Select, Portal, createListCollection, Text, Grid, GridItem, Input, Box } from "@chakra-ui/react";
 import { useEffect } from "react";
+import { UserRole } from "@/helpers/enum";
+import { MdOutlineFileUpload } from "react-icons/md";
+import { MdOutlineDescription } from "react-icons/md";
 
 interface FilterProps {
   boards: BoardProps[];
   classes: ClassProps[];
   subjects: SubjectProps[];
+  role: UserRole | undefined;
   assignments: AssignmentProps[];
   selectedBoardCode: string | null;
   selectedClassCode: number | null;
@@ -19,6 +23,7 @@ interface FilterProps {
 }
 
 export const Filter = ({
+  role,
   classes,
   subjects,
   boards,
@@ -245,6 +250,58 @@ export const Filter = ({
           </Select.Positioner>
         </Portal>
       </Select.Root>
+      {role === UserRole.FACULTY && (
+        <Grid
+          gap={"4"}
+          templateColumns={["repeat(3, 1fr)", "repeat(3, 1fr)", "repeat(5, 1fr)"]}
+        >
+          <GridItem colSpan={[2, 2, 2]}>
+            <Input
+              placeholder="Enter Topic Name"
+              css={{ "--focus-color": "#3bc8f6d6" }}
+              fontSize={["l", "xl", "xl", "xl", "xl"]}
+            />
+          </GridItem>
+          <GridItem
+            gap={[3, 3, 0]}
+            display={"flex"}
+            colSpan={[1, 1, 2]}
+            alignItems={"center"}
+            fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+            justifyContent={["flex-end", "flex-end", "center"]}
+          >
+            <Box display={["none", "none", "block"]}>
+              <Text
+                cursor={"pointer"}
+                textDecoration={"underline"}
+              >
+                Add Description
+              </Text>
+            </Box>
+            <Box
+              display={["block", "block", "none"]}
+              fontSize={["25px", "25px", "40px", "40px", "40px"]}
+            >
+              <MdOutlineDescription cursor={"pointer"} />
+            </Box>
+            <Box
+              display={["block", "block", "none"]}
+              fontSize={["25px", "25px", "40px", "40px", "40px"]}
+            >
+              <MdOutlineFileUpload cursor={"pointer"} />
+            </Box>
+          </GridItem>
+          <GridItem
+            colSpan={1}
+            alignItems={"center"}
+            justifyContent={"flex-end"}
+            display={["none", "none", "flex"]}
+            fontSize={["30px", "30px", "40px", "40px", "40px"]}
+          >
+            <MdOutlineFileUpload cursor={"pointer"} />
+          </GridItem>
+        </Grid>
+      )}
     </>
   );
 };
