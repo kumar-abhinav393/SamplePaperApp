@@ -1,9 +1,26 @@
-import type { AssignmentProps, BoardProps, ClassProps, PaperCode, SubjectProps } from "@/types/types";
-import { Select, Portal, createListCollection, Text, Grid, GridItem, Input, Box } from "@chakra-ui/react";
+import type {
+  AssignmentProps,
+  BoardProps,
+  ClassProps,
+  PaperCode,
+  SubjectProps,
+} from "@/types/types";
+import {
+  Select,
+  Portal,
+  createListCollection,
+  Text,
+  Grid,
+  GridItem,
+  Input,
+  Box,
+  Flex,
+} from "@chakra-ui/react";
 import { useEffect } from "react";
 import { UserRole } from "@/helpers/enum";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
+import { dialog } from "@/components/Modals/DescriptionModal";
 
 interface FilterProps {
   boards: BoardProps[];
@@ -37,7 +54,6 @@ export const Filter = ({
   setSelectedBoardCode,
   setSelectedSubjectCode,
 }: FilterProps) => {
-
   useEffect(() => {
     setSelectedBoardCode(null);
   }, [selectedClassCode]);
@@ -72,7 +88,7 @@ export const Filter = ({
     items: paperTypes.map((p) => ({
       label: p.name,
       value: p.code,
-    }))
+    })),
   });
   return (
     <>
@@ -253,7 +269,11 @@ export const Filter = ({
       {role === UserRole.FACULTY && (
         <Grid
           gap={"4"}
-          templateColumns={["repeat(3, 1fr)", "repeat(3, 1fr)", "repeat(5, 1fr)"]}
+          templateColumns={[
+            "repeat(3, 1fr)",
+            "repeat(3, 1fr)",
+            "repeat(5, 1fr)",
+          ]}
         >
           <GridItem colSpan={[2, 2, 2]}>
             <Input
@@ -270,26 +290,42 @@ export const Filter = ({
             fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
             justifyContent={["flex-end", "flex-end", "center"]}
           >
-            <Box display={["none", "none", "block"]}>
-              <Text
-                cursor={"pointer"}
-                textDecoration={"underline"}
+            <Flex>
+              <Box
+                display={["none", "none", "block"]}
+                onClick={() => {
+                  dialog.open("a", {
+                    title: "Add Description",
+                    description: "Write a short description...",
+                  });
+                }}
               >
-                Add Description
-              </Text>
-            </Box>
+                <Text cursor={"pointer"} textDecoration={"underline"}>
+                  Add Description
+                </Text>
+              </Box>
+            </Flex>
             <Box
               display={["block", "block", "none"]}
               fontSize={["25px", "25px", "40px", "40px", "40px"]}
+              onClick={() => {
+                  dialog.open("a", {
+                    title: "Add Description",
+                    description: "Write a short description...",
+                  });
+                }}
             >
               <MdOutlineDescription cursor={"pointer"} />
             </Box>
-            <Box
-              display={["block", "block", "none"]}
-              fontSize={["25px", "25px", "40px", "40px", "40px"]}
-            >
-              <MdOutlineFileUpload cursor={"pointer"} />
-            </Box>
+            <dialog.Viewport />
+            <Flex>
+              <Box
+                display={["block", "block", "none"]}
+                fontSize={["25px", "25px", "40px", "40px", "40px"]}
+              >
+                <MdOutlineFileUpload cursor={"pointer"} />
+              </Box>
+            </Flex>
           </GridItem>
           <GridItem
             colSpan={1}
