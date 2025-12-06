@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import type React from "react";
 import { useColorModeValue } from "../ui/color-mode";
+import { useState } from "react";
 
 interface DialogProps {
   title?: string;
@@ -19,6 +20,8 @@ interface DialogProps {
 export const dialog = createOverlay<DialogProps>((props) => {
   const { title, description, ...rest } = props;
 
+  const [text, setText] = useState("");
+  
   const textColor = useColorModeValue("black", "white");
 
   return (
@@ -47,8 +50,10 @@ export const dialog = createOverlay<DialogProps>((props) => {
                         size={"xl"}
                         maxLength={500}
                         variant={"outline"}
+                        value={text}
                         autoresize maxH={"10lh"}
                         placeholder="start typing..."
+                        onChange={(e) => setText(e.target.value)}
                       />
                       <Field.ErrorText>Field is required</Field.ErrorText>
                       <Field.HelperText>Max 500 characters.</Field.HelperText>
@@ -60,6 +65,7 @@ export const dialog = createOverlay<DialogProps>((props) => {
                       bg={"#3bc8f6d6"}
                       border={"1px solid black"}
                       fontSize={["xl", "xl", "xl", "1xl", "1xl"]}
+                      onClick={() => dialog.close("a", text)}
                     >
                       Add
                     </Button>

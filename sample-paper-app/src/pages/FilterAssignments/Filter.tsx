@@ -16,15 +16,17 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { UserRole } from "@/helpers/enum";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
 import { dialog } from "@/components/Modals/DescriptionModal";
 
 interface FilterProps {
+  topicName: string;
   boards: BoardProps[];
   classes: ClassProps[];
+  addDescription: string;
   subjects: SubjectProps[];
   role: UserRole | undefined;
   assignments: AssignmentProps[];
@@ -37,20 +39,26 @@ interface FilterProps {
   setSelectedBoardCode: (value: string | null) => void;
   setSelectedSubjectCode: (value: string | null) => void;
   setSelectedPaperCode: (value: PaperCode | null) => void;
+  setTopicName: React.Dispatch<React.SetStateAction<string>>
+  setAddDescription: React.Dispatch<React.SetStateAction<string>>
 }
 
 export const Filter = ({
   role,
+  boards,
   classes,
   subjects,
-  boards,
+  topicName,
   paperTypes,
+  setTopicName,
+  addDescription,
   selectedPaperCode,
   selectedClassCode,
   selectedBoardCode,
+  onClassCodeChange,
+  setAddDescription,
   selectedSubjectCode,
   setSelectedPaperCode,
-  onClassCodeChange,
   setSelectedBoardCode,
   setSelectedSubjectCode,
 }: FilterProps) => {
@@ -90,6 +98,7 @@ export const Filter = ({
       value: p.code,
     })),
   });
+
   return (
     <>
       <Select.Root
@@ -277,9 +286,11 @@ export const Filter = ({
         >
           <GridItem colSpan={[2, 2, 2]}>
             <Input
+              value={topicName}
               placeholder="Enter Topic Name"
               css={{ "--focus-color": "#3bc8f6d6" }}
               fontSize={["l", "xl", "xl", "xl", "xl"]}
+              onChange={(e) => setTopicName(e.target.value)}
             />
           </GridItem>
           <GridItem
@@ -297,6 +308,8 @@ export const Filter = ({
                   dialog.open("a", {
                     title: "Add Description",
                     description: "Write a short description...",
+                  }).then((value) => {
+                    setAddDescription(value);
                   });
                 }}
               >
@@ -312,6 +325,7 @@ export const Filter = ({
                   dialog.open("a", {
                     title: "Add Description",
                     description: "Write a short description...",
+                    
                   });
                 }}
             >
