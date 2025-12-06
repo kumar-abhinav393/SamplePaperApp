@@ -41,6 +41,8 @@ export const FilterAssignments = () => {
   const status = user ? "active" : "inactive";
   const isFaculty = role?.role === UserRole.FACULTY;
 
+  const [topicName, setTopicName] = useState("");
+  const [addDescription, setAddDescription] = useState("");
   const [showFacultyProfileModal, setShowFacultyProfileModal] = useState(false);
   const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
   const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
@@ -146,6 +148,27 @@ export const FilterAssignments = () => {
       }
     })
   }
+  
+  const handleUpload = () => {
+    try {
+      const assignmentDocs = {
+        active: status,
+        topicName: topicName,
+        createdAt: new Date(),
+        name: selectedPaperCode,
+        description: addDescription,
+        createdBy: user?.displayName,
+        year: new Date().getFullYear(),
+        classLevels: selectedClassCode,
+        boardFilters: selectedBoardCode,
+        subjectCode: selectedSubjectCode,
+        code: selectedPaperCode?.toLocaleUpperCase(),
+      }
+      console.log("Assignment Docs: ", assignmentDocs)
+    } catch (error) {
+      console.error("Upload failed: ", error)
+    }
+  }
 
   return (
     <Box
@@ -218,8 +241,12 @@ export const FilterAssignments = () => {
               boards={Boards}
               classes={Classes}
               subjects={Subjects}
+              topicName={topicName}
               paperTypes={paperTypes}
               assignments={Assignments}
+              setTopicName={setTopicName}
+              addDescription={addDescription}
+              setAddDescription={setAddDescription}
               selectedPaperCode={selectedPaperCode}
               selectedBoardCode={selectedBoardCode}
               selectedClassCode={selectedClassCode}
@@ -244,7 +271,7 @@ export const FilterAssignments = () => {
                 w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
-                onClick={handleFilter}
+                onClick={role?.role == UserRole.FACULTY ? handleUpload : handleFilter}
                 border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
               >
