@@ -48,11 +48,12 @@ export const dialog = createOverlay<DialogProps>((props) => {
                     <Field.Root required>
                       <Textarea
                         size={"xl"}
+                        value={text}
                         maxLength={500}
                         variant={"outline"}
-                        value={text}
                         autoresize maxH={"10lh"}
                         placeholder="start typing..."
+                        css={{ "--focus-color": "#3bc8f6d6" }}
                         onChange={(e) => setText(e.target.value)}
                       />
                       <Field.ErrorText>Field is required</Field.ErrorText>
@@ -63,6 +64,7 @@ export const dialog = createOverlay<DialogProps>((props) => {
                     <Button
                       color={textColor}
                       bg={"#3bc8f6d6"}
+                      disabled={!text}
                       border={"1px solid black"}
                       fontSize={["xl", "xl", "xl", "1xl", "1xl"]}
                       onClick={() => dialog.close("a", text)}
