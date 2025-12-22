@@ -37,7 +37,7 @@ export const FilterAssignments = () => {
 
   const textColor = useColorModeValue("black", "white");
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
-  
+
   const status = user ? "active" : "inactive";
   const isFaculty = role?.role === UserRole.FACULTY;
 
@@ -86,6 +86,7 @@ export const FilterAssignments = () => {
     setSelectedClassCode(null);
     setSelectedBoardCode(null);
     setSelectedSubjectCode(null);
+    setTopicName("");
   };
 
   const handleFilter = () => {
@@ -148,25 +149,46 @@ export const FilterAssignments = () => {
       }
     })
   }
-  
+
   const handleUpload = () => {
-    try {
-      const assignmentDocs = {
-        active: status,
-        topicName: topicName,
-        createdAt: new Date(),
-        name: selectedPaperCode,
-        description: addDescription,
-        createdBy: user?.displayName,
-        year: new Date().getFullYear(),
-        classLevels: selectedClassCode,
-        boardFilters: selectedBoardCode,
-        subjectCode: selectedSubjectCode,
-        code: selectedPaperCode?.toLocaleUpperCase(),
+    if (
+      !selectedPaperCode ||
+      !selectedClassCode ||
+      !selectedBoardCode ||
+      !selectedSubjectCode
+    ) {
+      toaster.create({
+        title: "Missing Selection",
+        type: "warning",
+        description: "Please make the selection before Uploading.",
+      });
+      return;
+    } else if (!topicName) {
+      toaster.create({
+        title: "Missing Topic Name",
+        type: "warning",
+        description: "Please enter the topic name before uploading.",
+      });
+      return
+    } else {
+      try {
+        const assignmentDocs = {
+          active: status,
+          topicName: topicName,
+          createdAt: new Date(),
+          name: selectedPaperCode,
+          description: addDescription,
+          createdBy: user?.displayName,
+          year: new Date().getFullYear(),
+          classLevels: selectedClassCode,
+          boardFilters: selectedBoardCode,
+          subjectCode: selectedSubjectCode,
+          code: selectedPaperCode?.toLocaleUpperCase(),
+        }
+        console.log("Assignment Docs: ", assignmentDocs)
+      } catch (error) {
+        console.error("Upload failed: ", error)
       }
-      console.log("Assignment Docs: ", assignmentDocs)
-    } catch (error) {
-      console.error("Upload failed: ", error)
     }
   }
 
