@@ -16,7 +16,7 @@ import {
   Box,
   Flex,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { UserRole } from "@/helpers/enum";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { MdOutlineDescription } from "react-icons/md";
@@ -29,11 +29,13 @@ interface FilterProps {
   addDescription: string;
   subjects: SubjectProps[];
   role: UserRole | undefined;
+  assignmentPdf: File | null;
   assignments: AssignmentProps[];
   selectedBoardCode: string | null;
   selectedClassCode: number | null;
   selectedSubjectCode: string | null;
   selectedPaperCode: PaperCode | null;
+  setAssignmentPdf: (file: File | null) => void;
   paperTypes: { code: PaperCode; name: string }[];
   onClassCodeChange: (value: number | null) => void;
   setSelectedBoardCode: (value: string | null) => void;
@@ -51,7 +53,9 @@ export const Filter = ({
   topicName,
   paperTypes,
   setTopicName,
+  assignmentPdf,
   addDescription,
+  setAssignmentPdf,
   selectedPaperCode,
   selectedClassCode,
   selectedBoardCode,
@@ -98,6 +102,8 @@ export const Filter = ({
       value: p.code,
     })),
   });
+
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
@@ -332,6 +338,19 @@ export const Filter = ({
               <MdOutlineDescription cursor={"pointer"} />
             </Box>
             <dialog.Viewport />
+            <input
+              type="file"
+              ref={fileInputRef}
+              accept="application/pdf"
+              style={{display: "none"}}
+              onChange={(e) => {
+                const file = e.target.files?.[0]
+                if (file) {
+                  setAssignmentPdf(file);
+                }
+              }}
+            >
+            </input>
             <Flex>
               <Box
                 display={["block", "block", "none"]}
@@ -348,7 +367,9 @@ export const Filter = ({
             display={["none", "none", "flex"]}
             fontSize={["30px", "30px", "40px", "40px", "40px"]}
           >
-            <MdOutlineFileUpload cursor={"pointer"} />
+            <MdOutlineFileUpload
+              cursor={"pointer"}
+              onClick={() => fileInputRef.current?.click()} />
           </GridItem>
         </Grid>
       )}
