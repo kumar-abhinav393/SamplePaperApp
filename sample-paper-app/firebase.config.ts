@@ -1,5 +1,6 @@
-import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 import { getFirestore, Timestamp } from "firebase/firestore";
 
 const firebaseConfig = {
@@ -12,10 +13,11 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const db = getFirestore();
 const auth = getAuth();
+const storage = getStorage(app);
 
 const timestamp = Timestamp;
 
-export { db, auth, timestamp }
+export { db, auth, timestamp, storage }
