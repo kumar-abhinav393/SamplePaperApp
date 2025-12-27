@@ -28,6 +28,8 @@ import { RouterPaths } from "@/global/enum";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useFacultyProfile } from "@/hooks/useFacultyProfile";
 import { FacultyProfile } from "@/components/Modals/FacultyProfile";
+import { uploadAssignmentPdf } from "@/helpers/uploadAssignmentPdf";
+import { createAssignmentDocument } from "@/helpers/createAssignmentDocument";
 
 export const FilterAssignments = () => {
   const navigate = useNavigate();
@@ -42,7 +44,9 @@ export const FilterAssignments = () => {
   const isFaculty = role?.role === UserRole.FACULTY;
 
   const [topicName, setTopicName] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
   const [addDescription, setAddDescription] = useState("");
+  const [assignmentPdf, setAssignmentPdf] = useState<File | null>(null);
   const [showFacultyProfileModal, setShowFacultyProfileModal] = useState(false);
   const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
   const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
@@ -82,11 +86,13 @@ export const FilterAssignments = () => {
   }, [isFaculty, user, profile]);
 
   const handleClearAll = () => {
+    setTopicName("");
+    setAddDescription("");
+    setAssignmentPdf(null);
     setSelectedPaperCode(null);
     setSelectedClassCode(null);
     setSelectedBoardCode(null);
     setSelectedSubjectCode(null);
-    setTopicName("");
   };
 
   const handleFilter = () => {
@@ -150,7 +156,7 @@ export const FilterAssignments = () => {
     })
   }
 
-  const handleUpload = () => {
+  const handleUpload = async () => {
     if (
       !selectedPaperCode ||
       !selectedClassCode ||
@@ -172,22 +178,28 @@ export const FilterAssignments = () => {
       return
     } else {
       try {
-        const assignmentDocs = {
-          active: status,
-          topicName: topicName,
-          createdAt: new Date(),
-          name: selectedPaperCode,
-          description: addDescription,
-          createdBy: user?.displayName,
-          year: new Date().getFullYear(),
-          classLevels: selectedClassCode,
-          boardFilters: selectedBoardCode,
-          subjectCode: selectedSubjectCode,
-          code: selectedPaperCode?.toLocaleUpperCase(),
+        if (assignmentPdf) {
+          setIsUploading(true);
+          const downloadUrl = await uploadAssignmentPdf(assignmentPdf);
+          await createAssignmentDocument({
+            status: status,
+            topicName: topicName,
+            filePath: downloadUrl,
+            name: selectedPaperCode,
+            description: addDescription,
+            classLevels: selectedClassCode,
+            boardFilters: selectedBoardCode,
+            subjectCode: selectedSubjectCode,
+            createdBy: user?.displayName || "",
+            code: selectedPaperCode.toLocaleUpperCase(),
+          });
         }
-        console.log("Assignment Docs: ", assignmentDocs)
       } catch (error) {
-        console.error("Upload failed: ", error)
+        console.error("Upload failed: ", error);
+      }
+      finally {
+        setIsUploading(false);
+        handleClearAll();
       }
     }
   }
@@ -267,7 +279,9 @@ export const FilterAssignments = () => {
               paperTypes={paperTypes}
               assignments={Assignments}
               setTopicName={setTopicName}
+              assignmentPdf={assignmentPdf}
               addDescription={addDescription}
+              setAssignmentPdf={setAssignmentPdf}
               setAddDescription={setAddDescription}
               selectedPaperCode={selectedPaperCode}
               selectedBoardCode={selectedBoardCode}
@@ -293,9 +307,11 @@ export const FilterAssignments = () => {
                 w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
-                onClick={role?.role == UserRole.FACULTY ? handleUpload : handleFilter}
+                loading={isUploading}
+                disabled={isUploading}
                 border={"1px solid black"}
                 fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+                onClick={role?.role == UserRole.FACULTY ? handleUpload : handleFilter}
               >
                 {role?.role === UserRole.FACULTY ? "Upload" : "Filter"}
               </Button>
