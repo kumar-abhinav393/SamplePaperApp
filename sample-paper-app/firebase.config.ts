@@ -4,12 +4,12 @@ import { getStorage } from "firebase/storage";
 import { getFirestore, Timestamp } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB6N898BktHcgaVVfKoFPcvBxlJm9uXdIQ",
-  authDomain: "sample-paper-app-0.firebaseapp.com",
-  projectId: "sample-paper-app-0",
-  storageBucket: "sample-paper-app-0.firebasestorage.app",
-  messagingSenderId: "125392778903",
-  appId: "1:125392778903:web:dfac3d2617d1414b0cdbd2"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
