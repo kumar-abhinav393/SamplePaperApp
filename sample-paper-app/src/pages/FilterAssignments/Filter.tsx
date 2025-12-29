@@ -354,7 +354,10 @@ export const Filter = ({
                 display={["block", "block", "none"]}
                 fontSize={["25px", "25px", "40px", "40px", "40px"]}
               >
-                <MdOutlineFileUpload cursor={"pointer"} />
+                <MdOutlineFileUpload
+                  cursor={"pointer"}
+                  onClick={() => fileInputRef.current?.click()}
+                />
               </Box>
             </Flex>
           </GridItem>
