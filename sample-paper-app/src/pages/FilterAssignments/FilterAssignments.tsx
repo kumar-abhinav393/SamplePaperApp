@@ -15,12 +15,14 @@ import {
   type SubjectProps,
 } from "@/types/types";
 import {
+  Text,
   Box,
   Button,
   Flex,
   SimpleGrid,
   Stack,
   useBreakpointValue,
+  CloseButton,
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
@@ -181,7 +183,7 @@ export const FilterAssignments = () => {
         if (assignmentPdf) {
           setIsUploading(true);
           const downloadUrl = await uploadAssignmentPdf(assignmentPdf);
-          await createAssignmentDocument({
+          const response = await createAssignmentDocument({
             status: status,
             topicName: topicName,
             filePath: downloadUrl,
@@ -193,9 +195,20 @@ export const FilterAssignments = () => {
             createdBy: user?.displayName || "",
             code: selectedPaperCode.toLocaleUpperCase(),
           });
+          if(response){
+            toaster.create({
+              title: "Assignment uploaded",
+              type: "success",
+              description: "You Assignment is successfully uploaded"
+            })
+          }
         }
       } catch (error) {
-        console.error("Upload failed: ", error);
+        toaster.create({
+          title: "Upload failed",
+          type: "error",
+          description: error
+        })
       }
       finally {
         setIsUploading(false);
@@ -292,6 +305,24 @@ export const FilterAssignments = () => {
               setSelectedBoardCode={setSelectedBoardCode}
               setSelectedSubjectCode={setSelectedSubjectCode}
             />
+            {assignmentPdf && (
+              <Box
+                display={"flex"}
+                justifyContent={"flex-end"}
+              >
+                <Text
+                  fontSize={"sm"}
+                  color={"#3bc8f6d6"}
+                >
+                  {assignmentPdf.name}
+                </Text>
+                <CloseButton
+                  size={"2xs"}
+                  variant={"ghost"}
+                  onClick={() => setAssignmentPdf(null)}  
+                />
+              </Box>
+            )}
             <Flex mt={4} w={"100%"} justifyContent={"space-between"}>
               <Button
                 w={"120px"}
