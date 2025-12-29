@@ -53,8 +53,6 @@ export const Filter = ({
   topicName,
   paperTypes,
   setTopicName,
-  assignmentPdf,
-  addDescription,
   setAssignmentPdf,
   selectedPaperCode,
   selectedClassCode,
@@ -68,15 +66,15 @@ export const Filter = ({
 }: FilterProps) => {
   useEffect(() => {
     setSelectedBoardCode(null);
-  }, [selectedClassCode]);
+  }, [selectedClassCode, setSelectedBoardCode]);
 
   useEffect(() => {
     setSelectedSubjectCode(null);
-  }, [selectedBoardCode]);
+  }, [selectedBoardCode, setSelectedSubjectCode]);
 
   useEffect(() => {
     setSelectedPaperCode(null);
-  }, [selectedSubjectCode]);
+  }, [selectedSubjectCode, setSelectedPaperCode]);
 
   const classFrameworks = createListCollection({
     items: classes.map((c) => ({
@@ -328,12 +326,12 @@ export const Filter = ({
               display={["block", "block", "none"]}
               fontSize={["25px", "25px", "40px", "40px", "40px"]}
               onClick={() => {
-                  dialog.open("a", {
-                    title: "Add Description",
-                    description: "Write a short description...",
-                    
-                  });
-                }}
+                dialog.open("a", {
+                  title: "Add Description",
+                  description: "Write a short description...",
+
+                });
+              }}
             >
               <MdOutlineDescription cursor={"pointer"} />
             </Box>
@@ -342,7 +340,7 @@ export const Filter = ({
               type="file"
               ref={fileInputRef}
               accept="application/pdf"
-              style={{display: "none"}}
+              style={{ display: "none" }}
               onChange={(e) => {
                 const file = e.target.files?.[0]
                 if (file) {
