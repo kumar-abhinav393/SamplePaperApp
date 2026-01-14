@@ -10,7 +10,7 @@ interface AssignmentDocumentprops {
     createdBy: string;
     description: string;
     classLevels: number;
-    boardFilters: string;
+    boardFilters: string[];
     subjectCode: string;
 }
 

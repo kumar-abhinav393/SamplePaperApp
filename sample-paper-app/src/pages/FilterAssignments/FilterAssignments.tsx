@@ -37,7 +37,7 @@ export const FilterAssignments = () => {
   const navigate = useNavigate();
   const { role } = useUserRole();
   const { user } = useAuthContext();
-  const { profile } = useFacultyProfile();
+  const { profile, loading } = useFacultyProfile();
 
   const textColor = useColorModeValue("black", "white");
   const isTablet = useBreakpointValue({ base: false, md: true, lg: false });
@@ -82,10 +82,10 @@ export const FilterAssignments = () => {
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
 
   useEffect(() => {
-    if (isFaculty && user && !profile) {
+    if (!loading && isFaculty && user && !profile) {
       setShowFacultyProfileModal(true);
     }
-  }, [isFaculty, user, profile]);
+  }, [loading, isFaculty, user, profile]);
 
   const handleClearAll = () => {
     setTopicName("");
@@ -123,9 +123,9 @@ export const FilterAssignments = () => {
 
     // In-memory filtering (simple, effecitve for small datasets)
     const filtered = Assignments
-      .filter(a => a.props.classLevels.includes(selectedClassCode))
+      .filter(a => a.props.classLevels === selectedClassCode)
       .filter(a => a.props.boardFilters.includes(selectedBoardCode))
-      .filter(a => a.props.subjectCode.includes(selectedSubjectCode));
+      .filter(a => a.props.subjectCode === selectedSubjectCode);
 
     if (filtered.length === 0) {
       toaster.create({
@@ -190,7 +190,7 @@ export const FilterAssignments = () => {
             name: selectedPaperCode,
             description: addDescription,
             classLevels: selectedClassCode,
-            boardFilters: selectedBoardCode,
+            boardFilters: [selectedBoardCode],
             subjectCode: selectedSubjectCode,
             createdBy: user?.displayName || "",
             code: selectedPaperCode.toLocaleUpperCase(),
