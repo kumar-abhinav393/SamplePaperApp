@@ -115,8 +115,8 @@ interface AssignmentProps {
     topicName: string;
     description: string;
     createdAt: Timestamp;
-    subjectCode: string[];
-    classLevels: number[];
+    subjectCode: string;
+    classLevels: number;
     boardFilters: string[];
     submittedAt: Timestamp;
   }

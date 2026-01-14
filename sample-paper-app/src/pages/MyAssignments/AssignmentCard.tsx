@@ -15,24 +15,25 @@ import { MdTopic } from "react-icons/md";
 import { MdPreview } from "react-icons/md";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { MdSubject } from "react-icons/md";
-import type { AssignmentProps } from "@/types/types";
+import { type AssignmentProps } from "@/types/types";
 import { GiTeacher } from "react-icons/gi";
 import { MdOutlineUpdate } from "react-icons/md";
 import { formatFirestoreDate } from "@/helpers/dateFormatting";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { MdOutlineDescription } from "react-icons/md";
-import { ColorMode } from "@/helpers/enum";
+import { ColorMode, UserRole } from "@/helpers/enum";
 
 
 interface AssignmenCardProps {
   assignments: AssignmentProps[];
+  role: UserRole | undefined;
 }
 
-export const AssignmentCard = ({ assignments }: AssignmenCardProps) => {
+export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
   return (
     <div>
-      {assignments.map((item) => (
+      {role && assignments.map((item) => (
         <Card.Root key={item.id} size="lg" m={2} border={"1px solid black"} bg={{ base: "#f5f5f5ff", _dark: "#141218" }}>
           <SimpleGrid
             gap={3}
