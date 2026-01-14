@@ -14,7 +14,9 @@ import {
 import { MdTopic } from "react-icons/md";
 import { MdPreview } from "react-icons/md";
 import { MdOutlineFileDownload } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
 import { MdSubject } from "react-icons/md";
+import { MdOutlineDeleteOutline } from "react-icons/md";
 import { type AssignmentProps } from "@/types/types";
 import { GiTeacher } from "react-icons/gi";
 import { MdOutlineUpdate } from "react-icons/md";
@@ -174,8 +176,19 @@ export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
             >
               <Heading color={textColor}>
                 <Flex mt={1} gap={1}>
-                  <MdPreview />
-                  <MdOutlineFileDownload />
+                  {role === UserRole.STUDENT && (
+                    <>
+                      <MdPreview />
+                      <MdOutlineFileDownload />
+                    </>
+                )}
+                {role === UserRole.FACULTY && (
+                    <>
+                      <MdPreview />
+                      <CiEdit />
+                      <MdOutlineDeleteOutline />
+                    </>
+                )}
                 </Flex>
               </Heading>
             </Box>
