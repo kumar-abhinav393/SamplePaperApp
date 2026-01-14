@@ -16,9 +16,12 @@ import { FaSortNumericDown } from "react-icons/fa";
 import type { AssignmentProps } from "@/types/types";
 import { formatFirestoreDate } from "@/helpers/dateFormatting";
 import { useColorModeValue } from "@/components/ui/color-mode";
-import { TimeFilter, SortOrder, ColorMode } from "@/helpers/enum";
+import { TimeFilter, SortOrder, ColorMode, UserRole } from "@/helpers/enum";
 import { AssignmentCard } from "@/pages/MyAssignments/AssignmentCard";
 import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect";
+import { useAuthContext } from "@/hooks/useAuthContext";
+import { useUserRole } from "@/hooks/useUserRole";
+import { useCollection } from "@/hooks/useCollection";
 
 type LocationState = {
   assignments?: AssignmentProps[];
@@ -31,12 +34,23 @@ type LocationState = {
 };
 
 export const MyAssignments = () => {
+  const { role } = useUserRole();
+  const { user } = useAuthContext();
+
   const [searchTerm, setSearchTerm] = useState<string>("");
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.desc);
   const [timeFilter, setTimeFilter] = useState<TimeFilter>(TimeFilter.All);
 
   const { state } = useLocation() as { state: LocationState };
+
+  const { documents: uploadedAssignments } = useCollection<AssignmentProps>("Papers", {
+    where: {
+      fieldPath: "createdBy",
+      opStr: "==",
+      value: user?.displayName
+    }
+  });
 
   const normalize = (s: unknown): string =>
     typeof s === "string" ? s
@@ -50,10 +64,19 @@ export const MyAssignments = () => {
     return new Date(formatFirestoreDate((assignment.props.createdAt))).getTime()
   }
 
-  const requireFilterFirst = !state?.filters;
+  const requireFilterFirst = role?.role !== UserRole.FACULTY && !state?.filters;
 
   const visibleAssignments = useMemo(() => {
     if (requireFilterFirst) return [];
+    return state?.assignments ?? [];
+  }, [state?.assignments, requireFilterFirst]);
+
+  // Conditional assignments based on role
+  const assignmentToShow = role?.role === UserRole.FACULTY ? uploadedAssignments : visibleAssignments;
+
+  const processedAssignments = useMemo(() => {
+    if (!assignmentToShow.length) return []
+
     const sortAssignments = (arr: AssignmentProps[], order: SortOrder = sortOrder) => {
       return [...arr].sort((a, b) => {
         const dateA = new Date(formatFirestoreDate(a.props.createdAt)).getTime()
@@ -61,8 +84,6 @@ export const MyAssignments = () => {
         return order === SortOrder.asc ? dateA - dateB : dateB - dateA
       })
     }
-    const assignments: AssignmentProps[] = state?.assignments ?? []
-    if (!assignments?.length) return []
 
     const now = new Date()
     const year = now.getFullYear()
@@ -71,24 +92,24 @@ export const MyAssignments = () => {
     const startOfNextMonth = new Date(year, month + 1, 1).getTime()
     const startOfLastMonth = new Date(year, month - 1, 1).getTime()
 
-    let list = [...assignments];
+    let list = [...assignmentToShow];
 
     if (timeFilter === TimeFilter.ThisMonth) {
-      list = assignments.filter(a => {
+      list = assignmentToShow.filter(a => {
         const t = getCreatedMillis(a)
         return t >= startOfThisMonth && t < startOfNextMonth
       });
     }
 
     if (timeFilter === TimeFilter.LastMonth) {
-      list = assignments.filter(a => {
+      list = assignmentToShow.filter(a => {
         const t = getCreatedMillis(a)
         return t >= startOfLastMonth && t < startOfThisMonth
       })
     }
 
     if (timeFilter === TimeFilter.Upcoming) {
-      list = assignments.filter(a => {
+      list = assignmentToShow.filter(a => {
         const t = getCreatedMillis(a)
         return t > startOfNextMonth
       })
@@ -109,9 +130,9 @@ export const MyAssignments = () => {
     }
 
     return sortAssignments(list, sortOrder)
-  }, [state?.assignments, timeFilter, sortOrder, searchTerm, requireFilterFirst])
+  }, [assignmentToShow, timeFilter, sortOrder, searchTerm])
 
-  const hasNoResults = !requireFilterFirst && visibleAssignments.length === 0;
+  const hasNoResults = !requireFilterFirst && processedAssignments.length === 0;
 
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === SortOrder.desc ? SortOrder.asc : SortOrder.desc));
@@ -175,7 +196,10 @@ export const MyAssignments = () => {
             h={["30px", "30px", "40px", "40px", "40px"]}
           >
             <GridItem colEnd={[23]} display={"flex"} colStart={[1, 1, 2, 2, 2]}>
-              <TimeFilterSelect value={timeFilter} onChange={setTimeFilter} disabled={requireFilterFirst} />
+              <TimeFilterSelect
+                value={timeFilter}
+                onChange={setTimeFilter}
+                disabled={requireFilterFirst} />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
                 <Button
                   h={"40px"}
@@ -185,7 +209,7 @@ export const MyAssignments = () => {
                   border={"1px solid black"}
                   disabled={requireFilterFirst}
                   onClick={() => setTimeFilter(TimeFilter.All)}
-                  bg={timeFilter === TimeFilter.All && !requireFilterFirst ? "#70f63bd6" : "#3bc8f6d6"}
+                  bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   All
                 </Button>
@@ -284,14 +308,24 @@ export const MyAssignments = () => {
               title="This is the alert title"
               size={["sm", "sm", "md", "md", "lg"]}>
               <Alert.Indicator />
-              <Alert.Title
-                fontSize={["l", "l", "xl", "1xl", "1xl"]}
-              >
-                No Assignment found for the current filter.
-              </Alert.Title>
+              {role?.role === UserRole.FACULTY ? (
+                <Alert.Title
+                  fontSize={["l", "l", "xl", "1xl", "1xl"]}
+                >
+                  No Assignment uploaded so far.
+                </Alert.Title>
+              ) : (
+                <Alert.Title
+                  fontSize={["l", "l", "xl", "1xl", "1xl"]}
+                >
+                  No Assignment found for the current filter.
+                </Alert.Title>
+              )}
             </Alert.Root>
           )}
-          <AssignmentCard assignments={visibleAssignments} />
+          {processedAssignments.length && (
+            <AssignmentCard assignments={processedAssignments} role={role?.role} />
+          )}
         </Box>
       </SimpleGrid>
     </Box>
