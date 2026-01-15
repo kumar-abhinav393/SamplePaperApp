@@ -24,6 +24,9 @@ import { formatFirestoreDate } from "@/helpers/dateFormatting";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { MdOutlineDescription } from "react-icons/md";
 import { ColorMode, UserRole } from "@/helpers/enum";
+import { useState } from "react";
+import { getDownloadURL, ref } from "firebase/storage";
+import { storage } from "../../../firebase.config";
 
 
 interface AssignmenCardProps {
@@ -33,6 +36,22 @@ interface AssignmenCardProps {
 
 export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
+
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [loadingUrl, setLoadingUrl] = useState(false);
+
+  const handlePreviewClick = async(path: string) => {
+    setLoadingUrl(true);
+    try {
+      const fileRef = ref(storage, path);
+      const url = await getDownloadURL(fileRef);
+      setPdfUrl(url);
+    } catch(err) {
+      console.error("Failed to fetch PDF: ", err);
+      setPdfUrl(null);
+    }
+    setLoadingUrl(false);
+  };
   return (
     <div>
       {role && assignments.map((item) => (
@@ -136,7 +155,9 @@ export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
                 flexDirection={"column"}
                 fontSize={["20px", "20px", "20px", "20px", "20px"]}
               >
-                <Dialog.Root size={{ smToMd: "full", md: "lg" }}>
+                <Dialog.Root
+                  size={{ smToMd: "full", md: "lg" }}
+                >
                   <Dialog.Trigger asChild>
                     <Link variant={"underline"}><MdOutlineDescription /></Link>
                   </Dialog.Trigger>
@@ -176,15 +197,52 @@ export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
             >
               <Heading color={textColor}>
                 <Flex mt={1} gap={1}>
+                  <Dialog.Root
+                    size={{ smToMd: "full", md: "lg" }}
+                    onOpenChange={(isOpen) => {
+                    if(isOpen) {
+                      handlePreviewClick(item.props.filePath);
+                    } else {
+                      setPdfUrl(null);
+                    }
+                  }}
+                  >
+                    <Dialog.Trigger asChild>
+                      <Link variant={"underline"}><MdPreview /></Link>
+                    </Dialog.Trigger>
+                    <Portal>
+                      <Dialog.Backdrop />
+                      <Dialog.Positioner>
+                        <Dialog.Content>
+                          <Dialog.Header justifyContent={"center"}>
+                            {item.props.topicName}
+                          </Dialog.Header>
+                          <Dialog.Body>
+                            {loadingUrl ? (
+                              <Text>Loading PDF...</Text>
+                            ) : pdfUrl ? (
+                              <iframe
+                                src={pdfUrl}
+                                width={"100%"}
+                                height={"500px"}
+                                style={{ border: "none" }}
+                                title="Assignment PDF Preview"
+                              />
+                            ) : (
+                              <Text>PDF not available</Text>
+                            )}
+                          </Dialog.Body>
+                        </Dialog.Content>
+                      </Dialog.Positioner>
+                    </Portal>
+                  </Dialog.Root>
                   {role === UserRole.STUDENT && (
                     <>
-                      <MdPreview />
                       <MdOutlineFileDownload />
                     </>
                 )}
                 {role === UserRole.FACULTY && (
                     <>
-                      <MdPreview />
                       <CiEdit />
                       <MdOutlineDeleteOutline />
                     </>
