@@ -111,6 +111,7 @@ interface AssignmentProps {
     year: number;
     code: PaperCode;
     active: boolean;
+    filePath: string;
     createdBy: string;
     topicName: string;
     description: string;
