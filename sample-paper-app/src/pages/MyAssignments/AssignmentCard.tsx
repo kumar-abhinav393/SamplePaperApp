@@ -27,6 +27,7 @@ import { ColorMode, UserRole } from "@/helpers/enum";
 import { useState } from "react";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../../firebase.config";
+import { dialog } from "@/components/Modals/DeleteModel";
 
 
 interface AssignmenCardProps {
@@ -244,7 +245,15 @@ export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
                 {role === UserRole.FACULTY && (
                     <>
                       <CiEdit />
-                      <MdOutlineDeleteOutline />
+                      <MdOutlineDeleteOutline
+                        onClick={() => {
+                        dialog.open("a", {
+                          title: "Delete Assignment",
+                          content: item,
+                          });
+                        }}
+                      />
+                      <dialog.Viewport />
                     </>
                 )}
                 </Flex>
