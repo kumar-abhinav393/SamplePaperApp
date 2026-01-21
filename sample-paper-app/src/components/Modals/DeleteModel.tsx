@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Portal, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
 import { useState } from "react";
+import { toaster } from "../ui/toaster";
 import type { AssignmentProps } from "@/types/types";
 
 interface DeleteModalProps {
@@ -8,15 +9,15 @@ interface DeleteModalProps {
   onClose: () => void;
   content: AssignmentProps;
   deleteDocument: (documentId: string, filePath: string) => Promise<void>;
-} 
+}
 
-export const DeleteModal = ({isOpen, onClose, content, deleteDocument}: DeleteModalProps) => {
+export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: DeleteModalProps) => {
   const textColor = useColorModeValue("black", "white");
 
   const [isDeleting, setIsDeleting] = useState(false);
 
   if (!isOpen) return null;
-  
+
   const handleCancel = () => {
     onClose();
   }
@@ -25,8 +26,18 @@ export const DeleteModal = ({isOpen, onClose, content, deleteDocument}: DeleteMo
     try {
       setIsDeleting(true);
       await deleteDocument(content.id, content.props.filePath);
-    } catch (err) {
-      console.error("Delete Failed: ", err);
+      toaster.create({
+        title: "Assignment deleted",
+        type: "success",
+        description: "Assignment is deleted successfully"
+      });
+      onClose();
+    } catch (error) {
+      toaster.create({
+        title: "Delete failed",
+        type: "error",
+        description: error
+      })
     } finally {
       setIsDeleting(false);
     }
@@ -74,11 +85,11 @@ export const DeleteModal = ({isOpen, onClose, content, deleteDocument}: DeleteMo
             display={"flex"}
             alignItems={"center"}
             flexDirection={"column"}
-            justifyContent={"center"}            
-            >
-              <Text color={textColor}>{content.props.topicName}</Text>
-              <Text color={textColor}>{content.props.subjectCode}</Text>
-              <Text color={textColor}>{content.props.createdBy}</Text>
+            justifyContent={"center"}
+          >
+            <Text color={textColor}>{content.props.topicName}</Text>
+            <Text color={textColor}>{content.props.subjectCode}</Text>
+            <Text color={textColor}>{content.props.createdBy}</Text>
           </Box>
           <Box display="flex" justifyContent="center" w="100%" p={"3"}>
             <Box h="1px" bg="#444746" w="99%" borderRadius="1px" />
@@ -86,7 +97,7 @@ export const DeleteModal = ({isOpen, onClose, content, deleteDocument}: DeleteMo
           <Box
             display={"flex"}
             alignItems={"center"}
-            justifyContent={"flex-start"} 
+            justifyContent={"flex-start"}
           >
             <Text
               m={4}
