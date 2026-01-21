@@ -1,87 +1,130 @@
-import { Box, Button, createOverlay, Dialog, Flex, Portal, Text } from "@chakra-ui/react";
+import { Box, Button, Flex, Portal, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
+import { useState } from "react";
 import type { AssignmentProps } from "@/types/types";
 
-interface DialogProps {
-  title?: string;
-  description?: string;
-  content?: AssignmentProps;
-}
+interface DeleteModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  content: AssignmentProps;
+  deleteDocument: (documentId: string, filePath: string) => Promise<void>;
+} 
 
-export const dialog = createOverlay<DialogProps>((props) => {
-  const { title, ...rest } = props;
-
+export const DeleteModal = ({isOpen, onClose, content, deleteDocument}: DeleteModalProps) => {
   const textColor = useColorModeValue("black", "white");
+
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  if (!isOpen) return null;
+  
+  const handleCancel = () => {
+    onClose();
+  }
+
+  const handleDelete = async () => {
+    try {
+      setIsDeleting(true);
+      await deleteDocument(content.id, content.props.filePath);
+    } catch (err) {
+      console.error("Delete Failed: ", err);
+    } finally {
+      setIsDeleting(false);
+    }
+  }
+
   return (
-    <Dialog.Root {...rest}>
-      <Portal>
-        <Dialog.Backdrop />
-        <Dialog.Positioner justifyContent={"center"} alignItems={"center"}>
-          <Dialog.Content>
-            {title && (
-              <Dialog.Header
-                color={textColor}
-                alignItems={"center"}
-                justifyContent={"center"}
-                bg={{ base: "#f5f5f5ff", _dark: "#141218" }}
-              >
-                <Dialog.Title fontSize={"md"}>{title}</Dialog.Title>
-              </Dialog.Header>
-            )}
-            <Dialog.Body bg={{ base: "#f5f5f5ff", _dark: "#141218" }}>
-                <Box display={"flex"} justifyContent={"center"}>
-                  <Box h={"1px"} bg="#444746" w={"99%"} borderRadius={"1px"}/>
-                </Box>
-                <Box
-                  p={5}
-                  gap={3}
-                  display={"flex"}
-                  alignItems={"center"}
-                  flexDirection={"column"}
-                  justifyContent={"center"}
-                >
-                  <Box>
-                    {props.content?.props.topicName}
-                  </Box>
-                  <Box>
-                    {props.content?.props.subjectCode}
-                  </Box>
-                  <Box>
-                    {props.content?.props.createdBy}
-                  </Box>
-                </Box>
-                <Box display={"flex"} justifyContent={"center"}>
-                  <Box h={"1px"} bg="#444746" w={"99%"} borderRadius={"1px"}/>
-                </Box>
-                <Box p={5} display={"flex"} justifyContent={"center"}>
-                  <Text fontSize={"md"}>Are you sure you want to delete the {props.content?.props.code}?</Text>
-                </Box>
-                <Box p={5} display={"flex"} justifyContent={"space-between"}>
-                  <Flex>
-                    <Button
-                      color={textColor}
-                      bg={"#3bc8f6d6"}
-                      border={ "1px solid black"}
-                      fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
-                    >
-                      Cancel
-                    </Button>
-                  </Flex>
-                  <Flex>
-                    <Button
-                      color={textColor}
-                      bg={"#3bc8f6d6"}
-                      border={ "1px solid black"}
-                      fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
-                    >
-                      Delete
-                    </Button>
-                  </Flex>
-                </Box>
-            </Dialog.Body>
-          </Dialog.Content>
-        </Dialog.Positioner>
-      </Portal>
-    </Dialog.Root>
+    <Portal>
+      <Box
+        top={0}
+        left={0}
+        zIndex={9999}
+        w={"100%"}
+        h={"100%"}
+        display={"flex"}
+        position={"fixed"}
+        alignItems={"center"}
+        justifyContent={"center"}
+      >
+        <Box
+          p={6}
+          maxW={"400px"}
+          display={"flex"}
+          boxShadow={"lg"}
+          borderRadius={"md"}
+          alignItems={"center"}
+          flexDirection={"column"}
+          justifyContent={"center"}
+          border={"1px solid #444746"}
+          bg={{ base: "#f5f5f5ff", _dark: "#141218" }}
+        >
+          <Text
+            mb={4}
+            color={textColor}
+            fontWeight={"bold"}
+            fontSize={["sm", "sm", "md", "lg", "lg"]}
+          >
+            DELETE {content.props.name}
+          </Text>
+          <Box display="flex" justifyContent="center" w="100%" p={"3"}>
+            <Box h="1px" bg="#444746" w="100%" borderRadius="1px" />
+          </Box>
+          <Box
+            m={4}
+            gap={2}
+            display={"flex"}
+            alignItems={"center"}
+            flexDirection={"column"}
+            justifyContent={"center"}            
+            >
+              <Text color={textColor}>{content.props.topicName}</Text>
+              <Text color={textColor}>{content.props.subjectCode}</Text>
+              <Text color={textColor}>{content.props.createdBy}</Text>
+          </Box>
+          <Box display="flex" justifyContent="center" w="100%" p={"3"}>
+            <Box h="1px" bg="#444746" w="99%" borderRadius="1px" />
+          </Box>
+          <Box
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"flex-start"} 
+          >
+            <Text
+              m={4}
+              color={textColor}
+              fontWeight={"bold"}
+              fontSize={["sm", "sm", "md", "lg", "lg"]}
+            >
+              Need to delete this {content.props.code}?
+            </Text>
+          </Box>
+          <Flex
+            mt={3}
+            w={"100%"}
+            justifyContent={"space-between"}
+          >
+            <Button
+              color={textColor}
+              bg={"#3bc8f6d6"}
+              fontWeight={"bold"}
+              onClick={handleCancel}
+              border={"1px solid black"}
+              fontSize={["sm", "sm", "md", "lg", "lg"]}
+            >
+              Cancel
+            </Button>
+            <Button
+              color={textColor}
+              bg={"#3bc8f6d6"}
+              fontWeight={"bold"}
+              onClick={handleDelete}
+              border={"1px solid black"}
+              fontSize={["sm", "sm", "md", "lg", "lg"]}
+            >
+              {isDeleting ? "Deleting..." : "Delete"}
+            </Button>
+          </Flex>
+        </Box>
+      </Box>
+    </Portal>
   );
-});
+}
