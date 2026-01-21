@@ -27,19 +27,22 @@ import { ColorMode, UserRole } from "@/helpers/enum";
 import { useState } from "react";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../../firebase.config";
-import { dialog } from "@/components/Modals/DeleteModel";
+import { DeleteModal } from "@/components/Modals/DeleteModel";
 
 
 interface AssignmenCardProps {
   assignments: AssignmentProps[];
   role: UserRole | undefined;
+  deleteDocument: (documentId: string, filePath: string) => Promise<void>;
 }
 
-export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
+export const AssignmentCard = ({ assignments, role, deleteDocument }: AssignmenCardProps) => {
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
 
-  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
   const [loadingUrl, setLoadingUrl] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [selectedItemToDelete, setSelectedItemToDelete] = useState<AssignmentProps | null>(null);
 
   const handlePreviewClick = async(path: string) => {
     setLoadingUrl(true);
@@ -247,13 +250,10 @@ export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
                       <CiEdit />
                       <MdOutlineDeleteOutline
                         onClick={() => {
-                        dialog.open("a", {
-                          title: "Delete Assignment",
-                          content: item,
-                          });
+                          setSelectedItemToDelete(item);
+                          setIsDeleteModalOpen(true);
                         }}
                       />
-                      <dialog.Viewport />
                     </>
                 )}
                 </Flex>
@@ -262,6 +262,17 @@ export const AssignmentCard = ({ assignments, role }: AssignmenCardProps) => {
           </SimpleGrid>
         </Card.Root>
       ))}
+      {isDeleteModalOpen && selectedItemToDelete && (
+        <DeleteModal
+          isOpen={isDeleteModalOpen}
+          onClose={() => {
+            setIsDeleteModalOpen(false);
+            setSelectedItemToDelete(null);
+          }}
+          content={selectedItemToDelete}
+          deleteDocument={deleteDocument}
+        />
+      )}
     </div>
   );
 };
