@@ -8,7 +8,7 @@ import {
   Input,
   SimpleGrid,
 } from "@chakra-ui/react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
 import { useLocation } from "react-router-dom";
 import { FaSortNumericUp } from "react-icons/fa";
@@ -22,6 +22,8 @@ import { TimeFilterSelect } from "@/components/TimeFilterSelect/TimeFilterSelect
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { useUserRole } from "@/hooks/useUserRole";
 import { useCollection } from "@/hooks/useCollection";
+import { useFirestore } from "@/hooks/useFirestore";
+import { toaster } from "@/components/ui/toaster";
 
 type LocationState = {
   assignments?: AssignmentProps[];
@@ -43,6 +45,7 @@ export const MyAssignments = () => {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>(TimeFilter.All);
 
   const { state } = useLocation() as { state: LocationState };
+  const { deleteDocument, response } = useFirestore<AssignmentProps>("Papers");
 
   const { documents: uploadedAssignments } = useCollection<AssignmentProps>("Papers", {
     where: {
@@ -137,6 +140,14 @@ export const MyAssignments = () => {
   const handleSortToggle = () => {
     setSortOrder((prev) => (prev === SortOrder.desc ? SortOrder.asc : SortOrder.desc));
   };
+
+  useEffect(() => {
+    if (response.error) {
+      toaster.error({
+        title: response.error,
+      })
+    }
+  }, [response])
 
   return (
     <Box
@@ -324,7 +335,7 @@ export const MyAssignments = () => {
             </Alert.Root>
           )}
           {processedAssignments.length && (
-            <AssignmentCard assignments={processedAssignments} role={role?.role} />
+            <AssignmentCard assignments={processedAssignments} role={role?.role} deleteDocument={deleteDocument} />
           )}
         </Box>
       </SimpleGrid>
