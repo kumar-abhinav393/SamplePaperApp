@@ -30,7 +30,6 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
                 const storage = getStorage();
                 const fileRef = ref(storage, filePath);
                 await deleteObject(fileRef);
-                console.log("Deleted PDF file.");
             }
             onSuccess?.();
             dispatchIfNotCanceled({type: "SUCCESS"});
