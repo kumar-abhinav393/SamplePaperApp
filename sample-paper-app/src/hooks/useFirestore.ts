@@ -15,9 +15,7 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
     const [response, dispatch] = useReducer(firestoreReducer, initialState);
     const [isCanceled, setIsCanceled] = useState(false);
 
-    console.log("CollectionId: ", collectionId);
     const colRef = collection(db, collectionId);
-    console.log("colRef: ", colRef.id)
     const dispatchIfNotCanceled = (action: FirestoreAction) => {
         if (!isCanceled) {
             dispatch(action);
@@ -25,7 +23,6 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
     }
     const deleteDocument = async (documentId: string, filePath: string, onSuccess?: () => void) => {
         try {
-            console.log("DocumentId: ", documentId);
             dispatch({type: "IS_PENDING"});
             const docRef = doc(colRef, documentId);
             await deleteDoc(docRef);
