@@ -112,6 +112,7 @@ interface AssignmentProps {
     code: PaperCode;
     active: boolean;
     filePath: string;
+    authorId: string;
     createdBy: string;
     topicName: string;
     description: string;

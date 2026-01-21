@@ -6,17 +6,19 @@ interface AssignmentDocumentprops {
     code: string;
     status: string;
     filePath: string;
+    authorId: string;
     topicName: string;
     createdBy: string;
     description: string;
     classLevels: number;
-    boardFilters: string[];
     subjectCode: string;
+    boardFilters: string[];
 }
 
 export const createAssignmentDocument = async ({
-    name, code, status, filePath, topicName, createdBy,
-    description, classLevels, boardFilters, subjectCode
+    name, code, status, filePath, authorId, topicName,
+    createdBy, description, classLevels, boardFilters,
+    subjectCode
 }: AssignmentDocumentprops) => {
     const colRef = collection(db, "Papers");
     const assignmentDocs = {
@@ -24,6 +26,7 @@ export const createAssignmentDocument = async ({
         code: code,
         active: status,
         filePath: filePath,
+        authorId: authorId,
         topicName: topicName,
         createdBy: createdBy,
         createdAt: new Date(),

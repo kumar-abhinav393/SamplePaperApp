@@ -188,6 +188,7 @@ export const FilterAssignments = () => {
             topicName: topicName,
             filePath: downloadUrl,
             name: selectedPaperCode,
+            authorId: user?.uid || "",
             description: addDescription,
             classLevels: selectedClassCode,
             boardFilters: [selectedBoardCode],
