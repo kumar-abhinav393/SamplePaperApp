@@ -28,6 +28,7 @@ import { useState } from "react";
 import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../../firebase.config";
 import { DeleteModal } from "@/components/Modals/DeleteModel";
+import { UpdateModal } from "@/components/Modals/UpdateModal";
 
 
 interface AssignmenCardProps {
@@ -41,9 +42,11 @@ export const AssignmentCard = ({ assignments, role, deleteDocument }: AssignmenC
 
   const [loadingUrl, setLoadingUrl] = useState(false);
   const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedItemToDelete, setSelectedItemToDelete] = useState<AssignmentProps | null>(null);
-
+  const [selectedItemToUpdate, setSelectedItemToUpdate] = useState<AssignmentProps | null>(null); 
+  
   const handlePreviewClick = async(path: string) => {
     setLoadingUrl(true);
     try {
@@ -247,7 +250,12 @@ export const AssignmentCard = ({ assignments, role, deleteDocument }: AssignmenC
                 )}
                 {role === UserRole.FACULTY && (
                     <>
-                      <CiEdit />
+                      <CiEdit
+                        onClick={() => {
+                          setSelectedItemToUpdate(item);
+                          setIsUpdateModalOpen(true);
+                        }}
+                      />
                       <MdOutlineDeleteOutline
                         onClick={() => {
                           setSelectedItemToDelete(item);
@@ -271,6 +279,15 @@ export const AssignmentCard = ({ assignments, role, deleteDocument }: AssignmenC
           }}
           content={selectedItemToDelete}
           deleteDocument={deleteDocument}
+        />
+      )}
+      {isUpdateModalOpen && selectedItemToUpdate && (
+        <UpdateModal
+          isOpen={isUpdateModalOpen}
+          onClose={() => {
+            setIsUpdateModalOpen(false);
+            setSelectedItemToUpdate(null);
+          }}
         />
       )}
     </div>
