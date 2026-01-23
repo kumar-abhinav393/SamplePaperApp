@@ -3,7 +3,7 @@ import type { User } from "firebase/auth";
 import type { OrderByDirection, Timestamp, WhereFilterOp } from "firebase/firestore";
 import type React from "react";
 
-type PaperCode = "ASSIGNMENTS" | "QUESTION_PAPER";
+type PaperCode = "ASSIGNMENT" | "QUESTION_PAPER";
 
 interface AuthState {
   pending: boolean;
