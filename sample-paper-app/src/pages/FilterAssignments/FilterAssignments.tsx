@@ -59,7 +59,7 @@ export const FilterAssignments = () => {
   const { documents: Classes } = useCollection<ClassProps>("Classes");
 
   const paperTypes: { code: PaperCode; name: string }[] = [
-    { code: "ASSIGNMENTS", name: "Assignments" },
+    { code: "ASSIGNMENT", name: "Assignments" },
     { code: "QUESTION_PAPER", name: "Question Papers" },
   ]
 
@@ -71,9 +71,9 @@ export const FilterAssignments = () => {
       : undefined;
 
   const AssignmentQuery: QueryParams | undefined =
-    selectedPaperCode === "ASSIGNMENTS"
+    selectedPaperCode === "ASSIGNMENT"
       ? {
-        where: { fieldPath: "code", opStr: "==", value: "ASSIGNMENTS" },
+        where: { fieldPath: "code", opStr: "==", value: "ASSIGNMENT" },
         orderBy: { fieldPath: "createdAt", direction: "desc" }
       }
       : undefined;
