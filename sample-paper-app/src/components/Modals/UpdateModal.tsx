@@ -1,13 +1,73 @@
 import { Box, Button, Flex, Input, Portal, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
+import type { AssignmentProps } from "@/types/types";
+import { useState } from "react";
+import { Timestamp, type DocumentData } from "firebase/firestore";
+import { toaster } from "../ui/toaster";
+import { formatFirestoreDate } from "@/helpers/dateFormatting";
 
 interface UpdateModalProps {
   isOpen: boolean;
   onClose: () => void;
+  content: AssignmentProps;
+  updateDocument: (document: Partial<DocumentData>, documentId: string) => Promise<void>;
 }
 
-export const UpdateModal = ({ isOpen, onClose }: UpdateModalProps) => {
+export const UpdateModal = ({ isOpen, onClose, content, updateDocument }: UpdateModalProps) => {
   const textColor = useColorModeValue("black", "white");
+
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [topicName, setTopicName] = useState(content.props.topicName || "");
+  const [facultyName, setFacultyName] = useState(content.props.createdBy || "");
+  const [subjectCode, setSubjectCode] = useState(content.props.subjectCode || "");
+  const [releaseDate, setReleaseDate] = useState(formatFirestoreDate(content.props.createdAt) || "");
+
+  if (!isOpen) return null;
+
+  const handleCancel = () => {
+    onClose();
+  }
+
+  const handleUpdate = async () => {
+    try {
+      setIsUpdating(true);
+
+      const selectedDate = new Date(releaseDate);
+      if (isNaN(selectedDate.getTime())) {
+        toaster.error({ title: "Invalid date format" });
+        return;
+      }
+
+      const year = selectedDate.getFullYear();
+      
+      await updateDocument(
+        {
+          topicName: topicName.trim(),
+          subjectCode: subjectCode.trim(),
+          createdBy: facultyName.trim(),
+          createdAt: Timestamp.fromDate(selectedDate),
+          year: year
+        },
+        content.id
+      );
+
+      toaster.create({
+        title: "Assignment Updated",
+        type: "success",
+        description: "Assignment is updated successfully"
+      });
+      onClose();
+    } catch (error) {
+      console.error("Update failed:", error);
+      toaster.create({
+        title: "Delete failed",
+        type: "error",
+        description: error
+      })
+    } finally {
+      setIsUpdating(false);
+    }
+  }
 
   return (
     <Portal>
@@ -66,7 +126,9 @@ export const UpdateModal = ({ isOpen, onClose }: UpdateModalProps) => {
               </Text>
               <Input
                 size={"sm"}
+                value={topicName}
                 css={{ "--focus-color": "#3bc8f6d6" }}
+                onChange={(e) => setTopicName(e.target.value)}
                 w={["200px", "200px", "230px", "230px", "230px"]}
               />
             </Flex>
@@ -84,7 +146,9 @@ export const UpdateModal = ({ isOpen, onClose }: UpdateModalProps) => {
               </Text>
               <Input
                 size={"sm"}
+                value={subjectCode}
                 css={{ "--focus-color": "#3bc8f6d6" }}
+                onChange={(e) => setSubjectCode(e.target.value)}
                 w={["200px", "200px", "230px", "230px", "230px"]}
               />
             </Flex>
@@ -102,7 +166,9 @@ export const UpdateModal = ({ isOpen, onClose }: UpdateModalProps) => {
               </Text>
               <Input
                 size={"sm"}
+                value={facultyName}
                 css={{ "--focus-color": "#3bc8f6d6" }}
+                onChange={(e) => setFacultyName(e.target.value)}
                 w={["200px", "200px", "230px", "230px", "230px"]}
               />
             </Flex>
@@ -120,7 +186,9 @@ export const UpdateModal = ({ isOpen, onClose }: UpdateModalProps) => {
               </Text>
               <Input
                 size={"sm"}
+                value={releaseDate}
                 css={{ "--focus-color": "#3bc8f6d6" }}
+                onChange={(e) => setReleaseDate(e.target.value)}
                 w={["200px", "200px", "230px", "230px", "230px"]}
               />
             </Flex>
@@ -151,6 +219,7 @@ export const UpdateModal = ({ isOpen, onClose }: UpdateModalProps) => {
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
+              onClick={handleCancel}
               border={"1px solid black"}
               size={["sm", "sm", "md", "lg", "lg"]}
               fontSize={["sm", "sm", "md", "lg", "lg"]}
@@ -161,11 +230,12 @@ export const UpdateModal = ({ isOpen, onClose }: UpdateModalProps) => {
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
+              onClick={handleUpdate}
               border={"1px solid black"}
               size={["sm", "sm", "md", "lg", "lg"]}
               fontSize={["sm", "sm", "md", "lg", "lg"]}
             >
-              Update
+              {isUpdating ? "Updating..." : "Update"}
             </Button>
           </Flex>
         </Box>

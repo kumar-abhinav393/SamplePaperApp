@@ -45,7 +45,7 @@ export const MyAssignments = () => {
   const [timeFilter, setTimeFilter] = useState<TimeFilter>(TimeFilter.All);
 
   const { state } = useLocation() as { state: LocationState };
-  const { deleteDocument, response } = useFirestore<AssignmentProps>("Papers");
+  const { updateDocument, deleteDocument, response } = useFirestore<AssignmentProps>("Papers");
 
   const { documents: uploadedAssignments } = useCollection<AssignmentProps>("Papers", {
     where: {
@@ -335,7 +335,11 @@ export const MyAssignments = () => {
             </Alert.Root>
           )}
           {processedAssignments.length && (
-            <AssignmentCard assignments={processedAssignments} role={role?.role} deleteDocument={deleteDocument} />
+            <AssignmentCard
+              assignments={processedAssignments}
+              role={role?.role}
+              deleteDocument={deleteDocument}
+              updateDocument={updateDocument} />
           )}
         </Box>
       </SimpleGrid>

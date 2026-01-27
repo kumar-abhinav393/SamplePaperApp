@@ -29,15 +29,16 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { storage } from "../../../firebase.config";
 import { DeleteModal } from "@/components/Modals/DeleteModel";
 import { UpdateModal } from "@/components/Modals/UpdateModal";
-
+import type { DocumentData } from "firebase/firestore";
 
 interface AssignmenCardProps {
   assignments: AssignmentProps[];
   role: UserRole | undefined;
   deleteDocument: (documentId: string, filePath: string) => Promise<void>;
+  updateDocument: (document: Partial<DocumentData>, documentId: string) => Promise<void>;
 }
 
-export const AssignmentCard = ({ assignments, role, deleteDocument }: AssignmenCardProps) => {
+export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocument }: AssignmenCardProps) => {
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
 
   const [loadingUrl, setLoadingUrl] = useState(false);
@@ -251,12 +252,14 @@ export const AssignmentCard = ({ assignments, role, deleteDocument }: AssignmenC
                 {role === UserRole.FACULTY && (
                     <>
                       <CiEdit
+                        cursor={"pointer"}
                         onClick={() => {
                           setSelectedItemToUpdate(item);
                           setIsUpdateModalOpen(true);
                         }}
                       />
                       <MdOutlineDeleteOutline
+                        cursor={"pointer"}
                         onClick={() => {
                           setSelectedItemToDelete(item);
                           setIsDeleteModalOpen(true);
@@ -288,6 +291,8 @@ export const AssignmentCard = ({ assignments, role, deleteDocument }: AssignmenC
             setIsUpdateModalOpen(false);
             setSelectedItemToUpdate(null);
           }}
+          content={selectedItemToUpdate}
+          updateDocument={updateDocument}
         />
       )}
     </div>
