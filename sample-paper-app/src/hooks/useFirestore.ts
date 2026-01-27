@@ -1,6 +1,6 @@
 import { firestoreReducer } from "@/reducers/firestoreReducer"
 import type { FirestoreAction, FirestoreState } from "@/types/types"
-import { collection, deleteDoc, doc, type DocumentData} from "firebase/firestore"
+import { collection, deleteDoc, doc, updateDoc, type DocumentData} from "firebase/firestore"
 import { useEffect, useReducer, useState } from "react"
 import { db } from "../../firebase.config"
 import { deleteObject, getStorage, ref } from "firebase/storage"
@@ -21,6 +21,19 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
             dispatch(action);
         }
     }
+
+    const updateDocument = async (document: Partial<DocumentType>, documentId: string) => {
+        try {
+            dispatch({type: "IS_PENDING"});
+            const docRef = doc(colRef, documentId);
+            await updateDoc(docRef, document as DocumentData);
+            dispatchIfNotCanceled({type: "SUCCESS"});
+        } catch (error) {
+            console.error("Update failed: ", error);
+            dispatchIfNotCanceled({ type: "ERROR", payload: "Could not update the document or file."})
+        }
+    };
+
     const deleteDocument = async (documentId: string, filePath: string, onSuccess?: () => void) => {
         try {
             dispatch({type: "IS_PENDING"});
@@ -43,5 +56,5 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
         return () => setIsCanceled(true)
     }, []);
 
-    return { deleteDocument, response };
+    return { updateDocument, deleteDocument, response };
 }
