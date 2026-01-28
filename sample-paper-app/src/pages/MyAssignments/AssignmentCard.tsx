@@ -10,6 +10,7 @@ import {
   Portal,
   Button,
   CloseButton,
+  ButtonGroup,
 } from "@chakra-ui/react";
 import { MdTopic } from "react-icons/md";
 import { MdPreview } from "react-icons/md";
@@ -46,15 +47,15 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedItemToDelete, setSelectedItemToDelete] = useState<AssignmentProps | null>(null);
-  const [selectedItemToUpdate, setSelectedItemToUpdate] = useState<AssignmentProps | null>(null); 
-  
-  const handlePreviewClick = async(path: string) => {
+  const [selectedItemToUpdate, setSelectedItemToUpdate] = useState<AssignmentProps | null>(null);
+
+  const handlePreviewClick = async (path: string) => {
     setLoadingUrl(true);
     try {
       const fileRef = ref(storage, path);
       const url = await getDownloadURL(fileRef);
       setPdfUrl(url);
-    } catch(err) {
+    } catch (err) {
       console.error("Failed to fetch PDF: ", err);
       setPdfUrl(null);
     }
@@ -183,7 +184,34 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                         </Dialog.Body>
                         <Dialog.Footer>
                           <Dialog.ActionTrigger asChild>
-                            <Button mx={"auto"} color={textColor} bg={"#3bc8f6d6"} variant={"outline"}>Cancel</Button>
+                            <ButtonGroup
+                              mx={"auto"}
+                              display={"flex"}
+                              color={textColor}
+                              size={["2xs", "2xs", "sm", "sm", "sm"]}
+                            >
+                              <Button
+                                bg={"#3bc8f6d6"}
+                                variant={"outline"}
+                                width={["50px", "50px", "70px", "100px", "100px"]}
+                              >
+                                Edit
+                              </Button>
+                              <Button
+                                bg={"#3bc8f6d6"}
+                                variant={"outline"}
+                                width={["50px", "50px", "70px", "100px", "100px"]}
+                              >
+                                Cancel
+                              </Button>
+                              <Button
+                                bg={"#3bc8f6d6"}
+                                variant={"outline"}
+                                width={["50px", "50px", "70px", "100px", "100px"]}
+                              >
+                                Delete
+                              </Button>
+                            </ButtonGroup>
                           </Dialog.ActionTrigger>
                         </Dialog.Footer>
                         <Dialog.CloseTrigger asChild>
@@ -208,12 +236,12 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                   <Dialog.Root
                     size={{ smToMd: "full", md: "lg" }}
                     onOpenChange={(isOpen) => {
-                    if(isOpen) {
-                      handlePreviewClick(item.props.filePath);
-                    } else {
-                      setPdfUrl(null);
-                    }
-                  }}
+                      if (isOpen) {
+                        handlePreviewClick(item.props.filePath);
+                      } else {
+                        setPdfUrl(null);
+                      }
+                    }}
                   >
                     <Dialog.Trigger asChild>
                       <Link variant={"underline"}><MdPreview /></Link>
@@ -248,8 +276,8 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                     <>
                       <MdOutlineFileDownload />
                     </>
-                )}
-                {role === UserRole.FACULTY && (
+                  )}
+                  {role === UserRole.FACULTY && (
                     <>
                       <CiEdit
                         cursor={"pointer"}
@@ -266,7 +294,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                         }}
                       />
                     </>
-                )}
+                  )}
                 </Flex>
               </Heading>
             </Box>
