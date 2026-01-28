@@ -1,4 +1,4 @@
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, increment, serverTimestamp, updateDoc } from "firebase/firestore";
 import { db } from "../../firebase.config";
 
 interface AssignmentDocumentprops {
@@ -38,5 +38,11 @@ export const createAssignmentDocument = async ({
     }
 
     const docRef = await addDoc(colRef, assignmentDocs);
+    const facultyRef = doc(db, "Faculties", authorId);
+
+    await updateDoc(facultyRef, {
+        uploadCount: increment(1),
+        lastUploadDate: serverTimestamp(),
+    });
     return docRef.id;
 }
