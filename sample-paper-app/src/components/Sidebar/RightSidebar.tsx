@@ -130,7 +130,7 @@ export const RightSidebar = ({
                   colorScheme="green"
                   fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                 >
-                  0
+                  {profile?.uploadCount}
                 </Tag.Label>
               </Tag.Root>
             </Flex>
