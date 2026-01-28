@@ -97,11 +97,13 @@ interface InvitesProps {
 interface FacultyProfileProps {
   id: string;
   email: string;
+  uploadCount: number;
   displayName: string;
   createdAt: Timestamp;
   assignedBoard: string[];
   assignedClass: string[];
   assignedSubject: string[];
+  lastUploadDate: Timestamp;
 };
 
 interface AssignmentProps {
