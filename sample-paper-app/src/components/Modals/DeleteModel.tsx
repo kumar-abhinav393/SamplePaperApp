@@ -8,7 +8,7 @@ interface DeleteModalProps {
   isOpen: boolean;
   onClose: () => void;
   content: AssignmentProps;
-  deleteDocument: (documentId: string, filePath: string) => Promise<void>;
+  deleteDocument: (documentId: string, filePath: string, authorId?: string) => Promise<void>;
 }
 
 export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: DeleteModalProps) => {
@@ -25,7 +25,7 @@ export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: Delete
   const handleDelete = async () => {
     try {
       setIsDeleting(true);
-      await deleteDocument(content.id, content.props.filePath);
+      await deleteDocument(content.id, content.props.filePath, content.props.authorId);
       toaster.create({
         title: "Assignment deleted",
         type: "success",

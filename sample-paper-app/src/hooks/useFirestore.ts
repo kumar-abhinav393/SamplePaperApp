@@ -1,6 +1,6 @@
 import { firestoreReducer } from "@/reducers/firestoreReducer"
 import type { FirestoreAction, FirestoreState } from "@/types/types"
-import { collection, deleteDoc, doc, updateDoc, type DocumentData} from "firebase/firestore"
+import { collection, deleteDoc, doc, increment, updateDoc, type DocumentData} from "firebase/firestore"
 import { useEffect, useReducer, useState } from "react"
 import { db } from "../../firebase.config"
 import { deleteObject, getStorage, ref } from "firebase/storage"
@@ -34,7 +34,7 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
         }
     };
 
-    const deleteDocument = async (documentId: string, filePath: string, onSuccess?: () => void) => {
+    const deleteDocument = async (documentId: string, filePath: string, authorId?: string) => {
         try {
             dispatch({type: "IS_PENDING"});
             const docRef = doc(colRef, documentId);
@@ -44,7 +44,14 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
                 const fileRef = ref(storage, filePath);
                 await deleteObject(fileRef);
             }
-            onSuccess?.();
+
+            if(authorId){
+                const facultyRef = doc(db, "Faculties", authorId);
+                await updateDoc(facultyRef, {
+                    uploadCount: increment(-1),
+                })   
+            }
+
             dispatchIfNotCanceled({type: "SUCCESS"});
         } catch (error) {
             console.log("Delete failed: ", error);
