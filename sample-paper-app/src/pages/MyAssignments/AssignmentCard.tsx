@@ -183,20 +183,21 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                           </Text>
                         </Dialog.Body>
                         <Dialog.Footer>
-                          <Dialog.ActionTrigger asChild>
-                            <ButtonGroup
-                              mx={"auto"}
-                              display={"flex"}
-                              color={textColor}
-                              size={["2xs", "2xs", "sm", "sm", "sm"]}
+
+                          <ButtonGroup
+                            mx={"auto"}
+                            display={"flex"}
+                            color={textColor}
+                            size={["2xs", "2xs", "sm", "sm", "sm"]}
+                          >
+                            <Button
+                              bg={"#3bc8f6d6"}
+                              variant={"outline"}
+                              width={["50px", "50px", "70px", "100px", "100px"]}
                             >
-                              <Button
-                                bg={"#3bc8f6d6"}
-                                variant={"outline"}
-                                width={["50px", "50px", "70px", "100px", "100px"]}
-                              >
-                                Edit
-                              </Button>
+                              Edit
+                            </Button>
+                            <Dialog.ActionTrigger asChild>
                               <Button
                                 bg={"#3bc8f6d6"}
                                 variant={"outline"}
@@ -204,8 +205,8 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                               >
                                 Cancel
                               </Button>
-                            </ButtonGroup>
-                          </Dialog.ActionTrigger>
+                            </Dialog.ActionTrigger>
+                          </ButtonGroup>
                         </Dialog.Footer>
                         <Dialog.CloseTrigger asChild>
                           <CloseButton size={"sm"} />
