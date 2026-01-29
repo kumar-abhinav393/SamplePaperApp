@@ -189,7 +189,7 @@ export const FilterAssignments = () => {
             filePath: downloadUrl,
             name: selectedPaperCode,
             authorId: user?.uid || "",
-            description: addDescription,
+            description: addDescription ? addDescription : "No Description so far",
             classLevels: selectedClassCode,
             boardFilters: [selectedBoardCode],
             subjectCode: selectedSubjectCode,
