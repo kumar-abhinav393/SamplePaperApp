@@ -204,13 +204,6 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                               >
                                 Cancel
                               </Button>
-                              <Button
-                                bg={"#3bc8f6d6"}
-                                variant={"outline"}
-                                width={["50px", "50px", "70px", "100px", "100px"]}
-                              >
-                                Delete
-                              </Button>
                             </ButtonGroup>
                           </Dialog.ActionTrigger>
                         </Dialog.Footer>
