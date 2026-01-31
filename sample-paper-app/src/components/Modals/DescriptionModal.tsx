@@ -20,7 +20,7 @@ interface DialogProps {
 export const dialog = createOverlay<DialogProps>((props) => {
   const { title, description, ...rest } = props;
 
-  const [text, setText] = useState("");
+  const [text, setText] = useState(description || "");
   
   const textColor = useColorModeValue("black", "white");
 
@@ -43,7 +43,6 @@ export const dialog = createOverlay<DialogProps>((props) => {
             <Dialog.Body bg={{ base: "#f5f5f5ff", _dark: "#141218" }}>
               {description && (
                 <Dialog.Description color={textColor}>
-                  {description}
                   <Flex mt={2} gap={2}>
                     <Field.Root required>
                       <Textarea
@@ -69,7 +68,7 @@ export const dialog = createOverlay<DialogProps>((props) => {
                       fontSize={["xl", "xl", "xl", "1xl", "1xl"]}
                       onClick={() => dialog.close("a", text)}
                     >
-                      Add
+                      {title?.includes("Edit") ? "Update" : "Add"}
                     </Button>
                   </Flex>
                 </Dialog.Description>
