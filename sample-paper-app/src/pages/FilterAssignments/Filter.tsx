@@ -329,7 +329,6 @@ export const Filter = ({
                 dialog.open("a", {
                   title: "Add Description",
                   description: "Write a short description...",
-
                 });
               }}
             >
