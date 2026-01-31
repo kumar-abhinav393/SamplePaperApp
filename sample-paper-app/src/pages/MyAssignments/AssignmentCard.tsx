@@ -31,6 +31,8 @@ import { storage } from "../../../firebase.config";
 import { DeleteModal } from "@/components/Modals/DeleteModel";
 import { UpdateModal } from "@/components/Modals/UpdateModal";
 import type { DocumentData } from "firebase/firestore";
+import { dialog } from "@/components/Modals/DescriptionModal";
+import { toaster } from "@/components/ui/toaster";
 
 interface AssignmenCardProps {
   assignments: AssignmentProps[];
@@ -183,7 +185,6 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                           </Text>
                         </Dialog.Body>
                         <Dialog.Footer>
-
                           <ButtonGroup
                             mx={"auto"}
                             display={"flex"}
@@ -194,6 +195,31 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                               bg={"#3bc8f6d6"}
                               variant={"outline"}
                               width={["50px", "50px", "70px", "100px", "100px"]}
+                              onClick={() => {
+                                dialog.open("a", {
+                                  title: "Edit Description",
+                                  description: item.props.description,
+                                }).then(async (newDescription) => {
+                                  if (newDescription && newDescription !== item.props.description) {
+                                    try {
+                                      await updateDocument({ description: newDescription }, item.id);
+                                      toaster.create({
+                                        title: "description updated",
+                                        type: "success",
+                                        description: "Description updated successfully"
+                                      });
+                                    } catch (error) {
+                                      toaster.create({
+                                        title: "Update failed",
+                                        type: "error",
+                                        description: error
+                                      });
+                                    }
+                                  }
+                                }).catch(() => {
+                                  // User cancelled - do nothing
+                                });
+                              }}
                             >
                               Edit
                             </Button>
@@ -206,6 +232,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                                 Cancel
                               </Button>
                             </Dialog.ActionTrigger>
+                            <dialog.Viewport />
                           </ButtonGroup>
                         </Dialog.Footer>
                         <Dialog.CloseTrigger asChild>
