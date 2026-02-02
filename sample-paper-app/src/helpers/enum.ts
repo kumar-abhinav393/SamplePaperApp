@@ -33,4 +33,9 @@ enum Boards {
   ICSE = "ICSE",
 }
 
-export {TimeFilter, SortOrder, ColorMode, UserRole, Subjects, Boards}
+enum Papers {
+  ASSIGNMENT = "ASSIGNMENT",
+  QUESTION_PAPER = "QUESTION_PAPER"
+}
+
+export {TimeFilter, SortOrder, ColorMode, UserRole, Subjects, Boards, Papers}
