@@ -63,6 +63,17 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
     }
     setLoadingUrl(false);
   };
+
+  const handleDownloadClick = async (path: string) => {
+    try {
+      const fileRef = ref(storage, path);
+      const url = await getDownloadURL(fileRef);
+      window.open(url, "_blank");
+    } catch(error) {
+      console.error("Error downloading PDF: ", error);
+    }
+  };
+
   return (
     <div>
       {role && assignments.map((item) => (
@@ -295,7 +306,10 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                   </Dialog.Root>
                   {role === UserRole.STUDENT && (
                     <>
-                      <MdOutlineFileDownload />
+                      <MdOutlineFileDownload
+                        cursor={"pointer"}
+                        onClick={() => handleDownloadClick(item.props.filePath)}
+                      />
                     </>
                   )}
                   {role === UserRole.FACULTY && (
