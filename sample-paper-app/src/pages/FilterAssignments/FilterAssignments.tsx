@@ -80,7 +80,7 @@ export const FilterAssignments = () => {
 
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
-
+  
   useEffect(() => {
     if (!loading && isFaculty && user && !profile) {
       setShowFacultyProfileModal(true);
@@ -234,6 +234,8 @@ export const FilterAssignments = () => {
             status={status}
             role={role?.role}
             profile={profile}
+            classes={Classes}
+            subjects={Subjects}
             isHorizontal={true}
           />
         </Box>
@@ -266,6 +268,8 @@ export const FilterAssignments = () => {
             status={status}
             role={role?.role}
             profile={profile}
+            classes={Classes}
+            subjects={Subjects}
           />
         </Box>
         <Box
