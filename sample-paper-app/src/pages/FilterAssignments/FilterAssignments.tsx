@@ -10,6 +10,7 @@ import {
   type AssignmentProps,
   type BoardProps,
   type ClassProps,
+  type FacultyProfileProps,
   type PaperCode,
   type QueryParams,
   type SubjectProps,
@@ -57,7 +58,8 @@ export const FilterAssignments = () => {
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
-
+  const { documents: Faculties } = useCollection<{id: string; props: FacultyProfileProps}>("Faculties");
+  
   const paperTypes: { code: PaperCode; name: string }[] = [
     { code: "ASSIGNMENT", name: "Assignments" },
     { code: "QUESTION_PAPER", name: "Question Papers" },
@@ -369,9 +371,11 @@ export const FilterAssignments = () => {
           display={{ base: "none", md: isTablet ? "none" : "flex", lg: "flex" }}
         >
           <RightSidebar
-            isHorizontal={false}
+            boards={Boards}
             role={role?.role}
             profile={profile}
+            isHorizontal={false}
+            faculties={Faculties}
           />
         </Box>
       </SimpleGrid>
@@ -384,9 +388,11 @@ export const FilterAssignments = () => {
       {isTablet && (
         <Box mt={4} display="flex" justifyContent="center" w="100%">
           <RightSidebar
-            isHorizontal={true}
+            boards={Boards}
             role={role?.role}
             profile={profile}
+            isHorizontal={true}
+            faculties={Faculties}
           />
         </Box>
       )}
