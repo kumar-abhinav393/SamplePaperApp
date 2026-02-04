@@ -24,6 +24,7 @@ import {
   Stack,
   useBreakpointValue,
   CloseButton,
+  Textarea,
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
@@ -58,8 +59,8 @@ export const FilterAssignments = () => {
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
-  const { documents: Faculties } = useCollection<{id: string; props: FacultyProfileProps}>("Faculties");
-  
+  const { documents: Faculties } = useCollection<{ id: string; props: FacultyProfileProps }>("Faculties");
+
   const paperTypes: { code: PaperCode; name: string }[] = [
     { code: "ASSIGNMENT", name: "Assignments" },
     { code: "QUESTION_PAPER", name: "Question Papers" },
@@ -82,7 +83,7 @@ export const FilterAssignments = () => {
 
   const { documents: Subjects } = useCollection<SubjectProps>("Subjects", subjectQuery);
   const { documents: Assignments } = useCollection<AssignmentProps>("Papers", AssignmentQuery);
-  
+
   useEffect(() => {
     if (!loading && isFaculty && user && !profile) {
       setShowFacultyProfileModal(true);
@@ -198,7 +199,7 @@ export const FilterAssignments = () => {
             createdBy: user?.displayName || "",
             code: selectedPaperCode.toLocaleUpperCase(),
           });
-          if(response){
+          if (response) {
             toaster.create({
               title: "Assignment uploaded",
               type: "success",
@@ -326,34 +327,45 @@ export const FilterAssignments = () => {
                 <CloseButton
                   size={"2xs"}
                   variant={"ghost"}
-                  onClick={() => setAssignmentPdf(null)}  
+                  onClick={() => setAssignmentPdf(null)}
                 />
               </Box>
             )}
-            <Flex mt={4} w={"100%"} justifyContent={"space-between"}>
+            <Flex justifyContent={"space-between"}>
               <Button
-                w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 onClick={handleClearAll}
                 border={"1px solid black"}
-                fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+                fontSize={["sm", "sm", "md", "lg", "lg"]}
+                h={["30px", "30px", "30px", "40px", "40px"]}
+                w={["80px", "80px", "100px", "120px", "120px"]}
               >
                 Clear All
               </Button>
               <Button
-                w={"120px"}
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 loading={isUploading}
                 disabled={isUploading}
                 border={"1px solid black"}
-                fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+                fontSize={["sm", "sm", "md", "lg", "lg"]}
+                h={["30px", "30px", "30px", "40px", "40px"]}
+                w={["80px", "80px", "100px", "120px", "120px"]}
                 onClick={role?.role == UserRole.FACULTY ? handleUpload : handleFilter}
               >
-                {role?.role === UserRole.FACULTY ? "Upload" : "Filter"}
+                {role?.role === UserRole.FACULTY ? "Upload"
+                  : role?.role === UserRole.STUDENT ? "Filter"
+                  : role?.role === UserRole.ADMIN ? "Create" : ""}
               </Button>
             </Flex>
+            <Textarea
+              readOnly
+              placeholder="Copy the invite token and share to the concerned."
+              h={["30px", "30px", "30px", "40px", "40px"]}
+            >
+
+            </Textarea>
           </Stack>
         </Box>
         <Box
