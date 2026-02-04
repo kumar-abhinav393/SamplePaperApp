@@ -1,19 +1,17 @@
 import { Stack, Flex, Tag, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
 import { UserRole } from "@/helpers/enum";
-import type { FacultyProfileProps } from "@/types/types";
+import type { BoardProps, FacultyProfileProps } from "@/types/types";
 
 interface RightSidebarProps {
+  boards: BoardProps[];
   isHorizontal?: boolean;
   role: UserRole | undefined;
   profile: FacultyProfileProps | null;
+  faculties: {id: string; props: FacultyProfileProps}[];
 }
 
-export const RightSidebar = ({
-  isHorizontal = false,
-  role,
-  profile
-}: RightSidebarProps) => {
+export const RightSidebar = ({ isHorizontal = false, role, profile, boards, faculties }: RightSidebarProps) => {
 
   const textColor = useColorModeValue("#3bc8f6d6", undefined);
 
@@ -131,6 +129,61 @@ export const RightSidebar = ({
                   fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                 >
                   {profile?.uploadCount}
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+          </>
+        )}
+        {role === UserRole.ADMIN && (
+          <>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                Total Boards
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="blue"
+                  fontSize={"l"}
+                >
+                  {boards.map(b => b.props.code).join(' | ')}
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                Total Uploads
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="blue"
+                  fontSize={"l"}
+                >
+                  {faculties.map(f => f.props.uploadCount)}
+                </Tag.Label>
+              </Tag.Root>
+            </Flex>
+            <Flex gap={3} flexDirection="column" alignItems="center">
+              <Text
+                color={"#3bc8f6d6"}
+                fontWeight="medium"
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+              >
+                Total Downloads
+              </Text>
+              <Tag.Root bg={textColor} border={"1px solid black"}>
+                <Tag.Label
+                  colorScheme="green"
+                  fontSize={"l"}
+                >
+                  {0}
                 </Tag.Label>
               </Tag.Root>
             </Flex>
