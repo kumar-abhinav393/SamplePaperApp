@@ -101,277 +101,366 @@ export const Filter = ({
     })),
   });
 
+  const roleFrameworks = createListCollection({
+    items: [
+      { label: UserRole.ADMIN, value: UserRole.ADMIN },
+      { label: UserRole.FACULTY, value: UserRole.FACULTY },
+      { label: UserRole.STUDENT, value: UserRole.STUDENT },
+    ],
+  });
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   return (
     <>
-      <Select.Root
-        collection={classFrameworks}
-        size="md"
-        deselectable
-        value={selectedClassCode != null ? [String(selectedClassCode)] : []}
-        onValueChange={(details) => {
-          const selectedValue = details.value[0];
-          onClassCodeChange(selectedValue ? Number(selectedValue) : null);
-        }}
-      >
-        <Select.HiddenSelect />
-        <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
-          Class
-        </Select.Label>
-        <Select.Control>
-          <Select.Trigger>
-            <Select.ValueText
-              placeholder="Select Class"
-              fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-            />
-          </Select.Trigger>
-          <Select.IndicatorGroup>
-            <Select.Indicator />
-          </Select.IndicatorGroup>
-        </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {classFrameworks.items.map((framework) => (
-                <Select.Item
-                  item={framework}
-                  key={framework.value}
-                  fontSize={["md", "md", "lg", "lg", "lg"]}
-                >
-                  {framework.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
-      </Select.Root>
-
-      <Select.Root
-        collection={boardFrameworks}
-        size="md"
-        deselectable
-        value={selectedBoardCode ? [selectedBoardCode] : []}
-        onValueChange={(details) => {
-          const selectedValue = details.value[0];
-          setSelectedBoardCode(selectedValue || null);
-        }}
-        disabled={selectedClassCode == null}
-      >
-        <Select.HiddenSelect />
-        <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
-          Board
-        </Select.Label>
-        <Select.Control>
-          <Select.Trigger>
-            <Select.ValueText
-              placeholder="Select Board"
-              fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-            />
-          </Select.Trigger>
-          <Select.IndicatorGroup>
-            <Select.Indicator />
-          </Select.IndicatorGroup>
-        </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {boardFrameworks.items.map((framework) => (
-                <Select.Item
-                  item={framework}
-                  key={framework.value}
-                  fontSize={["md", "md", "lg", "lg", "lg"]}
-                >
-                  {framework.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
-      </Select.Root>
-
-      <Select.Root
-        collection={subjectFrameworks}
-        size="md"
-        deselectable
-        value={selectedSubjectCode ? [selectedSubjectCode] : []}
-        onValueChange={(details) => {
-          const selectedValue = details.value[0];
-          setSelectedSubjectCode(selectedValue || null);
-        }}
-        disabled={selectedBoardCode == null}
-      >
-        <Select.HiddenSelect />
-        <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
-          Subject
-        </Select.Label>
-        <Select.Control>
-          <Select.Trigger>
-            <Select.ValueText
-              placeholder="Select Subject"
-              fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-            />
-          </Select.Trigger>
-          <Select.IndicatorGroup>
-            <Select.Indicator />
-          </Select.IndicatorGroup>
-        </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {subjectFrameworks.items.map((framework) => (
-                <Select.Item
-                  item={framework}
-                  key={framework.value}
-                  fontSize={["md", "md", "lg", "lg", "lg"]}
-                >
-                  {framework.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
-      </Select.Root>
-
-      <Select.Root
-        size="md"
-        deselectable
-        collection={paperFrameworks}
-        value={selectedPaperCode ? [selectedPaperCode] : []}
-        onValueChange={(details) => {
-          const selectedValue = details.value[0] as PaperCode | undefined;
-          setSelectedPaperCode(selectedValue || null);
-        }}
-        disabled={selectedSubjectCode == null}
-      >
-        <Select.HiddenSelect />
-        <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
-          Paper
-        </Select.Label>
-        <Select.Control>
-          <Select.Trigger>
-            <Select.ValueText
-              placeholder="Select Paper"
-              fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-            />
-          </Select.Trigger>
-          <Select.IndicatorGroup>
-            <Select.Indicator />
-          </Select.IndicatorGroup>
-        </Select.Control>
-        <Portal>
-          <Select.Positioner>
-            <Select.Content>
-              {paperFrameworks.items.map((framework) => (
-                <Select.Item
-                  item={framework}
-                  key={framework.value}
-                  fontSize={["md", "md", "lg", "lg", "lg"]}
-                >
-                  {framework.label}
-                  <Select.ItemIndicator />
-                </Select.Item>
-              ))}
-            </Select.Content>
-          </Select.Positioner>
-        </Portal>
-      </Select.Root>
-      {role === UserRole.FACULTY && (
-        <Grid
-          gap={"4"}
-          templateColumns={[
-            "repeat(3, 1fr)",
-            "repeat(3, 1fr)",
-            "repeat(5, 1fr)",
-          ]}
-        >
-          <GridItem colSpan={[2, 2, 2]}>
-            <Input
-              value={topicName}
-              placeholder="Enter Topic Name"
-              css={{ "--focus-color": "#3bc8f6d6" }}
-              fontSize={["l", "xl", "xl", "xl", "xl"]}
-              onChange={(e) => setTopicName(e.target.value)}
-            />
-          </GridItem>
-          <GridItem
-            gap={[3, 3, 0]}
-            display={"flex"}
-            colSpan={[1, 1, 2]}
-            alignItems={"center"}
-            fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
-            justifyContent={["flex-end", "flex-end", "center"]}
+      {role !== UserRole.ADMIN && (
+        <>
+          <Select.Root
+            collection={classFrameworks}
+            size="md"
+            deselectable
+            value={selectedClassCode != null ? [String(selectedClassCode)] : []}
+            onValueChange={(details) => {
+              const selectedValue = details.value[0];
+              onClassCodeChange(selectedValue ? Number(selectedValue) : null);
+            }}
           >
-            <Flex>
-              <Box
-                display={["none", "none", "block"]}
-                onClick={() => {
-                  dialog.open("a", {
-                    title: "Add Description",
-                    description: "Write a short description...",
-                  }).then((value) => {
-                    setAddDescription(value);
-                  });
-                }}
+            <Select.HiddenSelect />
+            <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
+              Class
+            </Select.Label>
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText
+                  placeholder="Select Class"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {classFrameworks.items.map((framework) => (
+                    <Select.Item
+                      item={framework}
+                      key={framework.value}
+                      fontSize={["md", "md", "lg", "lg", "lg"]}
+                    >
+                      {framework.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
+
+          <Select.Root
+            collection={boardFrameworks}
+            size="md"
+            deselectable
+            value={selectedBoardCode ? [selectedBoardCode] : []}
+            onValueChange={(details) => {
+              const selectedValue = details.value[0];
+              setSelectedBoardCode(selectedValue || null);
+            }}
+            disabled={selectedClassCode == null}
+          >
+            <Select.HiddenSelect />
+            <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
+              Board
+            </Select.Label>
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText
+                  placeholder="Select Board"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {boardFrameworks.items.map((framework) => (
+                    <Select.Item
+                      item={framework}
+                      key={framework.value}
+                      fontSize={["md", "md", "lg", "lg", "lg"]}
+                    >
+                      {framework.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
+
+          <Select.Root
+            collection={subjectFrameworks}
+            size="md"
+            deselectable
+            value={selectedSubjectCode ? [selectedSubjectCode] : []}
+            onValueChange={(details) => {
+              const selectedValue = details.value[0];
+              setSelectedSubjectCode(selectedValue || null);
+            }}
+            disabled={selectedBoardCode == null}
+          >
+            <Select.HiddenSelect />
+            <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
+              Subject
+            </Select.Label>
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText
+                  placeholder="Select Subject"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {subjectFrameworks.items.map((framework) => (
+                    <Select.Item
+                      item={framework}
+                      key={framework.value}
+                      fontSize={["md", "md", "lg", "lg", "lg"]}
+                    >
+                      {framework.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
+
+          <Select.Root
+            size="md"
+            deselectable
+            collection={paperFrameworks}
+            value={selectedPaperCode ? [selectedPaperCode] : []}
+            onValueChange={(details) => {
+              const selectedValue = details.value[0] as PaperCode | undefined;
+              setSelectedPaperCode(selectedValue || null);
+            }}
+            disabled={selectedSubjectCode == null}
+          >
+            <Select.HiddenSelect />
+            <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
+              Paper
+            </Select.Label>
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText
+                  placeholder="Select Paper"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {paperFrameworks.items.map((framework) => (
+                    <Select.Item
+                      item={framework}
+                      key={framework.value}
+                      fontSize={["md", "md", "lg", "lg", "lg"]}
+                    >
+                      {framework.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
+          {role === UserRole.FACULTY && (
+            <Grid
+              gap={"4"}
+              templateColumns={[
+                "repeat(3, 1fr)",
+                "repeat(3, 1fr)",
+                "repeat(5, 1fr)",
+              ]}
+            >
+              <GridItem colSpan={[2, 2, 2]}>
+                <Input
+                  value={topicName}
+                  placeholder="Enter Topic Name"
+                  css={{ "--focus-color": "#3bc8f6d6" }}
+                  fontSize={["l", "xl", "xl", "xl", "xl"]}
+                  onChange={(e) => setTopicName(e.target.value)}
+                />
+              </GridItem>
+              <GridItem
+                gap={[3, 3, 0]}
+                display={"flex"}
+                colSpan={[1, 1, 2]}
+                alignItems={"center"}
+                fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                justifyContent={["flex-end", "flex-end", "center"]}
               >
-                <Text cursor={"pointer"} textDecoration={"underline"}>
-                  Add Description
-                </Text>
-              </Box>
-            </Flex>
-            <Box
-              display={["block", "block", "none"]}
-              fontSize={["25px", "25px", "40px", "40px", "40px"]}
-              onClick={() => {
-                dialog.open("a", {
-                  title: "Add Description",
-                  description: "Write a short description...",
-                });
-              }}
-            >
-              <MdOutlineDescription cursor={"pointer"} />
-            </Box>
-            <dialog.Viewport />
-            <input
-              type="file"
-              ref={fileInputRef}
-              accept="application/pdf"
-              style={{ display: "none" }}
-              onChange={(e) => {
-                const file = e.target.files?.[0]
-                if (file) {
-                  setAssignmentPdf(file);
-                }
-              }}
-            >
-            </input>
-            <Flex>
-              <Box
-                display={["block", "block", "none"]}
-                fontSize={["25px", "25px", "40px", "40px", "40px"]}
+                <Flex>
+                  <Box
+                    display={["none", "none", "block"]}
+                    onClick={() => {
+                      dialog.open("a", {
+                        title: "Add Description",
+                        description: "Write a short description...",
+                      }).then((value) => {
+                        setAddDescription(value);
+                      });
+                    }}
+                  >
+                    <Text cursor={"pointer"} textDecoration={"underline"}>
+                      Add Description
+                    </Text>
+                  </Box>
+                </Flex>
+                <Box
+                  display={["block", "block", "none"]}
+                  fontSize={["25px", "25px", "40px", "40px", "40px"]}
+                  onClick={() => {
+                    dialog.open("a", {
+                      title: "Add Description",
+                      description: "Write a short description...",
+                    });
+                  }}
+                >
+                  <MdOutlineDescription cursor={"pointer"} />
+                </Box>
+                <dialog.Viewport />
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="application/pdf"
+                  style={{ display: "none" }}
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      setAssignmentPdf(file);
+                    }
+                  }}
+                >
+                </input>
+                <Flex>
+                  <Box
+                    display={["block", "block", "none"]}
+                    fontSize={["25px", "25px", "40px", "40px", "40px"]}
+                  >
+                    <MdOutlineFileUpload
+                      cursor={"pointer"}
+                      onClick={() => fileInputRef.current?.click()}
+                    />
+                  </Box>
+                </Flex>
+              </GridItem>
+              <GridItem
+                colSpan={1}
+                alignItems={"center"}
+                justifyContent={"flex-end"}
+                display={["none", "none", "flex"]}
+                fontSize={["30px", "30px", "40px", "40px", "40px"]}
               >
                 <MdOutlineFileUpload
                   cursor={"pointer"}
-                  onClick={() => fileInputRef.current?.click()}
-                />
-              </Box>
-            </Flex>
-          </GridItem>
-          <GridItem
-            colSpan={1}
-            alignItems={"center"}
-            justifyContent={"flex-end"}
-            display={["none", "none", "flex"]}
-            fontSize={["30px", "30px", "40px", "40px", "40px"]}
+                  onClick={() => fileInputRef.current?.click()} />
+              </GridItem>
+            </Grid>
+          )}
+        </>
+      )}
+      {role === UserRole.ADMIN && (
+        <>
+          <Text
+            display={"flex"}
+            fontWeight={"bold"}
+            color={"#3bc8f6d6"}
+            justifyContent={"center"}
+            fontSize={["1xl", "1xl", "2xl", "2xl", "2xl"]}
           >
-            <MdOutlineFileUpload
-              cursor={"pointer"}
-              onClick={() => fileInputRef.current?.click()} />
-          </GridItem>
-        </Grid>
+            Generate Invite Token
+          </Text>
+          <Select.Root
+            collection={roleFrameworks}
+            size="md"
+            deselectable
+          >
+            <Select.HiddenSelect />
+            <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
+              Role
+            </Select.Label>
+            <Select.Control>
+              <Select.Trigger>
+                <Select.ValueText
+                  placeholder="Select Role"
+                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                />
+              </Select.Trigger>
+              <Select.IndicatorGroup>
+                <Select.Indicator />
+              </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+              <Select.Positioner>
+                <Select.Content>
+                  {roleFrameworks.items.map((framework) => (
+                    <Select.Item
+                      item={framework}
+                      key={framework.value}
+                      fontSize={["md", "md", "lg", "lg", "lg"]}
+                    >
+                      {framework.label}
+                      <Select.ItemIndicator />
+                    </Select.Item>
+                  ))}
+                </Select.Content>
+              </Select.Positioner>
+            </Portal>
+          </Select.Root>
+          <Grid
+            gap={"4"}
+            templateColumns={[
+              "repeat(2, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(2, 1fr)",
+            ]}
+          >
+            <GridItem>
+              <Text fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>Created At</Text>
+              <Input
+                type="date"
+                placeholder="Enter Created Date"
+                css={{ "--focus-color": "#3bc8f6d6" }}
+                fontSize={["l", "xl", "xl", "xl", "xl"]}
+              />
+            </GridItem>
+            <GridItem>
+              <Text fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>Expires At</Text>
+              <Input
+                type="date"
+                placeholder="Enter Expiry Date"
+                css={{ "--focus-color": "#3bc8f6d6" }}
+                fontSize={["l", "xl", "xl", "xl", "xl"]}
+              />
+            </GridItem>
+          </Grid>
+        </>
       )}
     </>
   );
