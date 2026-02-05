@@ -95,12 +95,13 @@ export const Login = () => {
         </Flex>
         <Flex pt={5}>
           <Button
-            fontSize={"l"}
             color={textColor}
             bg={"#3bc8f6d6"}
-            onClick={handleGoogleLogin}
             border={"1px solid black"}
+            onClick={handleGoogleLogin}
             w={["310px", "350px", "400px", "450px"]}
+            fontSize={["xs", "xs", "sm", "md", "md"]}
+            h={["30px", "30px", "30px", "40px", "40px"]}
           >
             <FcGoogle />
             LOG IN WITH GOOGLE
@@ -162,7 +163,9 @@ export const Login = () => {
             bg={"#3bc8f6d6"}
             border={"1px solid black"}
             onClick={() => navigate("/")}
-            fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
+            fontSize={["sm", "sm", "md", "lg", "lg"]}
+            h={["30px", "30px", "30px", "40px", "40px"]}
+            w={["80px", "80px", "100px", "120px", "120px"]}
           >
             Cancel
           </Button>
@@ -172,7 +175,9 @@ export const Login = () => {
             onClick={handleSubmit}
             border={"1px solid black"}
             disabled={!email || !password}
-            fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
+            fontSize={["sm", "sm", "md", "lg", "lg"]}
+            h={["30px", "30px", "30px", "40px", "40px"]}
+            w={["80px", "80px", "100px", "120px", "120px"]}
           >
             Login
           </Button>

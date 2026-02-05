@@ -91,7 +91,6 @@ export const Signup = () => {
       <Flex
         gap={2}
         alignItems={"center"}
-        fontSize={["l", "l", "1xl", "1xl", "1xl"]}
       >
         <Text>Already Registered?</Text>
         <Box onClick={() => navigate("/login")}>
@@ -102,12 +101,13 @@ export const Signup = () => {
       </Flex>
       <Flex pt={5}>
         <Button
-          fontSize={"l"}
           color={textColor}
           bg={"#3bc8f6d6"}
           onClick={handleGoogleLogin}
           border={"1px solid black"}
           w={["310px", "350px", "400px", "450px"]}
+          fontSize={["xs", "xs", "sm", "md", "md"]}
+          h={["30px", "30px", "30px", "40px", "40px"]}
         >
           <FcGoogle />
           LOG IN WITH GOOGLE
@@ -171,26 +171,26 @@ export const Signup = () => {
             </Fieldset.Content>
           </Fieldset.Root>
 
-          <Flex mt={3} w={"100%"} justifyContent={"space-between"}>
+          <Flex mt={3} justifyContent={"space-between"}>
             <Button
-              w={100}
               color={textColor}
               bg={"#3bc8f6d6"}
               border={"1px solid black"}
-              onClick={() => {
-                navigate("/");
-              }}
-              fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
+              onClick={() => { navigate("/");}}
+              fontSize={["sm", "sm", "md", "lg", "lg"]}
+              h={["30px", "30px", "30px", "40px", "40px"]}
+              w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Back
             </Button>
             <Button
-              w={100}
               color={textColor}
               bg={"#3bc8f6d6"}
               onClick={handleSubmit}
               border={"1px solid black"}
-              fontSize={["xl", "xl", "1xl", "1xl", "1xl"]}
+              fontSize={["sm", "sm", "md", "lg", "lg"]}
+              h={["30px", "30px", "30px", "40px", "40px"]}
+              w={["80px", "80px", "100px", "120px", "120px"]}
               disabled={!email || !password || !displayName || passwordError}
             >
               Signup

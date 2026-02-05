@@ -65,8 +65,10 @@ export const dialog = createOverlay<DialogProps>((props) => {
                       bg={"#3bc8f6d6"}
                       disabled={!text}
                       border={"1px solid black"}
-                      fontSize={["xl", "xl", "xl", "1xl", "1xl"]}
                       onClick={() => dialog.close("a", text)}
+                      fontSize={["sm", "sm", "md", "lg", "lg"]}
+                      h={["30px", "30px", "30px", "40px", "40px"]}
+                      w={["80px", "80px", "100px", "120px", "120px"]}
                     >
                       {title?.includes("Edit") ? "Update" : "Add"}
                     </Button>
