@@ -356,16 +356,18 @@ export const FilterAssignments = () => {
               >
                 {role?.role === UserRole.FACULTY ? "Upload"
                   : role?.role === UserRole.STUDENT ? "Filter"
-                  : role?.role === UserRole.ADMIN ? "Create" : ""}
+                    : role?.role === UserRole.ADMIN ? "Create" : ""}
               </Button>
             </Flex>
-            <Textarea
-              readOnly
-              placeholder="Copy the invite token and share to the concerned."
-              h={["30px", "30px", "30px", "40px", "40px"]}
-            >
+            {role?.role === UserRole.ADMIN && (
+              <Textarea
+                readOnly
+                placeholder="Copy the invite token and share to the concerned."
+                h={["30px", "30px", "30px", "40px", "40px"]}
+              >
 
-            </Textarea>
+              </Textarea>
+            )}
           </Stack>
         </Box>
         <Box

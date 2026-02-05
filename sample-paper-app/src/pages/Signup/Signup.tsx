@@ -28,6 +28,7 @@ export const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [isSigningUp, setIsSigningUp] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const inviteToken = searchParams.get("invite");
@@ -70,10 +71,13 @@ export const Signup = () => {
       loading: { title: "Signing up...", description: "Please wait" },
     });
     try {
+      setIsSigningUp(true);
       await signupPromise;
       navigate("/login");
     } catch (error: unknown) {
       console.log(error);
+    } finally {
+      setIsSigningUp(false);
     }
   };
 
@@ -186,6 +190,7 @@ export const Signup = () => {
             <Button
               color={textColor}
               bg={"#3bc8f6d6"}
+              loading={isSigningUp}
               onClick={handleSubmit}
               border={"1px solid black"}
               fontSize={["sm", "sm", "md", "lg", "lg"]}

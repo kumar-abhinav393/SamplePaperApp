@@ -115,7 +115,9 @@ export const Navigation = () => {
                 ?
                 "My Assignments"
                 :
-                "All Assignments"}
+                role?.role === UserRole.ADMIN
+                ? "All Assignments"
+                : ""}
               </Text>
             </NavLink>
           </Flex>

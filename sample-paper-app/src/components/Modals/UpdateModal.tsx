@@ -221,8 +221,9 @@ export const UpdateModal = ({ isOpen, onClose, content, updateDocument }: Update
               fontWeight={"bold"}
               onClick={handleCancel}
               border={"1px solid black"}
-              size={["sm", "sm", "md", "lg", "lg"]}
               fontSize={["sm", "sm", "md", "lg", "lg"]}
+              h={["30px", "30px", "30px", "40px", "40px"]}
+              w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Cancel
             </Button>
@@ -230,12 +231,14 @@ export const UpdateModal = ({ isOpen, onClose, content, updateDocument }: Update
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
+              loading={isUpdating}
               onClick={handleUpdate}
               border={"1px solid black"}
-              size={["sm", "sm", "md", "lg", "lg"]}
               fontSize={["sm", "sm", "md", "lg", "lg"]}
+              h={["30px", "30px", "30px", "40px", "40px"]}
+              w={["80px", "80px", "100px", "120px", "120px"]}
             >
-              {isUpdating ? "Updating..." : "Update"}
+              Update
             </Button>
           </Flex>
         </Box>

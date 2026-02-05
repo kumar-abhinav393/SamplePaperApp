@@ -120,6 +120,8 @@ export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: Delete
               onClick={handleCancel}
               border={"1px solid black"}
               fontSize={["sm", "sm", "md", "lg", "lg"]}
+              h={["30px", "30px", "30px", "40px", "40px"]}
+              w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Cancel
             </Button>
@@ -127,11 +129,14 @@ export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: Delete
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
+              loading={isDeleting}
               onClick={handleDelete}
               border={"1px solid black"}
               fontSize={["sm", "sm", "md", "lg", "lg"]}
+              h={["30px", "30px", "30px", "40px", "40px"]}
+              w={["80px", "80px", "100px", "120px", "120px"]}
             >
-              {isDeleting ? "Deleting..." : "Delete"}
+              Delete
             </Button>
           </Flex>
         </Box>
