@@ -27,13 +27,16 @@ export const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const passwordError = password !== "" && password.length < 8;
   const emailError = email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = async () => {
+    if (isLoggedIn) return true;
     try {
+      setIsLoggedIn(true);
       await login({ email, password });
       navigate("/filter-assignments");
     } catch {
@@ -42,6 +45,8 @@ export const Login = () => {
         title: "Login failed",
         description: "Please check your credentials and try again",
       });
+    } finally {
+      setIsLoggedIn(false);
     }
   };
 
@@ -172,6 +177,7 @@ export const Login = () => {
           <Button
             color={textColor}
             bg={"#3bc8f6d6"}
+            loading={isLoggedIn}
             onClick={handleSubmit}
             border={"1px solid black"}
             disabled={!email || !password}
