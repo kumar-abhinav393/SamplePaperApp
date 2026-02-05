@@ -22,7 +22,8 @@ export const Authentication = () => {
         fontWeight={"bold"}
         border={"1px solid black"}
         onClick={() => navigate("/login")}
-        fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+        fontSize={["sm", "sm", "md", "lg", "lg"]}
+        h={["30px", "30px", "30px", "40px", "40px"]}
       >
         LOGIN WITH EMAIL
       </Button>
@@ -32,7 +33,8 @@ export const Authentication = () => {
         fontWeight={"bold"}
         border={"1px solid black"}
         onClick={() => navigate("/signup")}
-        fontSize={["xl", "xl", "1xl", "2xl", "2xl"]}
+        fontSize={["sm", "sm", "md", "lg", "lg"]}
+        h={["30px", "30px", "30px", "40px", "40px"]}
       >
         REGISTER WITH EMAIL
       </Button>

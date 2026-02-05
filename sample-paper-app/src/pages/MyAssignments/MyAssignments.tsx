@@ -213,48 +213,48 @@ export const MyAssignments = () => {
                 disabled={requireFilterFirst} />
               <Flex gap={2} display={{ base: "none", lg: "flex" }}>
                 <Button
-                  h={"40px"}
-                  w={"100px"}
-                  fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
                   disabled={requireFilterFirst}
+                  fontSize={["sm", "sm", "md", "lg", "lg"]}
+                  h={["30px", "30px", "30px", "40px", "40px"]}
                   onClick={() => setTimeFilter(TimeFilter.All)}
+                  w={["80px", "80px", "100px", "120px", "120px"]}
                   bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   All
                 </Button>
                 <Button
-                  h={"40px"}
-                  w={"100px"}
-                  fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
                   disabled={requireFilterFirst}
+                  fontSize={["sm", "sm", "md", "lg", "lg"]}
+                  h={["30px", "30px", "30px", "40px", "40px"]}
+                  w={["80px", "80px", "100px", "120px", "120px"]}
                   onClick={() => setTimeFilter(TimeFilter.ThisMonth)}
                   bg={timeFilter === TimeFilter.ThisMonth ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   This Month
                 </Button>
                 <Button
-                  h={"40px"}
-                  w={"100px"}
-                  fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
                   disabled={requireFilterFirst}
+                  fontSize={["sm", "sm", "md", "lg", "lg"]}
+                  h={["30px", "30px", "30px", "40px", "40px"]}
+                  w={["80px", "80px", "100px", "120px", "120px"]}
                   onClick={() => setTimeFilter(TimeFilter.LastMonth)}
                   bg={timeFilter === TimeFilter.LastMonth ? "#70f63bd6" : "#3bc8f6d6"}
                 >
                   Last Month
                 </Button>
                 <Button
-                  h={"40px"}
-                  w={"100px"}
-                  fontSize={"lg"}
                   color={textColor}
                   border={"1px solid black"}
                   disabled={requireFilterFirst}
+                  fontSize={["sm", "sm", "md", "lg", "lg"]}
+                  h={["30px", "30px", "30px", "40px", "40px"]}
+                  w={["80px", "80px", "100px", "120px", "120px"]}
                   onClick={() => setTimeFilter(TimeFilter.Upcoming)}
                   bg={timeFilter === TimeFilter.Upcoming ? "#70f63bd6" : "#3bc8f6d6"}
                 >
