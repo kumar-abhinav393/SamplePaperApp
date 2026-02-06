@@ -1,5 +1,5 @@
 import { Box, Flex, Grid, GridItem, Text } from "@chakra-ui/react"
-import { ColorModeButton } from "../ui/color-mode"
+import { ColorModeButton, useColorModeValue } from "../ui/color-mode"
 import { Logout } from "./Logout";
 import { useAuthContext } from "@/hooks/useAuthContext";
 import { GyaanLogo } from "@/assets/gyaan-logo";
@@ -13,6 +13,7 @@ export const Header = () => {
 
   const { role } = useUserRole();
   const { user } = useAuthContext();
+  const textColor = useColorModeValue("black", "white");
 
   return (
     <Box id="header"
@@ -51,8 +52,8 @@ export const Header = () => {
             fontSize={["25px", "25px", "40px", "40px", "45px"]}
           >
             <Text
+              color={textColor}
               fontWeight={"bold"}
-              color={"#3bc8f6d6"}
               fontFamily={"sans-serif"}
             >
               Gyaan Tuitions
