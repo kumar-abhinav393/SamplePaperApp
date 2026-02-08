@@ -30,14 +30,20 @@ interface FilterProps {
   subjects: SubjectProps[];
   role: UserRole | undefined;
   assignmentPdf: File | null;
+  inviteRole: UserRole | null;
+  inviteCreatedAt: string | null;
+  inviteExpiresAt: string | null;
   assignments: AssignmentProps[];
   selectedBoardCode: string | null;
   selectedClassCode: number | null;
   selectedSubjectCode: string | null;
   selectedPaperCode: PaperCode | null;
   setAssignmentPdf: (file: File | null) => void;
+  setInviteRole?: (role: UserRole | null) => void;
   paperTypes: { code: PaperCode; name: string }[];
   onClassCodeChange: (value: number | null) => void;
+  setInviteCreatedAt?: (date: string | null) => void;
+  setInviteExpiresAt?: (date: string | null) => void;
   setSelectedBoardCode: (value: string | null) => void;
   setSelectedSubjectCode: (value: string | null) => void;
   setSelectedPaperCode: (value: PaperCode | null) => void;
@@ -52,13 +58,19 @@ export const Filter = ({
   subjects,
   topicName,
   paperTypes,
+  inviteRole,
   setTopicName,
+  setInviteRole,
+  inviteCreatedAt,
+  inviteExpiresAt,
   setAssignmentPdf,
   selectedPaperCode,
   selectedClassCode,
   selectedBoardCode,
   onClassCodeChange,
   setAddDescription,
+  setInviteCreatedAt,
+  setInviteExpiresAt,
   selectedSubjectCode,
   setSelectedPaperCode,
   setSelectedBoardCode,
@@ -397,9 +409,14 @@ export const Filter = ({
             Generate Invite Token
           </Text>
           <Select.Root
-            collection={roleFrameworks}
             size="md"
             deselectable
+            collection={roleFrameworks}
+            value={inviteRole ? [inviteRole] : []}
+            onValueChange={(details) => {
+              const selectedRole = details.value[0] as UserRole;
+              setInviteRole?.(selectedRole)
+            }}
           >
             <Select.HiddenSelect />
             <Select.Label fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>
@@ -445,18 +462,22 @@ export const Filter = ({
               <Text fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>Created At</Text>
               <Input
                 type="date"
+                value={inviteCreatedAt ?? ""}
                 placeholder="Enter Created Date"
                 css={{ "--focus-color": "#3bc8f6d6" }}
                 fontSize={["l", "xl", "xl", "xl", "xl"]}
+                onChange={(e) => setInviteCreatedAt?.(e.target.value)}
               />
             </GridItem>
             <GridItem>
               <Text fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>Expires At</Text>
               <Input
                 type="date"
+                value={inviteExpiresAt ?? ""}
                 placeholder="Enter Expiry Date"
                 css={{ "--focus-color": "#3bc8f6d6" }}
                 fontSize={["l", "xl", "xl", "xl", "xl"]}
+                onChange={(e) => setInviteExpiresAt?.(e.target.value)}
               />
             </GridItem>
           </Grid>

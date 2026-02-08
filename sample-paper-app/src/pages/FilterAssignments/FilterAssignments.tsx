@@ -50,7 +50,10 @@ export const FilterAssignments = () => {
   const [topicName, setTopicName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
   const [addDescription, setAddDescription] = useState("");
+  const [inviteRole, setInviteRole] = useState<UserRole | null>(null);
   const [assignmentPdf, setAssignmentPdf] = useState<File | null>(null);
+  const [inviteCreatedAt, setInviteCreatedAt] = useState<string | null>(null);
+  const [inviteExpiresAt, setInviteExpiresAt] = useState<string | null>(null);
   const [showFacultyProfileModal, setShowFacultyProfileModal] = useState(false);
   const [selectedBoardCode, setSelectedBoardCode] = useState<string | null>(null);
   const [selectedClassCode, setSelectedClassCode] = useState<number | null>(null);
@@ -221,6 +224,10 @@ export const FilterAssignments = () => {
     }
   }
 
+  const handleCreateInvite = () => {
+    
+  }
+
   return (
     <Box
       id="filter-assignment"
@@ -298,15 +305,21 @@ export const FilterAssignments = () => {
               subjects={Subjects}
               topicName={topicName}
               paperTypes={paperTypes}
+              inviteRole={inviteRole}
               assignments={Assignments}
               setTopicName={setTopicName}
               assignmentPdf={assignmentPdf}
+              setInviteRole={setInviteRole}
               addDescription={addDescription}
+              inviteCreatedAt={inviteCreatedAt}
+              inviteExpiresAt={inviteExpiresAt}
               setAssignmentPdf={setAssignmentPdf}
               setAddDescription={setAddDescription}
               selectedPaperCode={selectedPaperCode}
               selectedBoardCode={selectedBoardCode}
               selectedClassCode={selectedClassCode}
+              setInviteCreatedAt={setInviteCreatedAt}
+              setInviteExpiresAt={setInviteExpiresAt}
               onClassCodeChange={setSelectedClassCode}
               selectedSubjectCode={selectedSubjectCode}
               setSelectedPaperCode={setSelectedPaperCode}
@@ -352,7 +365,7 @@ export const FilterAssignments = () => {
                 fontSize={["sm", "sm", "md", "lg", "lg"]}
                 h={["30px", "30px", "30px", "40px", "40px"]}
                 w={["80px", "80px", "100px", "120px", "120px"]}
-                onClick={role?.role == UserRole.FACULTY ? handleUpload : handleFilter}
+                onClick={role?.role == UserRole.FACULTY ? handleUpload : role?.role == UserRole.STUDENT ? handleFilter : handleCreateInvite}
               >
                 {role?.role === UserRole.FACULTY ? "Upload"
                   : role?.role === UserRole.STUDENT ? "Filter"
