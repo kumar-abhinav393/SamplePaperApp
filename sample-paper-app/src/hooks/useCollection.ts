@@ -12,7 +12,7 @@ import { useEffect, useMemo, useState } from "react";
 import { db } from "../../firebase.config";
 
 export const useCollection = <DocumentType extends { id: string; props: DocumentData }>(
-  collectionId: string,
+  collectionId?: string,
   queryParams?: QueryParams
 ): {
   documents: DocumentType[];
@@ -26,6 +26,12 @@ export const useCollection = <DocumentType extends { id: string; props: Document
   const queryKey = useMemo(() => JSON.stringify(queryParams ?? {}), [queryParams])
 
   useEffect(() => {
+    if (!collectionId) {
+      setDocuments([]);
+      setIsPending(false);
+      setError(undefined);
+      return;
+    }
     setIsPending(true);
     const colRef = collection(db, collectionId);
 
