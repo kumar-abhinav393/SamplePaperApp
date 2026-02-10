@@ -34,6 +34,8 @@ import { useFacultyProfile } from "@/hooks/useFacultyProfile";
 import { FacultyProfile } from "@/components/Modals/FacultyProfile";
 import { uploadAssignmentPdf } from "@/helpers/uploadAssignmentPdf";
 import { createAssignmentDocument } from "@/helpers/createAssignmentDocument";
+import { createInviteToken } from "@/helpers/createInviteToken";
+import { Timestamp } from "firebase/firestore";
 
 export const FilterAssignments = () => {
   const navigate = useNavigate();
@@ -49,7 +51,9 @@ export const FilterAssignments = () => {
 
   const [topicName, setTopicName] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const [isGenerating, setIsGenerating] = useState(false);
   const [addDescription, setAddDescription] = useState("");
+  const [inviteLink, setInviteLink] = useState<string>("");
   const [inviteRole, setInviteRole] = useState<UserRole | null>(null);
   const [assignmentPdf, setAssignmentPdf] = useState<File | null>(null);
   const [inviteCreatedAt, setInviteCreatedAt] = useState<string | null>(null);
@@ -95,8 +99,11 @@ export const FilterAssignments = () => {
 
   const handleClearAll = () => {
     setTopicName("");
+    setInviteRole(null);
     setAddDescription("");
     setAssignmentPdf(null);
+    setInviteCreatedAt(null);
+    setInviteExpiresAt(null);
     setSelectedPaperCode(null);
     setSelectedClassCode(null);
     setSelectedBoardCode(null);
@@ -224,8 +231,45 @@ export const FilterAssignments = () => {
     }
   }
 
-  const handleCreateInvite = () => {
-    
+  const handleCreateInvite = async () => {
+    if (!inviteRole || !inviteCreatedAt || !inviteExpiresAt) {
+      toaster.create({
+        title: "Missing Fields",
+        type: "warning",
+        description: "Please fill in all invite fields"
+      });
+      return
+    };
+
+    if (!user || role?.role !== UserRole.ADMIN) {
+      toaster.create({
+        title: "Not authorised",
+        type: "warning",
+        description: "Only admins can generate the invite links."
+      });
+      return;
+    }
+
+    try {
+      setIsGenerating(true);
+      const inviteId = await createInviteToken(
+        inviteRole,
+        Timestamp.fromDate(new Date(inviteCreatedAt)),
+        Timestamp.fromDate(new Date(inviteExpiresAt)),
+        user.uid
+      );
+      const inviteToken = `${window.location.origin}${RouterPaths.Signup}?invite=${inviteId}`;
+      setInviteLink(inviteToken);
+    } catch (err) {
+      toaster.create({
+        title: "Error",
+        type: "error",
+        description: err
+      });
+    } finally {
+      setIsGenerating(false);
+      handleClearAll();
+    }
   }
 
   return (
@@ -360,12 +404,21 @@ export const FilterAssignments = () => {
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 loading={isUploading}
-                disabled={isUploading}
+                disabled={role?.role === UserRole.FACULTY
+                  ? isUploading
+                  : role?.role === UserRole.ADMIN
+                  ? isGenerating
+                  : false
+                }
                 border={"1px solid black"}
                 fontSize={["sm", "sm", "md", "lg", "lg"]}
                 h={["30px", "30px", "30px", "40px", "40px"]}
                 w={["80px", "80px", "100px", "120px", "120px"]}
-                onClick={role?.role == UserRole.FACULTY ? handleUpload : role?.role == UserRole.STUDENT ? handleFilter : handleCreateInvite}
+                onClick={role?.role == UserRole.FACULTY
+                  ? handleUpload
+                  : role?.role == UserRole.STUDENT
+                  ? handleFilter
+                  : handleCreateInvite}
               >
                 {role?.role === UserRole.FACULTY ? "Upload"
                   : role?.role === UserRole.STUDENT ? "Filter"
@@ -375,10 +428,10 @@ export const FilterAssignments = () => {
             {role?.role === UserRole.ADMIN && (
               <Textarea
                 readOnly
-                placeholder="Copy the invite token and share to the concerned."
+                value={inviteLink}
                 h={["30px", "30px", "30px", "40px", "40px"]}
+                placeholder="Copy the invite token and share to the concerned."
               >
-
               </Textarea>
             )}
           </Stack>
