@@ -66,7 +66,10 @@ export const FilterAssignments = () => {
 
   const { documents: Boards } = useCollection<BoardProps>("Boards");
   const { documents: Classes } = useCollection<ClassProps>("Classes");
-  const { documents: Faculties } = useCollection<{ id: string; props: FacultyProfileProps }>("Faculties");
+  const facultiesCollection = role?.role === UserRole.ADMIN ? "Faculties" : undefined;
+  const { documents: Faculties } = useCollection<{ id: string; props: FacultyProfileProps }>(
+    facultiesCollection
+  );
 
   const paperTypes: { code: PaperCode; name: string }[] = [
     { code: "ASSIGNMENT", name: "Assignments" },
