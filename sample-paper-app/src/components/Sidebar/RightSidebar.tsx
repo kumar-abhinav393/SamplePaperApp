@@ -8,12 +8,13 @@ interface RightSidebarProps {
   isHorizontal?: boolean;
   role: UserRole | undefined;
   profile: FacultyProfileProps | null;
-  faculties: {id: string; props: FacultyProfileProps}[];
+  faculties?: {id: string; props: FacultyProfileProps}[];
 }
 
-export const RightSidebar = ({ isHorizontal = false, role, profile, boards, faculties }: RightSidebarProps) => {
+export const RightSidebar = ({ isHorizontal = false, role, profile, boards, faculties = [] }: RightSidebarProps) => {
 
   const textColor = useColorModeValue("#3bc8f6d6", undefined);
+  const uCount =  faculties.reduce((sum, f) => sum + (f.props.uploadCount ?? 0), 0);
 
   return (
     <>
@@ -128,7 +129,7 @@ export const RightSidebar = ({ isHorizontal = false, role, profile, boards, facu
                   colorScheme="green"
                   fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
                 >
-                  {profile?.uploadCount}
+                  {}
                 </Tag.Label>
               </Tag.Root>
             </Flex>
@@ -166,7 +167,7 @@ export const RightSidebar = ({ isHorizontal = false, role, profile, boards, facu
                   colorScheme="blue"
                   fontSize={"l"}
                 >
-                  {faculties.map(f => f.props.uploadCount)}
+                  {uCount}
                 </Tag.Label>
               </Tag.Root>
             </Flex>

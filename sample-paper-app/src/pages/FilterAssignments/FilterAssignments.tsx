@@ -24,7 +24,10 @@ import {
   Stack,
   useBreakpointValue,
   CloseButton,
-  Textarea,
+  Clipboard,
+  InputGroup,
+  Input,
+  IconButton,
 } from "@chakra-ui/react";
 import { toaster } from "@/components/ui/toaster";
 import { useNavigate } from "react-router-dom";
@@ -102,6 +105,7 @@ export const FilterAssignments = () => {
 
   const handleClearAll = () => {
     setTopicName("");
+    setInviteLink("");
     setInviteRole(null);
     setAddDescription("");
     setAssignmentPdf(null);
@@ -275,6 +279,16 @@ export const FilterAssignments = () => {
     }
   }
 
+  const ClipboardIconButton = () => {
+    return (
+      <Clipboard.Trigger asChild>
+        <IconButton variant={"surface"} size={"xs"} me={"-2"}>
+          <Clipboard.Indicator />
+        </IconButton>
+      </Clipboard.Trigger>
+    )
+  }
+
   return (
     <Box
       id="filter-assignment"
@@ -410,8 +424,8 @@ export const FilterAssignments = () => {
                 disabled={role?.role === UserRole.FACULTY
                   ? isUploading
                   : role?.role === UserRole.ADMIN
-                  ? isGenerating
-                  : false
+                    ? isGenerating
+                    : false
                 }
                 border={"1px solid black"}
                 fontSize={["sm", "sm", "md", "lg", "lg"]}
@@ -420,8 +434,8 @@ export const FilterAssignments = () => {
                 onClick={role?.role == UserRole.FACULTY
                   ? handleUpload
                   : role?.role == UserRole.STUDENT
-                  ? handleFilter
-                  : handleCreateInvite}
+                    ? handleFilter
+                    : handleCreateInvite}
               >
                 {role?.role === UserRole.FACULTY ? "Upload"
                   : role?.role === UserRole.STUDENT ? "Filter"
@@ -429,13 +443,16 @@ export const FilterAssignments = () => {
               </Button>
             </Flex>
             {role?.role === UserRole.ADMIN && (
-              <Textarea
-                readOnly
+              <Clipboard.Root
+                maxW={"100%"}
                 value={inviteLink}
-                h={["30px", "30px", "30px", "40px", "40px"]}
-                placeholder="Copy the invite token and share to the concerned."
               >
-              </Textarea>
+                <InputGroup endElement={<ClipboardIconButton />}>
+                  <Clipboard.Input asChild>
+                    <Input readOnly />
+                  </Clipboard.Input>
+                </InputGroup>
+              </Clipboard.Root>
             )}
           </Stack>
         </Box>
