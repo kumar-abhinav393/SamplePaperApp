@@ -76,6 +76,10 @@ export const Filter = ({
   setSelectedBoardCode,
   setSelectedSubjectCode,
 }: FilterProps) => {
+
+  // Creates a date object, converts into a string and splits into two parts
+  const today = new Date().toISOString().split("T")[0];
+
   useEffect(() => {
     setSelectedBoardCode(null);
   }, [selectedClassCode, setSelectedBoardCode]);
@@ -462,6 +466,7 @@ export const Filter = ({
               <Text fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>Created At</Text>
               <Input
                 type="date"
+                min={today}
                 value={inviteCreatedAt ?? ""}
                 placeholder="Enter Created Date"
                 css={{ "--focus-color": "#3bc8f6d6" }}
@@ -473,6 +478,7 @@ export const Filter = ({
               <Text fontSize={["l", "xl", "1xl", "1xl", "1xl"]}>Expires At</Text>
               <Input
                 type="date"
+                min={today}
                 value={inviteExpiresAt ?? ""}
                 placeholder="Enter Expiry Date"
                 css={{ "--focus-color": "#3bc8f6d6" }}
