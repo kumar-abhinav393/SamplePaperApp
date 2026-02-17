@@ -39,6 +39,13 @@
     color: var(--color-current);
     font-size: var(--chakra-font-sizes-sm);
     border: 1px solid var(--border-current);
+    outline: none;
+}
+
+.react-datepicker__input-container input:focus,
+.react-datepicker__input-container input:focus-visible {
+    border-color: var(--border-current);
+    box-shadow: none;
 }
 
 .react-datepicker__input-container:has(input:disabled) {

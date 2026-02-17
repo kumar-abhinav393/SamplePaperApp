@@ -13,7 +13,7 @@ import { TfiSearch } from "react-icons/tfi";
 import { useLocation } from "react-router-dom";
 import { FaSortNumericUp } from "react-icons/fa";
 import { FaSortNumericDown } from "react-icons/fa";
-import type { AssignmentProps } from "@/types/types";
+import type { AssignmentProps, FacultyProfileProps } from "@/types/types";
 import { formatFirestoreDate } from "@/helpers/dateFormatting";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { TimeFilter, SortOrder, ColorMode, UserRole } from "@/helpers/enum";
@@ -24,6 +24,7 @@ import { useUserRole } from "@/hooks/useUserRole";
 import { useCollection } from "@/hooks/useCollection";
 import { useFirestore } from "@/hooks/useFirestore";
 import { toaster } from "@/components/ui/toaster";
+import { FacultyFilterSelect } from "@/components/FacultyFilterSelect/FacultyFilterSelect";
 
 type LocationState = {
   assignments?: AssignmentProps[];
@@ -54,6 +55,8 @@ export const MyAssignments = () => {
       value: user?.displayName
     }
   });
+
+  const { documents: Faculties } = useCollection<{ id: string; props: FacultyProfileProps }>("Faculties");
 
   const normalize = (s: unknown): string =>
     typeof s === "string" ? s
@@ -206,62 +209,69 @@ export const MyAssignments = () => {
             templateColumns={"repeat(24, 1fr)"}
             h={["30px", "30px", "40px", "40px", "40px"]}
           >
-            <GridItem colEnd={[23]} display={"flex"} colStart={[1, 1, 2, 2, 2]}>
-              <TimeFilterSelect
-                value={timeFilter}
-                onChange={setTimeFilter}
-                disabled={requireFilterFirst} />
-              <Flex gap={2} display={{ base: "none", lg: "flex" }}>
-                <Button
-                  color={textColor}
-                  border={"1px solid black"}
-                  disabled={requireFilterFirst}
-                  fontSize={["sm", "sm", "md", "lg", "lg"]}
-                  h={["30px", "30px", "30px", "40px", "40px"]}
-                  onClick={() => setTimeFilter(TimeFilter.All)}
-                  w={["80px", "80px", "100px", "120px", "120px"]}
-                  bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
-                >
-                  All
-                </Button>
-                <Button
-                  color={textColor}
-                  border={"1px solid black"}
-                  disabled={requireFilterFirst}
-                  fontSize={["sm", "sm", "md", "lg", "lg"]}
-                  h={["30px", "30px", "30px", "40px", "40px"]}
-                  w={["80px", "80px", "100px", "120px", "120px"]}
-                  onClick={() => setTimeFilter(TimeFilter.ThisMonth)}
-                  bg={timeFilter === TimeFilter.ThisMonth ? "#70f63bd6" : "#3bc8f6d6"}
-                >
-                  This Month
-                </Button>
-                <Button
-                  color={textColor}
-                  border={"1px solid black"}
-                  disabled={requireFilterFirst}
-                  fontSize={["sm", "sm", "md", "lg", "lg"]}
-                  h={["30px", "30px", "30px", "40px", "40px"]}
-                  w={["80px", "80px", "100px", "120px", "120px"]}
-                  onClick={() => setTimeFilter(TimeFilter.LastMonth)}
-                  bg={timeFilter === TimeFilter.LastMonth ? "#70f63bd6" : "#3bc8f6d6"}
-                >
-                  Last Month
-                </Button>
-                <Button
-                  color={textColor}
-                  border={"1px solid black"}
-                  disabled={requireFilterFirst}
-                  fontSize={["sm", "sm", "md", "lg", "lg"]}
-                  h={["30px", "30px", "30px", "40px", "40px"]}
-                  w={["80px", "80px", "100px", "120px", "120px"]}
-                  onClick={() => setTimeFilter(TimeFilter.Upcoming)}
-                  bg={timeFilter === TimeFilter.Upcoming ? "#70f63bd6" : "#3bc8f6d6"}
-                >
-                  Upcoming
-                </Button>
-              </Flex>
-            </GridItem>
+            {(role?.role === UserRole.STUDENT || role?.role === UserRole.FACULTY) && (
+              <GridItem colEnd={[23]} display={"flex"} colStart={[1, 1, 2, 2, 2]}>
+                <TimeFilterSelect
+                  value={timeFilter}
+                  onChange={setTimeFilter}
+                  disabled={requireFilterFirst} />
+                <Flex gap={2} display={{ base: "none", lg: "flex" }}>
+                  <Button
+                    color={textColor}
+                    border={"1px solid black"}
+                    disabled={requireFilterFirst}
+                    fontSize={["sm", "sm", "md", "lg", "lg"]}
+                    h={["30px", "30px", "30px", "40px", "40px"]}
+                    onClick={() => setTimeFilter(TimeFilter.All)}
+                    w={["80px", "80px", "100px", "120px", "120px"]}
+                    bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
+                  >
+                    All
+                  </Button>
+                  <Button
+                    color={textColor}
+                    border={"1px solid black"}
+                    disabled={requireFilterFirst}
+                    fontSize={["sm", "sm", "md", "lg", "lg"]}
+                    h={["30px", "30px", "30px", "40px", "40px"]}
+                    w={["80px", "80px", "100px", "120px", "120px"]}
+                    onClick={() => setTimeFilter(TimeFilter.ThisMonth)}
+                    bg={timeFilter === TimeFilter.ThisMonth ? "#70f63bd6" : "#3bc8f6d6"}
+                  >
+                    This Month
+                  </Button>
+                  <Button
+                    color={textColor}
+                    border={"1px solid black"}
+                    disabled={requireFilterFirst}
+                    fontSize={["sm", "sm", "md", "lg", "lg"]}
+                    h={["30px", "30px", "30px", "40px", "40px"]}
+                    w={["80px", "80px", "100px", "120px", "120px"]}
+                    onClick={() => setTimeFilter(TimeFilter.LastMonth)}
+                    bg={timeFilter === TimeFilter.LastMonth ? "#70f63bd6" : "#3bc8f6d6"}
+                  >
+                    Last Month
+                  </Button>
+                  <Button
+                    color={textColor}
+                    border={"1px solid black"}
+                    disabled={requireFilterFirst}
+                    fontSize={["sm", "sm", "md", "lg", "lg"]}
+                    h={["30px", "30px", "30px", "40px", "40px"]}
+                    w={["80px", "80px", "100px", "120px", "120px"]}
+                    onClick={() => setTimeFilter(TimeFilter.Upcoming)}
+                    bg={timeFilter === TimeFilter.Upcoming ? "#70f63bd6" : "#3bc8f6d6"}
+                  >
+                    Upcoming
+                  </Button>
+                </Flex>
+              </GridItem>
+            )}
+            {role?.role === UserRole.ADMIN && (
+              <GridItem colEnd={[23]} display={"flex"} colStart={[1, 1, 2, 2, 2]}>
+                <FacultyFilterSelect faculties={Faculties} />
+              </GridItem>
+            )}
             <GridItem
               colEnd={24}
               display={"flex"}
