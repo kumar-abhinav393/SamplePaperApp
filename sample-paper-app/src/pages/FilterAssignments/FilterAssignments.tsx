@@ -105,7 +105,6 @@ export const FilterAssignments = () => {
 
   const handleClearAll = () => {
     setTopicName("");
-    setInviteLink("");
     setInviteRole(null);
     setAddDescription("");
     setAssignmentPdf(null);
