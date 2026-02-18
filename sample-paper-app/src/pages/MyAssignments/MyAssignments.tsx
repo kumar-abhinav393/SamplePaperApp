@@ -56,7 +56,9 @@ export const MyAssignments = () => {
     }
   });
 
-  const { documents: Faculties } = useCollection<{ id: string; props: FacultyProfileProps }>("Faculties");
+  const { documents: Faculties } = useCollection<{ id: string; props: FacultyProfileProps }>(
+    role?.role === UserRole.ADMIN ? "Faculties" : undefined
+  );
 
   const normalize = (s: unknown): string =>
     typeof s === "string" ? s
