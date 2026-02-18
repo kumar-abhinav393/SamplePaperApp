@@ -110,7 +110,7 @@ export const RightSidebar = ({ isHorizontal = false, role, profile, boards, facu
               <Tag.Root bg={textColor} border={"1px solid black"}>
                 <Tag.Label
                   colorScheme="blue"
-                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                  fontSize={"l"}
                 >
                   
                 </Tag.Label>
@@ -127,9 +127,9 @@ export const RightSidebar = ({ isHorizontal = false, role, profile, boards, facu
               <Tag.Root bg={textColor} border={"1px solid black"}>
                 <Tag.Label
                   colorScheme="green"
-                  fontSize={["l", "xl", "1xl", "1xl", "1xl"]}
+                  fontSize={"l"}
                 >
-                  {}
+                  {profile?.uploadCount ?? 0}
                 </Tag.Label>
               </Tag.Root>
             </Flex>
