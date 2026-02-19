@@ -7,6 +7,7 @@ import {
   GridItem,
   Input,
   SimpleGrid,
+  Text,
 } from "@chakra-ui/react";
 import { useEffect, useMemo, useState } from "react";
 import { TfiSearch } from "react-icons/tfi";
@@ -60,6 +61,8 @@ export const MyAssignments = () => {
     role?.role === UserRole.ADMIN ? "Faculties" : undefined
   );
 
+  const { documents: allAssignments } = useCollection<AssignmentProps>("Papers");
+
   const normalize = (s: unknown): string =>
     typeof s === "string" ? s
       .normalize("NFKD")
@@ -80,7 +83,16 @@ export const MyAssignments = () => {
   }, [state?.assignments, requireFilterFirst]);
 
   // Conditional assignments based on role
-  const assignmentToShow = role?.role === UserRole.FACULTY ? uploadedAssignments : visibleAssignments;
+  const assignmentToShow = useMemo(() => {
+    if (role?.role === UserRole.FACULTY) {
+      return uploadedAssignments ?? [];
+    } else if (role?.role === UserRole.ADMIN) {
+      return allAssignments ?? [];
+    } else if (role?.role === UserRole.STUDENT) {
+      return visibleAssignments;
+    }
+    return [];
+  }, [role?.role, uploadedAssignments, visibleAssignments, allAssignments]);
 
   const processedAssignments = useMemo(() => {
     if (!assignmentToShow.length) return []
@@ -311,19 +323,27 @@ export const MyAssignments = () => {
           bg={{ base: "white", _dark: "black" }}
         >
           {requireFilterFirst && (
-            <Alert.Root
-              status="info"
-              textWrap={"wrap"}
-              title="This is the alert title"
-              size={["sm", "sm", "md", "md", "lg"]}>
-              <Alert.Indicator />
-              <Alert.Title
-                fontSize={["l", "l", "xl", "1xl", "1xl"]}
-              >
-                Please open <b>Filter Assignment</b> tab and select your filters first.
-              </Alert.Title>
-            </Alert.Root>
-          )}
+            (role?.role === UserRole.ADMIN && allAssignments.length === 0) ||
+            (role?.role === UserRole.STUDENT && visibleAssignments.length === 0)
+          ) && (
+              <Alert.Root
+                status="info"
+                textWrap={"wrap"}
+                title="This is the alert title"
+                size={["sm", "sm", "md", "md", "lg"]}>
+                <Alert.Indicator />
+                <Alert.Title
+                  fontSize={["l", "l", "xl", "1xl", "1xl"]}
+                >
+                  {role?.role === UserRole.ADMIN && (
+                    <Text>No Records uploaded by any faculty so far.</Text>
+                  )}
+                  {role?.role === UserRole.STUDENT && (
+                    <Text>Please open <b>Filter Assignment</b> tab and select your filters first.</Text>
+                  )}
+                </Alert.Title>
+              </Alert.Root>
+            )}
           {hasNoResults && (
             <Alert.Root
               status="info"
