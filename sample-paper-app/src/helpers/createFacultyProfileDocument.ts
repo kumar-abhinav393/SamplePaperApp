@@ -29,7 +29,9 @@ export const createFacultyProfileDocument = async ({
             assignedBoard,
             assignedSubject,
             uid: currentUser.uid,
+            uploadCount: 0,
             createdAt: serverTimestamp(),
+            lastUploadDate: null,
         });
     }
 };
