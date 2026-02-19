@@ -312,7 +312,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                       />
                     </>
                   )}
-                  {role === UserRole.FACULTY && (
+                  {(role === UserRole.FACULTY || role === UserRole.ADMIN) && (
                     <>
                       <CiEdit
                         cursor={"pointer"}
