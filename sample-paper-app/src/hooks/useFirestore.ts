@@ -49,7 +49,7 @@ export const useFirestore = <DocumentType extends DocumentData>(collectionId: st
                 const facultyRef = doc(db, "Faculties", authorId);
                 await updateDoc(facultyRef, {
                     uploadCount: increment(-1),
-                })   
+                })
             }
 
             dispatchIfNotCanceled({type: "SUCCESS"});
