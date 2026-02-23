@@ -44,7 +44,7 @@ export const MyAssignments = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.desc);
-  const [timeFilter, setTimeFilter] = useState<TimeFilter>(TimeFilter.All);
+  const [timeFilter, setTimeFilter] = useState<TimeFilter>(TimeFilter.Recent);
 
   const { state } = useLocation() as { state: LocationState };
   const { updateDocument, deleteDocument, response } = useFirestore<AssignmentProps>("Papers");
@@ -106,14 +106,22 @@ export const MyAssignments = () => {
     }
 
     const now = new Date()
-    const year = now.getFullYear()
     const month = now.getMonth()
+    const year = now.getFullYear()
     const startOfThisMonth = new Date(year, month, 1).getTime()
     const startOfNextMonth = new Date(year, month + 1, 1).getTime()
     const startOfLastMonth = new Date(year, month - 1, 1).getTime()
+    const recentCutOff = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).getTime()
 
     let list = [...assignmentToShow];
 
+    if (timeFilter === TimeFilter.Recent) {
+      list = assignmentToShow.filter((a) => {
+        const t = getCreatedMillis(a)
+        return t >= recentCutOff
+      })
+    }
+    
     if (timeFilter === TimeFilter.ThisMonth) {
       list = assignmentToShow.filter(a => {
         const t = getCreatedMillis(a)
@@ -128,11 +136,8 @@ export const MyAssignments = () => {
       })
     }
 
-    if (timeFilter === TimeFilter.Upcoming) {
-      list = assignmentToShow.filter(a => {
-        const t = getCreatedMillis(a)
-        return t > startOfNextMonth
-      })
+    if (timeFilter === TimeFilter.All) {
+      list = assignmentToShow
     }
 
     if (searchTerm.trim() !== "") {
@@ -236,11 +241,11 @@ export const MyAssignments = () => {
                     disabled={requireFilterFirst}
                     fontSize={["sm", "sm", "md", "lg", "lg"]}
                     h={["30px", "30px", "30px", "40px", "40px"]}
-                    onClick={() => setTimeFilter(TimeFilter.All)}
+                    onClick={() => setTimeFilter(TimeFilter.Recent)}
                     w={["80px", "80px", "100px", "120px", "120px"]}
-                    bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
+                    bg={timeFilter === TimeFilter.Recent ? "#70f63bd6" : "#3bc8f6d6"}
                   >
-                    All
+                    Recent
                   </RippleButton>
                   <RippleButton
                     color={textColor}
@@ -273,10 +278,10 @@ export const MyAssignments = () => {
                     fontSize={["sm", "sm", "md", "lg", "lg"]}
                     h={["30px", "30px", "30px", "40px", "40px"]}
                     w={["80px", "80px", "100px", "120px", "120px"]}
-                    onClick={() => setTimeFilter(TimeFilter.Upcoming)}
-                    bg={timeFilter === TimeFilter.Upcoming ? "#70f63bd6" : "#3bc8f6d6"}
+                    onClick={() => setTimeFilter(TimeFilter.All)}
+                    bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
                   >
-                    Upcoming
+                    All
                   </RippleButton>
                 </Flex>
               </GridItem>
