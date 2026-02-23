@@ -8,7 +8,6 @@ import {
   Dialog,
   Link,
   Portal,
-  Button,
   CloseButton,
   ButtonGroup,
 } from "@chakra-ui/react";
@@ -33,6 +32,7 @@ import { UpdateModal } from "@/components/Modals/UpdateModal";
 import type { DocumentData } from "firebase/firestore";
 import { dialog } from "@/components/Modals/DescriptionModal";
 import { toaster } from "@/components/ui/toaster";
+import { RippleButton } from "@/components/ui/RippleButton";
 
 interface AssignmenCardProps {
   assignments: AssignmentProps[];
@@ -202,7 +202,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                             color={textColor}
                             size={["2xs", "2xs", "sm", "sm", "sm"]}
                           >
-                            <Button
+                            <RippleButton
                               bg={"#3bc8f6d6"}
                               variant={"outline"}
                               width={["50px", "50px", "70px", "100px", "100px"]}
@@ -233,15 +233,15 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                               }}
                             >
                               Edit
-                            </Button>
+                            </RippleButton>
                             <Dialog.ActionTrigger asChild>
-                              <Button
+                              <RippleButton
                                 bg={"#3bc8f6d6"}
                                 variant={"outline"}
                                 width={["50px", "50px", "70px", "100px", "100px"]}
                               >
                                 Cancel
-                              </Button>
+                              </RippleButton>
                             </Dialog.ActionTrigger>
                             <dialog.Viewport />
                           </ButtonGroup>

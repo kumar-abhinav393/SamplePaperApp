@@ -1,5 +1,4 @@
 import {
-  Button,
   createOverlay,
   Dialog,
   Flex,
@@ -12,6 +11,7 @@ import { toaster } from "../ui/toaster";
 import { useResetPassword } from "@/hooks/useResetPassword";
 import { useState } from "react";
 import { useColorModeValue } from "../ui/color-mode";
+import { RippleButton } from "../ui/RippleButton";
 
 interface DialoagProps {
   title?: string;
@@ -77,7 +77,7 @@ export const dialog = createOverlay<DialoagProps>((props) => {
                       css={{ "--focus-color": "#3bc8f6d6" }}
                       onChange={(e) => setEmail(e.target.value)}
                     />
-                    <Button
+                    <RippleButton
                       color={textColor}
                       bg={"#3bc8f6d6"}
                       disabled={!email}
@@ -86,7 +86,7 @@ export const dialog = createOverlay<DialoagProps>((props) => {
                       fontSize={["xl", "xl", "xl", "1xl", "1xl"]}
                     >
                       {<GiClick />}
-                    </Button>
+                    </RippleButton>
                   </Flex>
                 </Dialog.Description>
               )}

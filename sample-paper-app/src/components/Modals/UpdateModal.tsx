@@ -1,10 +1,11 @@
-import { Box, Button, Flex, Input, Portal, Text } from "@chakra-ui/react";
+import { Box, Flex, Input, Portal, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
 import type { AssignmentProps } from "@/types/types";
 import { useState } from "react";
 import { Timestamp, type DocumentData } from "firebase/firestore";
 import { toaster } from "../ui/toaster";
 import { formatFirestoreDate } from "@/helpers/dateFormatting";
+import { RippleButton } from "../ui/RippleButton";
 
 interface UpdateModalProps {
   isOpen: boolean;
@@ -215,7 +216,7 @@ export const UpdateModal = ({ isOpen, onClose, content, updateDocument }: Update
             w={"100%"}
             justifyContent={"space-between"}
           >
-            <Button
+            <RippleButton
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
@@ -226,8 +227,8 @@ export const UpdateModal = ({ isOpen, onClose, content, updateDocument }: Update
               w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Cancel
-            </Button>
-            <Button
+            </RippleButton>
+            <RippleButton
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
@@ -239,7 +240,7 @@ export const UpdateModal = ({ isOpen, onClose, content, updateDocument }: Update
               w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Update
-            </Button>
+            </RippleButton>
           </Flex>
         </Box>
       </Box>
