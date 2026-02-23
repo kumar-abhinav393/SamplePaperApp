@@ -10,10 +10,10 @@ type props = {
 export const TimeFilterSelect = ({ value, onChange, disabled }: props) => {
   const filterFrameworks = createListCollection({
     items: [
-      { label: "All", value: TimeFilter.All },
+      { label: "Recent", value: TimeFilter.Recent },
       { label: "This Month", value: TimeFilter.ThisMonth },
       { label: "Last Month", value: TimeFilter.LastMonth },
-      { label: "Upcoming", value: TimeFilter.Upcoming },
+      { label: "All", value: TimeFilter.All },
     ],
   });
   return (
