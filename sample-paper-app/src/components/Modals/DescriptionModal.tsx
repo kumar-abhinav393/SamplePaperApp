@@ -1,5 +1,4 @@
 import {
-  Button,
   createOverlay,
   Dialog,
   Field,
@@ -10,6 +9,7 @@ import {
 import type React from "react";
 import { useColorModeValue } from "../ui/color-mode";
 import { useState } from "react";
+import { RippleButton } from "../ui/RippleButton";
 
 interface DialogProps {
   title?: string;
@@ -60,7 +60,7 @@ export const dialog = createOverlay<DialogProps>((props) => {
                     </Field.Root>
                   </Flex>
                   <Flex alignItems={"center"} justifyContent={"center"} mt={10}>
-                    <Button
+                    <RippleButton
                       color={textColor}
                       bg={"#3bc8f6d6"}
                       disabled={!text}
@@ -71,7 +71,7 @@ export const dialog = createOverlay<DialogProps>((props) => {
                       w={["80px", "80px", "100px", "120px", "120px"]}
                     >
                       {title?.includes("Edit") ? "Update" : "Add"}
-                    </Button>
+                    </RippleButton>
                   </Flex>
                 </Dialog.Description>
               )}

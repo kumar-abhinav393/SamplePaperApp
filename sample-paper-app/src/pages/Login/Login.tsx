@@ -18,6 +18,7 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { ColorMode } from "@/helpers/enum";
+import { RippleButton } from "@/components/ui/RippleButton";
 
 export const Login = () => {
   const { login } = useLogin();
@@ -163,7 +164,7 @@ export const Login = () => {
         </Flex>
 
         <Flex mt={3} w={"100%"} justifyContent={"space-between"}>
-          <Button
+          <RippleButton
             color={textColor}
             bg={"#3bc8f6d6"}
             border={"1px solid black"}
@@ -173,8 +174,8 @@ export const Login = () => {
             w={["80px", "80px", "100px", "120px", "120px"]}
           >
             Cancel
-          </Button>
-          <Button
+          </RippleButton>
+          <RippleButton
             color={textColor}
             bg={"#3bc8f6d6"}
             loading={isLoggedIn}
@@ -186,7 +187,7 @@ export const Login = () => {
             w={["80px", "80px", "100px", "120px", "120px"]}
           >
             Login
-          </Button>
+          </RippleButton>
         </Flex>
       </Flex>
     </Flex>

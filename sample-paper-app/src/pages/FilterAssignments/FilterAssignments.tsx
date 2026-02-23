@@ -18,7 +18,6 @@ import {
 import {
   Text,
   Box,
-  Button,
   Flex,
   SimpleGrid,
   Stack,
@@ -39,6 +38,7 @@ import { uploadAssignmentPdf } from "@/helpers/uploadAssignmentPdf";
 import { createAssignmentDocument } from "@/helpers/createAssignmentDocument";
 import { createInviteToken } from "@/helpers/createInviteToken";
 import { Timestamp } from "firebase/firestore";
+import { RippleButton } from "@/components/ui/RippleButton";
 
 export const FilterAssignments = () => {
   const navigate = useNavigate();
@@ -405,7 +405,7 @@ export const FilterAssignments = () => {
               </Box>
             )}
             <Flex justifyContent={"space-between"}>
-              <Button
+              <RippleButton
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 onClick={handleClearAll}
@@ -415,8 +415,8 @@ export const FilterAssignments = () => {
                 w={["80px", "80px", "100px", "120px", "120px"]}
               >
                 Clear All
-              </Button>
-              <Button
+              </RippleButton>
+              <RippleButton
                 color={textColor}
                 bg={"#3bc8f6d6"}
                 loading={isUploading}
@@ -439,7 +439,7 @@ export const FilterAssignments = () => {
                 {role?.role === UserRole.FACULTY ? "Upload"
                   : role?.role === UserRole.STUDENT ? "Filter"
                     : role?.role === UserRole.ADMIN ? "Create" : ""}
-              </Button>
+              </RippleButton>
             </Flex>
             {role?.role === UserRole.ADMIN && (
               <Clipboard.Root

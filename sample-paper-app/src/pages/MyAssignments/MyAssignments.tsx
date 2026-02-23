@@ -1,7 +1,6 @@
 import {
   Alert,
   Box,
-  Button,
   Flex,
   Grid,
   GridItem,
@@ -26,6 +25,7 @@ import { useCollection } from "@/hooks/useCollection";
 import { useFirestore } from "@/hooks/useFirestore";
 import { toaster } from "@/components/ui/toaster";
 import { FacultyFilterSelect } from "@/components/FacultyFilterSelect/FacultyFilterSelect";
+import { RippleButton } from "@/components/ui/RippleButton";
 
 type LocationState = {
   assignments?: AssignmentProps[];
@@ -204,7 +204,7 @@ export const MyAssignments = () => {
               justifyContent={"center"}
               colStart={[25, 25, 23, 23, 23]}
             >
-              <Button
+              <RippleButton
                 ml={1}
                 color={textColor}
                 bg={"#3bc8f6d6"}
@@ -214,7 +214,7 @@ export const MyAssignments = () => {
                 w={["25px", "25px", "35px", "40px", "40px"]}
               >
                 <TfiSearch />
-              </Button>
+              </RippleButton>
             </GridItem>
           </Grid>
         </Box>
@@ -230,7 +230,7 @@ export const MyAssignments = () => {
                   onChange={setTimeFilter}
                   disabled={requireFilterFirst} />
                 <Flex gap={2} display={{ base: "none", lg: "flex" }}>
-                  <Button
+                  <RippleButton
                     color={textColor}
                     border={"1px solid black"}
                     disabled={requireFilterFirst}
@@ -241,8 +241,8 @@ export const MyAssignments = () => {
                     bg={timeFilter === TimeFilter.All ? "#70f63bd6" : "#3bc8f6d6"}
                   >
                     All
-                  </Button>
-                  <Button
+                  </RippleButton>
+                  <RippleButton
                     color={textColor}
                     border={"1px solid black"}
                     disabled={requireFilterFirst}
@@ -253,8 +253,8 @@ export const MyAssignments = () => {
                     bg={timeFilter === TimeFilter.ThisMonth ? "#70f63bd6" : "#3bc8f6d6"}
                   >
                     This Month
-                  </Button>
-                  <Button
+                  </RippleButton>
+                  <RippleButton
                     color={textColor}
                     border={"1px solid black"}
                     disabled={requireFilterFirst}
@@ -265,8 +265,8 @@ export const MyAssignments = () => {
                     bg={timeFilter === TimeFilter.LastMonth ? "#70f63bd6" : "#3bc8f6d6"}
                   >
                     Last Month
-                  </Button>
-                  <Button
+                  </RippleButton>
+                  <RippleButton
                     color={textColor}
                     border={"1px solid black"}
                     disabled={requireFilterFirst}
@@ -277,7 +277,7 @@ export const MyAssignments = () => {
                     bg={timeFilter === TimeFilter.Upcoming ? "#70f63bd6" : "#3bc8f6d6"}
                   >
                     Upcoming
-                  </Button>
+                  </RippleButton>
                 </Flex>
               </GridItem>
             )}
@@ -293,7 +293,7 @@ export const MyAssignments = () => {
               justifyContent={"center"}
               colStart={[25, 25, 23, 23, 23]}
             >
-              <Button
+              <RippleButton
                 ml={1}
                 color={textColor}
                 bg={"#3bc8f6d6"}
@@ -308,7 +308,7 @@ export const MyAssignments = () => {
                 ) : (
                   <FaSortNumericDown />
                 )}
-              </Button>
+              </RippleButton>
             </GridItem>
           </Grid>
         </Box>

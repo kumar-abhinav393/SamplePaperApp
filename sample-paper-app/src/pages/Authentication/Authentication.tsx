@@ -1,5 +1,6 @@
 import { useColorModeValue } from "@/components/ui/color-mode";
-import { Button, Flex } from "@chakra-ui/react"
+import { RippleButton } from "@/components/ui/RippleButton";
+import { Flex } from "@chakra-ui/react"
 import { useNavigate } from "react-router-dom"
 
 export const Authentication = () => {
@@ -15,7 +16,7 @@ export const Authentication = () => {
       justifyContent={"center"}
       w={["80%", "80%", "45%", "35%", "35%"]}
     >
-      <Button
+      <RippleButton
         mb={3}
         color={textColor}
         bg={"#3bc8f6d6"}
@@ -26,8 +27,8 @@ export const Authentication = () => {
         h={["30px", "30px", "30px", "40px", "40px"]}
       >
         LOGIN WITH EMAIL
-      </Button>
-      <Button
+      </RippleButton>
+      <RippleButton
         color={textColor}
         bg={"#3bc8f6d6"}
         fontWeight={"bold"}
@@ -37,7 +38,7 @@ export const Authentication = () => {
         h={["30px", "30px", "30px", "40px", "40px"]}
       >
         REGISTER WITH EMAIL
-      </Button>
+      </RippleButton>
     </Flex>
   )
 }

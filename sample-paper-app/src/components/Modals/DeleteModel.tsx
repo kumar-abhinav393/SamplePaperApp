@@ -1,8 +1,9 @@
-import { Box, Button, Flex, Portal, Text } from "@chakra-ui/react";
+import { Box, Flex, Portal, Text } from "@chakra-ui/react";
 import { useColorModeValue } from "../ui/color-mode";
 import { useState } from "react";
 import { toaster } from "../ui/toaster";
 import type { AssignmentProps } from "@/types/types";
+import { RippleButton } from "../ui/RippleButton";
 
 interface DeleteModalProps {
   isOpen: boolean;
@@ -113,7 +114,7 @@ export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: Delete
             w={"100%"}
             justifyContent={"space-between"}
           >
-            <Button
+            <RippleButton
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
@@ -124,8 +125,8 @@ export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: Delete
               w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Cancel
-            </Button>
-            <Button
+            </RippleButton>
+            <RippleButton
               color={textColor}
               bg={"#3bc8f6d6"}
               fontWeight={"bold"}
@@ -137,7 +138,7 @@ export const DeleteModal = ({ isOpen, onClose, content, deleteDocument }: Delete
               w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Delete
-            </Button>
+            </RippleButton>
           </Flex>
         </Box>
       </Box>

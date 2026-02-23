@@ -17,6 +17,7 @@ import {
 import { FcGoogle } from "react-icons/fc";
 import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
 import { validateInviteToken } from "@/helpers/validateInviteToken";
+import { RippleButton } from "@/components/ui/RippleButton";
 
 export const Signup = () => {
   const { signup } = useSignup();
@@ -176,7 +177,7 @@ export const Signup = () => {
           </Fieldset.Root>
 
           <Flex mt={3} justifyContent={"space-between"}>
-            <Button
+            <RippleButton
               color={textColor}
               bg={"#3bc8f6d6"}
               border={"1px solid black"}
@@ -186,8 +187,8 @@ export const Signup = () => {
               w={["80px", "80px", "100px", "120px", "120px"]}
             >
               Back
-            </Button>
-            <Button
+            </RippleButton>
+            <RippleButton
               color={textColor}
               bg={"#3bc8f6d6"}
               loading={isSigningUp}
@@ -199,7 +200,7 @@ export const Signup = () => {
               disabled={!email || !password || !displayName || passwordError}
             >
               Signup
-            </Button>
+            </RippleButton>
           </Flex>
         </form>
       </Flex>

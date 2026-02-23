@@ -3,7 +3,6 @@ import { getBoardFramework, getClassFramework, getSubjectFramework } from "@/hel
 import type { BoardProps, ClassProps, SubjectProps } from "@/types/types";
 import {
   Flex,
-  Button,
   Fieldset,
   Field,
   Input,
@@ -13,6 +12,7 @@ import {
   Portal,
 } from "@chakra-ui/react";
 import { useState } from "react";
+import { RippleButton } from "../ui/RippleButton";
 
 interface FacultyProfileProps {
   user: { displayName: string; email: string };
@@ -231,7 +231,7 @@ export const FacultyProfile = ({ user, onClose, classes, boards, subjects }: Fac
           </Flex>
 
           <Flex mt={3} w={"100%"} justifyContent={"space-between"}>
-            <Button
+            <RippleButton
               bg={"#3bc8f6d6"}
               onClick={handleSubmit}
               disabled={!isFormValid}
@@ -240,7 +240,7 @@ export const FacultyProfile = ({ user, onClose, classes, boards, subjects }: Fac
               w={["310px", "350px", "450px", "450px", "450px"]}
             >
               Submit
-            </Button>
+            </RippleButton>
           </Flex>
         </Flex>
       </Flex>
