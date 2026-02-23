@@ -1,6 +1,6 @@
 enum TimeFilter {
   All = "all",
-  Upcoming = "upcoming",
+  Recent = "recent",
   LastMonth = "lastMonth",
   ThisMonth = "thisMonth",
 }
