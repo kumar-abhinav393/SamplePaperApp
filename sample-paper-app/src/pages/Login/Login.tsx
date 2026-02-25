@@ -2,11 +2,9 @@ import { dialog } from "@/components/Modals/ResetPasswordModal";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
-import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
 import { useLogin } from "@/hooks/useLogin";
 import {
   Box,
-  Button,
   Field,
   Fieldset,
   Flex,
@@ -15,40 +13,33 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useState } from "react";
-import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { ColorMode } from "@/helpers/enum";
 import { RippleButton } from "@/components/ui/RippleButton";
 
 export const Login = () => {
-  const { login } = useLogin();
+  const { login, isPending } = useLogin();
   const navigate = useNavigate();
   const textColor = useColorModeValue(ColorMode.black, ColorMode.white);
-  const { handleGoogleLogin } = useGoogleAuthenticationHandler();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
   const passwordError = password !== "" && password.length < 8;
   const emailError = email !== "" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = async () => {
-    if (isLoggedIn) return true;
-    try {
-      setIsLoggedIn(true);
-      await login({ email, password });
-      navigate("/filter-assignments");
-    } catch {
+    if (isPending) return;
+    const result = await login({ email, password });
+    if (!result.ok) {
       toaster.create({
         type: "error",
-        title: "Login failed",
-        description: "Please check your credentials and try again",
-      });
-    } finally {
-      setIsLoggedIn(false);
+        title: "Invalid credentials",
+        description: "Email or password is incorrect" });
+      return;
     }
+    navigate("/filter-assignments");
   };
 
   return (
@@ -99,7 +90,7 @@ export const Login = () => {
           </Box>
           <dialog.Viewport />
         </Flex>
-        <Flex pt={5}>
+        {/* <Flex pt={5}>
           <Button
             color={textColor}
             bg={"#3bc8f6d6"}
@@ -119,7 +110,7 @@ export const Login = () => {
             OR
           </Text>
           <Box flex="1" h="1px" bg="#444746" />
-        </Flex>
+        </Flex> */}
         <Flex
           mt={4}
           gap={2}
@@ -178,7 +169,7 @@ export const Login = () => {
           <RippleButton
             color={textColor}
             bg={"#3bc8f6d6"}
-            loading={isLoggedIn}
+            loading={isPending}
             onClick={handleSubmit}
             border={"1px solid black"}
             disabled={!email || !password}
