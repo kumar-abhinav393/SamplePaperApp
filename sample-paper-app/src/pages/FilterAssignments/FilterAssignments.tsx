@@ -150,7 +150,6 @@ export const FilterAssignments = () => {
       toaster.create({
         title: "No Results",
         type: "info",
-        description: "No assignments found for your current filter."
       });
       return
     }
