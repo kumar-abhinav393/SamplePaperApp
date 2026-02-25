@@ -8,14 +8,11 @@ import {
   Flex,
   Box,
   Input,
-  Button,
   Text,
   Fieldset,
   Field,
   InputGroup,
 } from "@chakra-ui/react";
-import { FcGoogle } from "react-icons/fc";
-import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
 import { validateInviteToken } from "@/helpers/validateInviteToken";
 import { RippleButton } from "@/components/ui/RippleButton";
 
@@ -24,7 +21,6 @@ export const Signup = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const textColor = useColorModeValue("black", "white");
-  const { handleGoogleLogin } = useGoogleAuthenticationHandler();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -104,7 +100,7 @@ export const Signup = () => {
           </Text>
         </Box>
       </Flex>
-      <Flex pt={5}>
+      {/* <Flex pt={5}>
         <Button
           color={textColor}
           bg={"#3bc8f6d6"}
@@ -124,7 +120,7 @@ export const Signup = () => {
           OR
         </Text>
         <Box flex="1" h="1px" bg="#444746" />
-      </Flex>
+      </Flex> */}
       <Flex
         mt={3}
         fontSize={"l"}

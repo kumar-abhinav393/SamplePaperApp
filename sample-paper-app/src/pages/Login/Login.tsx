@@ -2,11 +2,9 @@ import { dialog } from "@/components/Modals/ResetPasswordModal";
 import { useColorModeValue } from "@/components/ui/color-mode";
 import { toaster } from "@/components/ui/toaster";
 import { getPasswordIcon } from "@/helpers/getPasswordIcon";
-import { useGoogleAuthenticationHandler } from "@/helpers/googleAuthentication";
 import { useLogin } from "@/hooks/useLogin";
 import {
   Box,
-  Button,
   Field,
   Fieldset,
   Flex,
@@ -99,7 +97,7 @@ export const Login = () => {
           </Box>
           <dialog.Viewport />
         </Flex>
-        <Flex pt={5}>
+        {/* <Flex pt={5}>
           <Button
             color={textColor}
             bg={"#3bc8f6d6"}
@@ -119,7 +117,7 @@ export const Login = () => {
             OR
           </Text>
           <Box flex="1" h="1px" bg="#444746" />
-        </Flex>
+        </Flex> */}
         <Flex
           mt={4}
           gap={2}
