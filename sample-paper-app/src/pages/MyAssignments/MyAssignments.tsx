@@ -75,7 +75,7 @@ export const MyAssignments = () => {
     return new Date(formatFirestoreDate((assignment.props.createdAt))).getTime()
   }
 
-  const requireFilterFirst = role?.role !== UserRole.FACULTY && !state?.filters;
+  const requireFilterFirst = role?.role === UserRole.STUDENT && !state?.filters;
 
   const visibleAssignments = useMemo(() => {
     if (requireFilterFirst) return [];
@@ -145,12 +145,13 @@ export const MyAssignments = () => {
       list = list.filter((a) => {
         const topic = normalize((a)?.props?.topicName ?? "")
         const facultyName = normalize((a)?.props?.createdBy)
+        const subjectName = normalize((a)?.props?.subjectCode ?? "")
         const uploadDate = normalize(
           (a)?.props?.createdAt
             ? formatFirestoreDate((a)?.props?.createdAt)
             : ""
         )
-        return topic.includes(q) || facultyName.includes(q) || uploadDate.includes(q)
+        return topic.includes(q) || facultyName.includes(q) || subjectName.includes(q) || uploadDate.includes(q)
       })
     }
 

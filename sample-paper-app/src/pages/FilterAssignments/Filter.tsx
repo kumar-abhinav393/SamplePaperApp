@@ -61,6 +61,7 @@ export const Filter = ({
   inviteRole,
   setTopicName,
   setInviteRole,
+  addDescription,
   inviteCreatedAt,
   inviteExpiresAt,
   setAssignmentPdf,
@@ -337,7 +338,7 @@ export const Filter = ({
                     onClick={() => {
                       dialog.open("a", {
                         title: "Add Description",
-                        description: "Write a short description...",
+                        initialValue: addDescription,
                       }).then((value) => {
                         setAddDescription(value);
                       });
@@ -354,7 +355,6 @@ export const Filter = ({
                   onClick={() => {
                     dialog.open("a", {
                       title: "Add Description",
-                      description: "Write a short description...",
                     });
                   }}
                 >

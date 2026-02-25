@@ -209,7 +209,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                               onClick={() => {
                                 dialog.open("a", {
                                   title: "Edit Description",
-                                  description: item.props.description,
+                                  initialValue: item.props.description,
                                 }).then(async (newDescription) => {
                                   if (newDescription && newDescription !== item.props.description) {
                                     try {
