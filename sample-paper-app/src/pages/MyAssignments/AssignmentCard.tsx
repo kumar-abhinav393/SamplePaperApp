@@ -202,7 +202,8 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                             color={textColor}
                             size={["2xs", "2xs", "sm", "sm", "sm"]}
                           >
-                            <RippleButton
+                            {(role === UserRole.FACULTY || role === UserRole.ADMIN) && (
+                              <RippleButton
                               bg={"#3bc8f6d6"}
                               variant={"outline"}
                               width={["50px", "50px", "70px", "100px", "100px"]}
@@ -234,6 +235,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                             >
                               Edit
                             </RippleButton>
+                            )}
                             <Dialog.ActionTrigger asChild>
                               <RippleButton
                                 bg={"#3bc8f6d6"}
