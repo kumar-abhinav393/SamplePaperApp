@@ -69,7 +69,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
       const fileRef = ref(storage, path);
       const url = await getDownloadURL(fileRef);
       window.open(url, "_blank");
-    } catch(error) {
+    } catch (error) {
       console.error("Error downloading PDF: ", error);
     }
   };
@@ -82,7 +82,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
             gap={3}
             alignItems="start"
             gridTemplateColumns={{
-              base: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr)",
+              base: "minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)",
               sm: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
               md: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
               lg: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
@@ -167,8 +167,8 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
               m={1}
               minW={0}
               display={"flex"}
-              justifyContent={"center"}
               alignItems={"center"}
+              justifyContent={"center"}
             >
               <Heading
                 mt={"1"}
