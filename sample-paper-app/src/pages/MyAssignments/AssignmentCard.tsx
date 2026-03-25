@@ -69,7 +69,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
       const fileRef = ref(storage, path);
       const url = await getDownloadURL(fileRef);
       window.open(url, "_blank");
-    } catch(error) {
+    } catch (error) {
       console.error("Error downloading PDF: ", error);
     }
   };
@@ -82,7 +82,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
             gap={3}
             alignItems="start"
             gridTemplateColumns={{
-              base: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1fr)",
+              base: "minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr)",
               sm: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
               md: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
               lg: "minmax(0, 2fr) minmax(0, 1fr) minmax(0, 2fr)",
@@ -167,8 +167,8 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
               m={1}
               minW={0}
               display={"flex"}
-              justifyContent={"center"}
               alignItems={"center"}
+              justifyContent={"center"}
             >
               <Heading
                 mt={"1"}
@@ -202,7 +202,8 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                             color={textColor}
                             size={["2xs", "2xs", "sm", "sm", "sm"]}
                           >
-                            <RippleButton
+                            {(role === UserRole.FACULTY || role === UserRole.ADMIN) && (
+                              <RippleButton
                               bg={"#3bc8f6d6"}
                               variant={"outline"}
                               width={["50px", "50px", "70px", "100px", "100px"]}
@@ -234,6 +235,7 @@ export const AssignmentCard = ({ assignments, role, deleteDocument, updateDocume
                             >
                               Edit
                             </RippleButton>
+                            )}
                             <Dialog.ActionTrigger asChild>
                               <RippleButton
                                 bg={"#3bc8f6d6"}
