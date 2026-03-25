@@ -5,7 +5,7 @@ A modern web application for managing and accessing academic assignments and que
 GyaanKosh is designed for an educational institute to streamline the management and distribution of assignments. It provides role-based access for Students, Faculty, and Admins, ensuring secure and efficient interaction with academic resources.
 
 ## 1.1 LIVE DEMO
-https://https://sample-paper-app-0.web.app/
+https://sample-paper-app-0.web.app/
 
 # -----------------------------------------
 
