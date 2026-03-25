@@ -7,7 +7,7 @@ GyaanKosh is designed for an educational institute to streamline the management 
 ## 1.1 LIVE DEMO
 https://https://sample-paper-app-0.web.app/
 
-# --------------------------------------------------------------------------------------------------
+# -----------------------------------------
 
 ## 2. WIRE FRAMES
 Wireframes were created using draw.io to plan the layout, navigation flow, and user interactions before development.
@@ -22,7 +22,7 @@ These designs helped ensure:
 ### 2.2 MOBILE VIEW
 ![alt text](sample-paper-app/src/assets/wireframes/mobile.png)
 
-# --------------------------------------------------------------------------------------------------
+# -----------------------------------------
 
 ## 3. FEATURES
 ### 3.1 STUDENT
@@ -48,7 +48,7 @@ These designs helped ensure:
 - Secure Firestore rules
 - Password reset functionality (with security considerations)
 
-# --------------------------------------------------------------------------------------------------
+# -----------------------------------------
 
 ## 4. INVITE-BASED FACULTY REGISTRATION
 This app uses an invite-based registration flow for privileged roles such as **Faculty/Admin**. This ensures that only authorized users can create faculty/admin accounts in the system.
@@ -81,7 +81,7 @@ Example: `/signup?invite=TOKEN_VALUE`
 - Only admin-issued tokens can assign privileged roles.
 - This reduces the risk of unauthorized role escalation.
 
-# --------------------------------------------------------------------------------------------------
+# -----------------------------------------
 
 ## 5. FACULTY FIRST-TIME ONBOARDING
 After a faculty members signsup through the invite-bases signup flow and logs in for the first time, the app displays a modal form to complete the faculty profile. This onboarding step is implemented using the `FacultyProps.tsx` component.
@@ -115,10 +115,9 @@ It helps the application:
 - It is displayed only during the first login or until the required profile information is completed
 - The captured data is used for role-based workflows across the application
 
-# --------------------------------------------------------------------------------------------------
+# -----------------------------------------
 
 ## 6. TECH STACK
-
 ### 6.1 FRONTEND
 - React(Vite)
 - Typescript
@@ -130,53 +129,35 @@ It helps the application:
 - Firebase Storage
 - Firebase Hosting
 
-# --------------------------------------------------------------------------------------------------
+# -----------------------------------------
 
-## 7. PROJECT STRUCTURE
-Gyaankosh/
-│
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── hooks/
-│   ├── helpers/
-│   ├── types/
-│   └── firebase.config.ts
-│
-├── public/
-├── package.json
-├── firebase.json
-└── README.md
-
-# --------------------------------------------------------------------------------------------------
-
-## 8. SETUP & INSTALLATION
-### 8.1 CLONE THE REPOSITORY
+## 7. SETUP & INSTALLATION
+### 7.1 CLONE THE REPOSITORY
     git clone [<repo-url>](https://github.com/kumar-abhinav393/SamplePaperApp.git)
     cd sample-paper-app
 
-### 8.2 INSTALL DEPENDENCIES
+### 7.2 INSTALL DEPENDENCIES
     npm install
 
-### 8.3 ADD ENVIRONMENT VARIABLES
+### 7.3 ADD ENVIRONMENT VARIABLES
     VITE_FIREBASE_API_KEY=firebase_key
     VITE_FIREBASE_STORAGE_BUCKET=firebase_bucket
 
-### 8.4 RUN THE APP LOCALLY
+### 7.4 RUN THE APP LOCALLY
     npm run dev
 
 # --------------------------------------------------------------------------------------------------
 
-## 9. DEPLOYMENT
-### 9.1 BUILD
+## 8. DEPLOYMENT
+### 8.1 BUILD
     npm run build
 
-### 9.2 DEPLOY
+### 8.2 DEPLOY
     firebase deploy
 
 # --------------------------------------------------------------------------------------------------
 
-## 10. VERSIONING
+## 9. VERSIONING
 This project follows semantic versioning:
 
 vMAJOR.MINOR.PATCH
@@ -188,6 +169,6 @@ Development version use: 1.1.0-SNAPSHOT
 
 # --------------------------------------------------------------------------------------------------
 
-## 11. KNOWN LIMITATIONS
+## 10. KNOWN LIMITATIONS
 	•	Mobile PDF download behavior depends on browser capabilities.
 	•	Password reset flow requires rate limiting and CAPTCHA for enhanced security.
