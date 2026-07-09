@@ -5,12 +5,18 @@ import { Header } from "./components/Header/Header"
 import { Provider } from "./components/ui/provider"
 import { Flex, Grid, Spinner } from "@chakra-ui/react"
 import { useAuthContext } from "./hooks/useAuthContext"
+import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics"
 import { Navigation } from "./components/Navigation/Navigation"
 import { MyAssignments } from "./pages/MyAssignments/MyAssignments"
 import { Authentication } from "./pages/Authentication/Authentication"
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
 import { FilterAssignments } from "./pages/FilterAssignments/FilterAssignments"
 import { BackgroundTheme } from "./components/BackgroundTheme/BackgroundTheme"
+
+function AnalyticsTracker() {
+  useGoogleAnalytics();
+  return null;
+}
 
 function App() {
 
@@ -20,6 +26,7 @@ function App() {
     <Provider>
       <BackgroundTheme />
       <BrowserRouter>
+        <AnalyticsTracker />
         {!authIsReady && (
           <Flex w={"100vw"} h={"100dvh"} align={"center"} justify={"center"}>
             <Spinner size={"md"} color={"#3bc8f6d6"} colorPalette={"#3bc8f6d6"} />
