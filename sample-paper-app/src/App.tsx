@@ -20,7 +20,9 @@ function AnalyticsTracker() {
 
 function App() {
 
+function App() {
   const { user, authIsReady } = useAuthContext();
+  const textColor = useColorModeValue("black", "white");
 
   return (
     <Provider>
@@ -29,47 +31,104 @@ function App() {
         <AnalyticsTracker />
         {!authIsReady && (
           <Flex w={"100vw"} h={"100dvh"} align={"center"} justify={"center"}>
-            <Spinner size={"md"} color={"#3bc8f6d6"} colorPalette={"#3bc8f6d6"} />
+            <Spinner
+              size={"md"}
+              color={"#3bc8f6d6"}
+              colorPalette={"#3bc8f6d6"}
+            />
           </Flex>
         )}
         {authIsReady && (
-          <Flex justifyContent={"center"} alignItems={"center"} w={"100vw"} m={"auto"}>
-            <Grid height={"100dvh"} gridTemplateRows={user ? "auto auto 1fr" : "auto 1fr"} w={["100vw", "100vw", "100vw", "100vw", "90vw"]}
+          <>
+            <Flex
+              justifyContent={"center"}
+              alignItems={"center"}
+              w={"100vw"}
+              m={"auto"}
             >
-              <Header />
-              {user && <Navigation />}
-              <Routes>
-                <Route
-                  path={RouterPaths.Root}
-                  element={user ? <Navigate to={RouterPaths.FilterAssignments} /> : <Authentication />}
-                />
-                <Route
-                  path={RouterPaths.Signup}
-                  element={user ? <Navigate to={RouterPaths.FilterAssignments} /> : <Signup />}
-                />
-                <Route
-                  path={RouterPaths.Login}
-                  element={user ? <Navigate to={RouterPaths.FilterAssignments} /> : <Login />}
-                />
-                <Route
-                  path={RouterPaths.FilterAssignments}
-                  element={user ? <FilterAssignments /> : <Navigate to={RouterPaths.Root} />}
-                />
-                <Route
-                  path={RouterPaths.MyAssignments}
-                  element={user ? <MyAssignments /> : <Navigate to={RouterPaths.Root} />}
-                />
-                <Route
-                  path={"*"}
-                  element={user ? <Navigate to={RouterPaths.FilterAssignments} /> : <Navigate to={RouterPaths.Root} />}
-                />
-              </Routes>
-            </Grid>
-          </Flex>
+              <Grid
+                minHeight={"100dvh"}
+                gridTemplateRows={user ? "auto auto 1fr" : "auto 1fr"}
+                w={["100vw", "100vw", "100vw", "100vw", "90vw"]}
+              >
+                <Header />
+                {user && <Navigation />}
+                <Routes>
+                  <Route
+                    path={RouterPaths.Root}
+                    element={
+                      user ? (
+                        <Navigate to={RouterPaths.FilterAssignments} />
+                      ) : (
+                        <Authentication />
+                      )
+                    }
+                  />
+                  <Route
+                    path={RouterPaths.Signup}
+                    element={
+                      user ? (
+                        <Navigate to={RouterPaths.FilterAssignments} />
+                      ) : (
+                        <Signup />
+                      )
+                    }
+                  />
+                  <Route
+                    path={RouterPaths.Login}
+                    element={
+                      user ? (
+                        <Navigate to={RouterPaths.FilterAssignments} />
+                      ) : (
+                        <Login />
+                      )
+                    }
+                  />
+                  <Route
+                    path={RouterPaths.FilterAssignments}
+                    element={
+                      user ? (
+                        <FilterAssignments />
+                      ) : (
+                        <Navigate to={RouterPaths.Root} />
+                      )
+                    }
+                  />
+                  <Route
+                    path={RouterPaths.MyAssignments}
+                    element={
+                      user ? (
+                        <MyAssignments />
+                      ) : (
+                        <Navigate to={RouterPaths.Root} />
+                      )
+                    }
+                  />
+                  <Route
+                    path={"*"}
+                    element={
+                      user ? (
+                        <Navigate to={RouterPaths.FilterAssignments} />
+                      ) : (
+                        <Navigate to={RouterPaths.Root} />
+                      )
+                    }
+                  />
+                </Routes>
+              </Grid>
+            </Flex>
+            <Flex py={4} alignItems={"end"} justifyContent={"center"}>
+              <Box mt={"150vh"}>
+                <Text fontSize={"sm"} color={textColor}>
+                  &copy; {new Date().getFullYear()} Gyaan. All rights reserved.
+                </Text>
+              </Box>
+            </Flex>
+          </>
         )}
       </BrowserRouter>
     </Provider>
-  )
+  );
 }
 
-export default App
+export default App;
