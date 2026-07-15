@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## v1.1.1 - 2026-07-15
+
+### Added
+- Scrolling effect and internal links on the landing page
+
+---
+
 ## v1.1.0 - 2026-07-09
 
 ### Added
