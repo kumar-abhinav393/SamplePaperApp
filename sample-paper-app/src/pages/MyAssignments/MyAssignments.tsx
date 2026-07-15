@@ -179,7 +179,7 @@ export const MyAssignments = () => {
       maxW={"1200px"}
       w={["100vw", "100vw", "100vw", "95vw", "90vw"]}
     >
-      <SimpleGrid h={"100vh"} gridRowStart={3} templateRows={"auto auto 1fr"}>
+      <SimpleGrid minHeight={"100vh"} gridRowStart={3} templateRows={"auto auto 1fr"}>
         <Box mt={[3, 3, 5, 5, 6]}>
           <Grid
             templateColumns={"repeat(24, 1fr)"}
