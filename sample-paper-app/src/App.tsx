@@ -1,23 +1,24 @@
-import { Login } from "./pages/Login/Login";
-import { RouterPaths } from "./global/enum";
-import { Signup } from "./pages/Signup/Signup";
-import { Header } from "./components/Header/Header";
-import { Provider } from "./components/ui/provider";
-import { Box, Flex, Grid, Spinner, Text } from "@chakra-ui/react";
-import { useAuthContext } from "./hooks/useAuthContext";
-import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics";
-import { Navigation } from "./components/Navigation/Navigation";
-import { MyAssignments } from "./pages/MyAssignments/MyAssignments";
-import { Authentication } from "./pages/Authentication/Authentication";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
-import { FilterAssignments } from "./pages/FilterAssignments/FilterAssignments";
-import { BackgroundTheme } from "./components/BackgroundTheme/BackgroundTheme";
-import { useColorModeValue } from "./components/ui/color-mode";
+import { Login } from "./pages/Login/Login"
+import { RouterPaths } from "./global/enum"
+import { Signup } from "./pages/Signup/Signup"
+import { Header } from "./components/Header/Header"
+import { Provider } from "./components/ui/provider"
+import { Flex, Grid, Spinner } from "@chakra-ui/react"
+import { useAuthContext } from "./hooks/useAuthContext"
+import { useGoogleAnalytics } from "./hooks/useGoogleAnalytics"
+import { Navigation } from "./components/Navigation/Navigation"
+import { MyAssignments } from "./pages/MyAssignments/MyAssignments"
+import { Authentication } from "./pages/Authentication/Authentication"
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom"
+import { FilterAssignments } from "./pages/FilterAssignments/FilterAssignments"
+import { BackgroundTheme } from "./components/BackgroundTheme/BackgroundTheme"
 
 function AnalyticsTracker() {
   useGoogleAnalytics();
   return null;
 }
+
+function App() {
 
 function App() {
   const { user, authIsReady } = useAuthContext();
